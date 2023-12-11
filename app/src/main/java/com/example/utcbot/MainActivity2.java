@@ -1,4 +1,5 @@
 package com.example.utcbot;
+
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,17 +12,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity2 extends AppCompatActivity {
 
     private static final String KEY_WEB_VIEW_URL = "web_view_url";
 
     private WebView wv1;
     private DatabaseHelper dbHelper;
+    private String nombre;
+    private String contenido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        // Obtener datos pasados desde MainActivity
+        nombre = getIntent().getStringExtra("nombre");
+        contenido = getIntent().getStringExtra("contenido");
 
         wv1 = findViewById(R.id.wv1);
         WebSettings webSettings = wv1.getSettings();
@@ -95,5 +105,17 @@ public class MainActivity2 extends AppCompatActivity {
     @JavascriptInterface
     public void insertarDatos(String nombre, String contenido) {
         insertarDatosEnDB(nombre, contenido);
+    }
+
+    @JavascriptInterface
+    public String obtenerDatos() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("nombre", nombre);
+            jsonObject.put("contenido", contenido);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
     }
 }

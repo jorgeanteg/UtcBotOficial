@@ -528,12 +528,12 @@
         <img id="playerImage" src="irobot.png" style="display: none;">
     </div>
     <div>
-        <h2>Nombre del Proyecto: <span id="nombreProyecto"></span></h2>
-        <p>Contenido del Proyecto: <span id="contenidoProyecto"></span></p>
+        <h2>Nombre del Proyecto: <span id="proyectoNombre"></span></h2>
+        <p>Contenido del Proyecto: <span id="proyectoContenido"></span></p>
     </div>
 </div>
 <button class="floating-play" onclick="runCode()">Play</button>
-<button class="floating-guardar" onclick="guardarDatos()">Guardar</button>
+<button class="floating-guardar" onclick="cargarDatos()">Guardar</button>
 
 
 <a href="#" class="floating-button" id="toggle-button">Botón</a>
@@ -1091,6 +1091,20 @@ Fin teclado Repetir -->
     workspace.addChangeListener(function (event) {
         guardarDatos();
     });
+
+    function cargarDatos() {
+            // Llamada al método obtenerDatos en la interfaz Android
+            var datosJSON = Android.obtenerDatos();
+
+            // Parsear el JSON
+            var datos = JSON.parse(datosJSON);
+
+            // Mostrar los datos en la página
+            document.getElementById('proyectoNombre').innerHTML = '<strong>Nombre:</strong> ' + datos.nombre;
+            document.getElementById('proyectoContenido').innerHTML = '<strong>Contenido:</strong> ' + datos.contenido;
+        }
+
+
 
 </script>
 
