@@ -1,0 +1,2579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="landscape">
+    <meta name="x5-orientation" content="landscape">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Document</title>
+
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="javascript_compressed.js"></script>
+    <script src="es.js"></script>
+    <script src="javascript.js"></script>
+
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #fff;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+            transition: all 0.5s;
+        }
+
+        .container.active {
+            justify-content: flex-end;
+        }
+
+        .container>div {
+            height: 100%;
+        }
+
+        .container .first-div {
+            width: 100%;
+            background-color: #ccc;
+            transition: width 0.5s;
+        }
+
+        .container.active .first-div {
+            width: 55%;
+        }
+
+        .container .second-div {
+            width: 0;
+            background-color: rgb(224, 211, 224);
+            transition: width 0.5s;
+            overflow: hidden;
+        }
+
+        .container.active .second-div {
+            width: 45%;
+        }
+
+
+        canvas {
+            border: 1px solid black;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Boton flotante */
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            z-index: 999;
+            /* Asegura que el botón esté encima de todo */
+        }
+
+        .floating-button:hover {
+            background-color: #0056b3;
+        }
+
+
+        .floating-play {
+            position: fixed;
+            bottom: 200px;
+            left: 20px;
+            background-color: #007BFF;
+            color: #f10e0e;
+            border: none;
+            border-radius: 30%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            z-index: 999;
+        }
+        .floating-guardar {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            background-color: #007BFF;
+            color: #f10e0e;
+            border: none;
+            border-radius: 30%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+
+        table {
+            height: 100%;
+            width: 100%;
+        }
+
+        #blocklyArea {
+            height: 99%;
+        }
+
+
+
+        /* Teclaco numerico */
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            z-index: 9999;
+            border-radius: 1rem;
+            border-color: transparent;
+            box-shadow: 0px 10px 22px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            border: none;
+            padding: 0;
+            margin: 0;
+            background: none;
+            outline: none;
+        }
+
+        .pantalla_teclado {
+            border-radius: 7px;
+            border: 2px solid #808080;
+            padding: 5px;
+
+
+        }
+
+        .fila {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px;
+
+        }
+
+        .fila .numero {
+            flex: 1;
+            padding: 5px 16px;
+            margin-left: 2.5px;
+            margin-right: 2.5px;
+        }
+
+        .btn-borrar {
+            margin-left: 2.5px;
+            margin-right: 2.5px;
+        }
+
+        .btn-borrar-todo {
+            flex: 1;
+            background-color: red;
+
+        }
+
+        button {
+            background-color: #0074d9;
+            /* Color de fondo */
+            color: #fff;
+            /* Color del texto */
+            border: none;
+            /* Quitar el borde */
+            padding: 5px 16px;
+            /* Espaciado interno */
+            border-radius: 7px;
+            /* Bordes redondeados */
+            cursor: pointer;
+            /* Cambiar el cursor al pasar sobre el botón */
+            font-size: 16px;
+            /* Tamaño de fuente */
+            font-weight: bold;
+        }
+
+        .contenedor_cerrar {
+            text-align: center;
+        }
+
+        #cerrarModal,
+        #cerrarModal2,
+        #cerrarModal3,
+        #cerrarModal4,
+        #cerrarModal5,
+        #cerrarModal6 {
+            border-radius: 50%;
+            padding: 5px 10px;
+            box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            color: #000;
+        }
+
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        canvas {
+            border: 1px solid black;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        /*Teclado Slider*/
+        .modal_slider {
+            display: flex;
+            justify-content: center;
+            height: 100x;
+            margin: 0;
+        }
+
+        .slider-container {
+            text-align: center;
+            position: relative;
+        }
+
+        #image-container {
+            margin-top: 5px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #slider-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #slider-value {
+            margin-top: 5px;
+            font-size: 18px;
+        }
+
+        .numero_slider {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+
+        .numero_slider::-webkit-inner-spin-button,
+        .numero_slider::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .numero_slider {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .numero_slider {
+            font-size: 18px;
+            width: 25px;
+        }
+
+        /* fin teclado slider */
+
+        /* Inicio de teclado Angulo*/
+
+        #container_angulo {
+            position: relative;
+            width: 100px;
+            margin: 0 auto;
+        }
+
+        #circle_angulo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 0;
+            padding-left: 100%;
+            padding-bottom: 100%;
+            border-radius: 50%;
+            border: 8px solid #333333;
+            z-index: -1;
+        }
+
+        #centerImage_angulo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            /* Ajusta el tamaño según sea necesario */
+            height: 40px;
+            background-image: url('irobot.png');
+            /* Ruta de la imagen en el centro */
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 3;
+        }
+
+        #slider_angulo {
+            width: 100%;
+            margin-top: 30px;
+            z-index: 1;
+        }
+
+        #sliderHandle_angulo {
+            position: absolute;
+            transform-origin: 0% 100%;
+            transform: translate(75px, -90px) rotate(0deg);
+            /* Ajuste de la posición hacia arriba */
+            width: 40px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: 2;
+        }
+
+        #output_angulo {
+
+            font-size: 18px;
+        }
+
+        .contenedor_slider_angulo {
+            width: 200px;
+
+        }
+
+        /*Fin de teclado angulo*/
+
+        /* Teclado repetir */
+        .rep-modal_slider {
+            display: flex;
+            justify-content: center;
+            height: 100px;
+            margin: 0;
+        }
+
+        .rep-slider-container {
+            text-align: center;
+            position: relative;
+        }
+
+        #rep-image-container {
+            position: relative;
+        }
+
+        #rep-slider-value {
+            margin-top: -2px;
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 42%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        #rep-slider-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Fin teclado repetir */
+
+        /* Inicio teclado prender luz */
+        .image-container {
+            text-align: center;
+        }
+
+        .color-box {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border: 2px solid #ccc;
+            display: inline-block;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        .color-box.selected {
+            transform: scale(1.2);
+            border-color: #000;
+            /* Cambiar el color del borde cuando está seleccionado */
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .color-box.red {
+            background-color: red;
+        }
+
+        .color-box.orange {
+            background-color: orange;
+        }
+
+        .color-box.yellow {
+            background-color: yellow;
+        }
+
+        .color-box.green {
+            background-color: green;
+        }
+
+        .color-box.lightblue {
+            background-color: lightblue;
+        }
+
+        .color-box.blue {
+            background-color: blue;
+        }
+
+        .color-box.purple {
+            background-color: purple;
+        }
+
+        .color-box.white {
+            background-color: white;
+        }
+
+        /* Fin teclado prender luz */
+
+        /* Inicio teclado Audio */
+        .image-container {
+            text-align: center;
+        }
+
+        .audio-box {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Alinea el contenido horizontalmente */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        .letter {
+            font-size: 16px;
+            /* Ajusta el tamaño de la letra según sea necesario */
+        }
+
+
+        .audio-box.selected2 {
+            transform: scale(1.2);
+            border-color: #000;
+            /* Cambiar el color del borde cuando está seleccionado */
+        }
+
+        .row_audio {
+            display: flex;
+            justify-content: center;
+        }
+
+
+        /* Fin teclado Audio */
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="first-div">
+        <table>
+            <tr>
+                <td id="blocklyArea">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="second-div" id="canvasContainer">
+        <canvas id="gameCanvas" width="200" height="280"></canvas>
+        <img id="playerImage" src="irobot.png" style="display: none;">
+    </div>
+    <div>
+        <h2>Nombre del Proyecto: <span id="nombreProyecto"></span></h2>
+        <p>Contenido del Proyecto: <span id="contenidoProyecto"></span></p>
+    </div>
+</div>
+<button class="floating-play" onclick="runCode()">Play</button>
+<button class="floating-guardar" onclick="guardarDatos()">Guardar</button>
+
+
+<a href="#" class="floating-button" id="toggle-button">Botón</a>
+
+<div id="tecladoNumerico" class="modal">
+    <div class="fila">
+        <input class="pantalla_teclado" type="number" id="inputNuevo">
+    </div>
+    <div class="fila">
+        <button class="borrar-todo btn-borrar-todo btn-borrar">Borrar</button>
+        <button class="borrar btn-borrar"> <- </button>
+    </div>
+    <div class="fila">
+        <button class="numero">7</button>
+        <button class="numero">8</button>
+        <button class="numero">9</button>
+    </div>
+    <div class="fila">
+        <button class="numero">4</button>
+        <button class="numero">5</button>
+        <button class="numero">6</button>
+    </div>
+    <div class="fila">
+        <button class="numero">1</button>
+        <button class="numero">2</button>
+        <button class="numero">3</button>
+    </div>
+    <div class="fila">
+        <button class="numero">0</button>
+        <button class="numero">.</button>
+        <button class="numero">+/-</button>
+    </div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal">x</button>
+    </div>
+</div>
+
+<!-- Teclado slider -->
+<div id="tecladoSlider" class="modal">
+    <div class="modal_slider">
+        <div class="slider-container">
+            <div id="slider-value"><input class="numero_slider" type="number" id="slider-value-span"
+                                          value="20"><span>
+                        cm</span></div>
+            <input type="range" id="custom-slider" min="-20" max="20" value="20" step="1" />
+            <div id="image-container">
+                <img src="" alt="Imagen" id="slider-image">
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal2">x</button>
+    </div>
+</div>
+
+<script>
+        const slider = document.getElementById('custom-slider');
+        const sliderValueSpan = document.getElementById('slider-value-span');
+        document.addEventListener('DOMContentLoaded', function () {
+            const tecladoSlider = document.getElementById("tecladoSlider");
+
+            const imageContainer = document.getElementById('image-container');
+            const sliderImage = document.getElementById('slider-image');
+
+
+            slider.addEventListener('input', function () {
+                updateImage();
+                sliderValueSpan.value = slider.value;
+                if (selectedBlock && selectedBlockFieldName) {
+                    const newValue = parseFloat(sliderValueSpan.value);
+                    if (!isNaN(newValue)) {
+                        selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                    } else {
+                        console.log("Error")
+                    }
+                }
+            });
+
+            function updateImage() {
+
+                const value = slider.value;
+                const imageSize = '40px';
+                sliderImage.style.width = imageSize;
+                sliderImage.style.height = imageSize;
+
+
+                sliderImage.src = 'irobot.png';
+
+                const widthPercentage = Math.abs(value) * 2 + 20;
+                imageContainer.style.width = widthPercentage + '%';
+
+                const imagePosition = value * 1.5;
+                imageContainer.style.left = 50 + imagePosition + '%';
+                sliderValueSpan.textContent = value;
+
+            }
+
+            document.querySelector("#cerrarModal2").addEventListener("click", () => {
+                tecladoSlider.style.display = "none";
+
+            });
+
+            updateImage();
+        });
+    </script>
+
+<!-- fin Teclado slider -->
+
+<!-- Teclado angulo -->
+
+<div id="tecladoAngulo" class="modal">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="container_angulo">
+        <div id="circle_angulo">
+            <div id="centerImage_angulo"></div>
+        </div>
+        <div id="sliderHandle_angulo"></div>
+
+    </div>
+    <br>
+    <br>
+
+    <br>
+    <div class="contenedor_slider_angulo">
+        <input type="range" id="slider_angulo" min="-360" max="360" value="90" step="10"
+               oninput="updateSliderValue()">
+    </div>
+    <div id="output_angulo"><span id="sliderValue">0</span><span>°</span></div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal3">x</button>
+    </div>
+
+</div>
+
+<script>
+
+        const slider_angulo = document.getElementById("slider_angulo");
+        const output_angulo = document.getElementById("sliderValue");
+
+        function updateSliderValue() {
+
+
+            const handle = document.getElementById("sliderHandle_angulo");
+            const centerImage_angulo = document.getElementById("centerImage_angulo");
+
+            output_angulo.innerText = slider_angulo.value;
+
+            // Obtener el valor del slider_angulo
+            var sliderValue = parseInt(slider_angulo.value);
+
+            // Cambiar la imagen del sliderHandle_angulo según el valor del slider_angulo
+            handle.style.backgroundImage = `url('${getImageForSliderValue(sliderValue)}')`;
+
+            // Calcular el ángulo de rotación en grados
+            var rotationAngle = (sliderValue / 360) * 360;
+
+            // Calcular la posición del circulito respecto al círculo principal
+            var circleRadius = document.getElementById("circle_angulo").clientWidth / 2;
+            var handleX = circleRadius * Math.sin((rotationAngle * Math.PI) / 180);
+            var handleY = -circleRadius * Math.cos((rotationAngle * Math.PI) / 180);
+
+            // Ajustar la posición del sliderHandle_angulo hacia la derecha y hacia arriba
+            handleX += circleRadius;
+            handleY -= 29;
+
+            // Aplicar la posición del sliderHandle_angulo al circulito giratorio
+            handle.style.transform = `translate(${handleX}px, ${handleY}px) rotate(${rotationAngle}deg)`;
+
+            // Rotar la imagen en el centro según el valor del slider_angulo
+            centerImage_angulo.style.transform = `rotate(${rotationAngle}deg)`;
+
+            if (selectedBlock && selectedBlockFieldName) {
+                const newValue1 = parseFloat(slider_angulo.value);
+
+                console.log("Provando: " + newValue1)
+
+                if (!isNaN(newValue1)) {
+                    selectedBlock.setFieldValue(newValue1, selectedBlockFieldName);
+                } else {
+                    console.log("Error")
+                }
+            }
+
+
+
+
+        }
+
+        function getImageForSliderValue(value) {
+            if (value > 0) {
+                return 'derecha.png';
+            } else if (value < 0) {
+                return 'izquierda.png';
+            } else {
+                return 'detener_angulo.png';
+            }
+        }
+
+
+        // Llamar a updateSliderValue() una vez que se cargue la página
+        document.querySelector("#cerrarModal3").addEventListener("click", () => {
+            tecladoAngulo.style.display = "none";
+
+        });
+
+
+    </script>
+
+<!-- fin Teclado angulo -->
+
+<!-- Inicio teclado Repetir -->
+
+<div id="tecladoRepetir" class="modal">
+    <div class="rep-modal_slider">
+        <div class="rep-slider-container">
+            <div id="rep-image-container">
+                <img src="img/repetir.png" alt="Imagen" id="rep-slider-image">
+                <div id="rep-slider-value">
+                    <input class="numero_slider" type="number" id="rep-slider-value-span" value="20">
+                </div>
+            </div>
+            <input type="range" id="rep-custom-slider" min="0" max="10" value="10" step="1" />
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal4">x</button>
+    </div>
+</div>
+
+<script>
+        const repSlider = document.getElementById('rep-custom-slider');
+        const repSliderValueSpan = document.getElementById('rep-slider-value-span');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tecladoRepetir = document.getElementById("tecladoRepetir");
+
+            repSlider.addEventListener('input', function () {
+                repSliderValueSpan.value = repSlider.value;
+
+                if (selectedBlock && selectedBlockFieldName) {
+                    const newValue2 = parseFloat(repSlider.value);
+
+                    console.log("Provando: " + newValue2)
+                    if (!isNaN(newValue2)) {
+                        selectedBlock.setFieldValue(newValue2, selectedBlockFieldName);
+                    } else {
+                        console.log("Error")
+                    }
+                }
+            });
+        });
+
+
+        document.querySelector("#cerrarModal4").addEventListener("click", () => {
+            tecladoRepetir.style.display = "none";
+
+        });
+    </script>
+
+<!--
+Fin teclado Repetir -->
+
+<!-- Inicio teclado prender_luz -->
+
+<div id="tecladoFoco" class="modal">
+    <div class="image-container">
+        <img src="img/foco.png" alt="Imagen" width="65" height="65">
+    </div>
+    <div class="row">
+        <div class="color-box red" onclick="selectColor('red')"></div>
+        <div class="color-box orange" onclick="selectColor('orange')"></div>
+        <div class="color-box yellow" onclick="selectColor('yellow')"></div>
+        <div class="color-box green" onclick="selectColor('green')"></div>
+    </div>
+    <div class="row">
+        <div class="color-box lightblue" onclick="selectColor('lightblue')"></div>
+        <div class="color-box blue" onclick="selectColor('blue')"></div>
+        <div class="color-box purple" onclick="selectColor('purple')"></div>
+        <div class="color-box white" onclick="selectColor('white')"></div>
+    </div>
+
+    <div>
+        <label for="colorInput">Ingrese el color: </label>
+    </div>
+
+    <div>
+        <input type="text" id="colorInput" onchange="selectColorFromInput()">
+    </div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal5">x</button>
+    </div>
+</div>
+
+<script>
+        var selectedColor = null;
+
+        const tecladoFoco = document.getElementById('tecladoFoco');
+
+        function selectColor(color) {
+            console.log('Color seleccionado:', color);
+            resetColorBoxes(); // Deseleccionar todos los cuadros
+            document.querySelector('.color-box.' + color).classList.add('selected');
+            selectedColor = color;
+            updateColorInput(color); // Nueva línea para actualizar el input
+            // Puedes realizar otras acciones aquí con el color seleccionado
+
+            if (selectedBlock && selectedBlockFieldName) {
+                const newValue = selectedColor;
+
+                if (newValue) {
+                    selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                } else {
+                    console.log("Error")
+                }
+            }
+        }
+
+
+
+
+        const inputColor1 = document.getElementById('colorInput');
+
+        function selectColorFromInput() {
+
+            var inputColor = document.getElementById('colorInput').value.toLowerCase();
+
+            var validColors = ['red', 'orange', 'yellow', 'green', 'lightblue', 'blue', 'purple', 'white'];
+
+            if (validColors.includes(inputColor)) {
+                console.log('Color seleccionado:', inputColor);
+                resetColorBoxes(); // Deseleccionar todos los cuadros
+                document.querySelector('.color-box.' + inputColor).classList.add('selected');
+                selectedColor = inputColor;
+                // Puedes realizar otras acciones aquí con el color seleccionado
+            } else {
+                console.log('Color no válido. Por favor, ingrese un color válido.');
+            }
+
+            if (selectedBlock && selectedBlockFieldName) {
+                const newValue = selectedColor;
+
+                if (newValue) {
+                    selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                } else {
+                    console.log("Error")
+                }
+            }
+
+            updateColorInput(inputColor); // Nueva línea para actualizar el input
+        }
+
+        function resetColorBoxes() {
+            var colorBoxes = document.querySelectorAll('.color-box');
+            colorBoxes.forEach(function (box) {
+                box.classList.remove('selected');
+            });
+        }
+
+        function updateColorInput(color) {
+            document.getElementById('colorInput').value = color;
+        }
+
+        // Agregar un evento de entrada al input para actualizar la selección
+        document.getElementById('colorInput').addEventListener('input', function () {
+            selectColorFromInput();
+        });
+
+        document.querySelector("#cerrarModal5").addEventListener("click", () => {
+            tecladoFoco.style.display = "none";
+
+        });
+    </script>
+
+<!-- Fin teclado prender_luz -->
+
+
+<!-- Inicio teclado audio -->
+
+<div id="tecladoAudio" class="modal">
+    <div class="image-container">
+        <img src="img/nota-musical.png" alt="Imagen" width="55" height="55">
+    </div>
+    <div class="row_audio">
+        <div class="audio-box Csos" onclick="selectAudio('Csos')"><span class="letter">C#</span></div>
+        <div class="audio-box Dsos" onclick="selectAudio('Dsos')"><span class="letter">D#</span></div>
+        <div class="audio-box Fsos" onclick="selectAudio('Fsos')"><span class="letter">F#</span></div>
+        <div class="audio-box Gsos" onclick="selectAudio('Gsos')"><span class="letter">G#</span></div>
+        <div class="audio-box Asos" onclick="selectAudio('Asos')"><span class="letter">A#</span></div>
+    </div>
+    <div class="row_audio">
+        <div class="audio-box C" onclick="selectAudio('C')"><span class="letter">C</span></div>
+        <div class="audio-box D" onclick="selectAudio('D')"><span class="letter">D</span></div>
+        <div class="audio-box E" onclick="selectAudio('E')"><span class="letter">E</span></div>
+        <div class="audio-box F" onclick="selectAudio('F')"><span class="letter">F</span></div>
+        <div class="audio-box G" onclick="selectAudio('G')"><span class="letter">G</span></div>
+        <div class="audio-box A" onclick="selectAudio('A')"><span class="letter">A</span></div>
+        <div class="audio-box B" onclick="selectAudio('B')"><span class="letter">B</span></div>
+    </div>
+
+    <div>
+        <label for="audioInput">Ingrese el color: </label>
+    </div>
+
+    <div>
+        <input type="text" id="audioInput" onchange="selectAudioFromInput()">
+    </div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal6">x</button>
+    </div>
+</div>
+
+<script>
+        var selectedAudio = null;
+
+        const tecladoAudio = document.getElementById('tecladoAudio');
+
+        function selectAudio(sonido) {
+            console.log('sonido seleccionado:', sonido);
+            resetAudioBoxes(); // Deseleccionar todos los cuadros
+            document.querySelector('.audio-box.' + sonido).classList.add('selected2');
+            selectedAudio = sonido;
+            updateAudioInput(sonido); // Nueva línea para actualizar el input
+            // Puedes realizar otras acciones aquí con el sonido seleccionado
+
+            if (selectedBlock && selectedBlockFieldName) {
+                const newValue = selectedAudio;
+
+                if (newValue) {
+                    selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                } else {
+                    console.log("Error")
+                }
+            }
+        }
+
+
+
+
+        const inputAudio1 = document.getElementById('audioInput');
+
+        function selectAudioFromInput() {
+
+            var inputAudio = document.getElementById('audioInput').value;
+
+            var validAudios = ['Csos', 'Dsos', 'Fsos', 'Gsos', 'Asos', 'C', 'D', 'E', 'F', 'G', 'A', 'B'];
+
+            if (validAudios.includes(inputAudio)) {
+                console.log('sonido seleccionado:', inputAudio);
+                resetAudioBoxes(); // Deseleccionar todos los cuadros
+                document.querySelector('.audio-box.' + inputAudio).classList.add('selected2');
+                selectedAudio = inputAudio;
+                // Puedes realizar otras acciones aquí con el sonido seleccionado
+            } else {
+                console.log('sonido no válido. Por favor, ingrese un sonido válido.');
+            }
+
+            if (selectedBlock && selectedBlockFieldName) {
+                const newValue = selectedAudio;
+
+                if (newValue) {
+                    selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                } else {
+                    console.log("Error")
+                }
+            }
+
+            updateAudioInput(inputAudio); // Nueva línea para actualizar el input
+        }
+
+        function resetAudioBoxes() {
+            var audioBoxes = document.querySelectorAll('.audio-box');
+            audioBoxes.forEach(function (box) {
+                box.classList.remove('selected2');
+            });
+        }
+
+        function updateAudioInput(sonido) {
+            document.getElementById('audioInput').value = sonido;
+        }
+
+        // Agregar un evento de entrada al input para actualizar la selección
+        document.getElementById('audioInput').addEventListener('input', function () {
+            selectAudioFromInput();
+        });
+
+        document.querySelector("#cerrarModal6").addEventListener("click", () => {
+            tecladoAudio.style.display = "none";
+
+        });
+    </script>
+
+
+
+<!-- Fin teclado audio -->
+
+<div id="blocklyDiv" style="position: absolute"></div>
+
+
+<xml id="toolbox" style="display: none">
+    <category name="Nivel 1">
+        <block type="avanzar_n1"></block>
+        <block type="girar_derecha_n1"></block>
+        <block type="girar_izquierda_n1"></block>
+        <block type="repetir_n1"></block>
+        <block type="foco_n1"></block>
+        <block type="apagar_luz_n1"></block>
+        <block type="audio_n1"></block>
+        <block type="foco_par_n1"></block>
+        <block type="bajar_rotulador_n1"></block>
+        <block type="subir_rotulador_n1"></block>
+
+    </category>
+    <category name="Nivel 2">
+        <block type="avanzar"></block>
+        <block type="foco_n2"></block>
+        <block type="girar_derecha"></block>
+        <block type="girar_izquierda"></block>
+        <block type="repetir"></block>
+        <block type="prender_luz"></block>
+        <block type="audio"></block>
+        <block type="rotulador_n2"></block>
+
+
+
+    </category>
+    <category name="Nivel 3">
+        <block type="avanzar"></block>
+        <block type="girar_derecha"></block>
+        <block type="girar_izquierda"></block>
+        <block type="repetir"></block>
+        <block type="prender_luz"></block>
+    </category>
+
+</xml>
+
+<script>
+
+    function guardarDatos() {
+        var xml = Blockly.Xml.workspaceToDom(workspace);
+        contenido = Blockly.Xml.domToPrettyText(xml);
+
+        var nombre = "Proyecto 1";
+        Android.insertarDatos(nombre, contenido); // Accede a la variable global
+    }
+
+    workspace.addChangeListener(function (event) {
+        guardarDatos();
+    });
+
+</script>
+
+
+
+    <script>
+        // Función para cambiar la orientación a horizontal
+        function forceLandscapeOrientation() {
+            if (window.orientation !== 90 && window.orientation !== -90) {
+                // Cambia la orientación a horizontal
+                screen.orientation.lock("landscape").then(function success() {
+                    console.log("La orientación se cambió a horizontal");
+                }, function error(err) {
+                    console.error("Error al intentar cambiar la orientación: " + err.message);
+                });
+            }
+        }
+
+        // Ejecuta la función al cargar la página
+        window.addEventListener("load", forceLandscapeOrientation);
+
+        // También puedes ejecutar la función cuando cambia la orientación del dispositivo
+        window.addEventListener("orientationchange", forceLandscapeOrientation);
+    </script>
+
+<script>
+        // Load saved blocks on page load
+        window.onload = function () {
+            loadBlocks();
+            // Add a listener to the workspace to save blocks whenever they change
+            workspace.addChangeListener(function (event) {
+                saveBlocks();
+            });
+        };
+
+        // Function to save blocks to localStorage
+        function saveBlocks() {
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            var xmlText = Blockly.Xml.domToPrettyText(xml);
+            localStorage.setItem('savedBlocks', xmlText);
+        }
+
+        // Function to load blocks from localStorage
+        function loadBlocks() {
+            var savedWorkspace = localStorage.getItem('savedBlocks');
+            if (savedWorkspace) {
+                var xml = Blockly.utils.xml.textToDom(savedWorkspace);
+                Blockly.Xml.domToWorkspace(xml, workspace);
+                workspace.scrollCenter();
+            }
+        }
+
+        // Handle screen orientation change
+        window.addEventListener('orientationchange', function () {
+            // Save blocks before the orientation changes
+            saveBlocks();
+            // Reload blocks after a short delay to allow for orientation change
+            setTimeout(function () {
+                loadBlocks();
+            }, 500);
+        });
+    </script>
+
+<script>
+        document.getElementById('toggle-button').addEventListener('click', function () {
+            onresize(); // Redimensiona blocklyDiv
+
+            adjustCanvasSize();
+            document.querySelector('.container').classList.toggle('active'); // Activa/desactiva el segundo div
+
+            // Asegúrate de redimensionar nuevamente después de que se active el segundo div
+            setTimeout(function () {
+                onresize();
+                adjustCanvasSize()
+            }, 500); // 500ms es un tiempo aproximado para que el segundo div se active completamente
+        });
+    </script>
+
+<script>
+        function adjustCanvasSize() {
+            // Obtén una referencia al contenedor del canvas
+            const canvasContainer = document.getElementById('canvasContainer');
+            const canvas2 = document.getElementById('gameCanvas');
+
+            // Calcula el ancho y alto del contenedor
+            const containerWidth = canvasContainer.clientWidth;
+            const containerHeight = canvasContainer.clientHeight;
+
+            // Asigna los valores calculados al canvas
+            canvas2.width = containerWidth;
+            canvas2.height = containerHeight;
+
+            // Asegúrate de volver a dibujar el jugador en las nuevas dimensiones
+            drawPlayer();
+        }
+
+        // Llama a la función para ajustar el tamaño del canvas cuando se carga la página
+        window.onload = adjustCanvasSize;
+
+        // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
+        window.addEventListener('resize', adjustCanvasSize);
+    </script>
+<script>
+
+        //  escript para la funcionalidad teclado
+        const inputNuevo = document.getElementById("inputNuevo");
+        const tecladoNumerico = document.getElementById("tecladoNumerico");
+
+        document.querySelector(".borrar-todo").addEventListener("click", () => {
+            inputNuevo.value = "";
+        });
+
+        document.querySelector(".borrar").addEventListener("click", () => {
+            const currentValue = inputNuevo.value;
+            inputNuevo.value = currentValue.slice(0, -1);
+        });
+
+        document.querySelectorAll(".numero").forEach((button) => {
+            button.addEventListener("click", () => {
+                if (button.textContent === "+/-") {
+                    inputNuevo.value = cambiarSigno(inputNuevo.value);
+                } else {
+                    inputNuevo.value += button.textContent;
+                }
+
+                // Actualiza el valor del campo correspondiente del bloque seleccionado
+                if (selectedBlock && selectedBlockFieldName) {
+                    const newValue = parseFloat(inputNuevo.value);
+                    if (!isNaN(newValue)) {
+                        selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                    }
+                }
+            });
+        });
+
+        document.querySelector("#cerrarModal").addEventListener("click", () => {
+            tecladoNumerico.style.display = "none";
+            inputNuevo.value = "";
+        });
+
+        function cambiarSigno(valor) {
+            if (valor.startsWith("-")) {
+                return valor.substring(1);
+            } else {
+                return "-" + valor;
+            }
+        }
+
+    </script>
+
+<script>
+
+        var toolbox = document.getElementById("toolbox");
+
+        var options = {
+            toolbox: toolbox,
+            collapse: true,
+            comments: true,
+            disable: true,
+            maxBlocks: Infinity,
+            trashcan: true,
+            horizontalLayout: true,
+            toolboxPosition: 'end',
+            css: true,
+            media: 'https://blockly-demo.appspot.com/static/media/',
+            rtl: false,
+            scrollbars: true,
+            sounds: true,
+            oneBasedIndex: true,
+            zoom: {
+                controls: true,
+                wheel: true,
+                startScale: 1,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2
+            }
+        };
+
+
+
+        var blocklyArea = document.getElementById('blocklyArea');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+
+        var workspace = Blockly.inject('blocklyDiv', options);
+        var onresize = function (e) {
+            // Compute the absolute coordinates and dimensions of blocklyArea.
+            var element = blocklyArea;
+            var x = 0;
+            var y = 0;
+            do {
+                x += element.offsetLeft;
+                y += element.offsetTop;
+                element = element.offsetParent;
+            } while (element);
+            // Position blocklyDiv over blocklyArea.
+            blocklyDiv.style.left = x + 'px';
+            blocklyDiv.style.top = y + 'px';
+            blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+            blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+            Blockly.svgResize(workspace);
+        };
+        window.addEventListener('resize', onresize, false);
+        onresize();
+    </script>
+
+<!-- <script>
+    function toXml() {
+        var xml = Blockly.Xml.workspaceToDom(workspace);
+        var xmlText = Blockly.Xml.domToPrettyText(xml);
+        localStorage.setItem('savedBlocks', xmlText);
+    }
+
+    // Cargar los bloques desde localStorage al cargar la página
+    window.onload = function () {
+        var savedWorkspace = localStorage.getItem('savedBlocks');
+        if (savedWorkspace) {
+            var xml = Blockly.utils.xml.textToDom(savedWorkspace);
+            Blockly.Xml.domToWorkspace(xml, workspace);
+            workspace.scrollCenter();
+        }
+
+        workspace.addChangeListener(function (event) {
+            toXml();
+        });
+    };
+
+</script> -->
+<script>
+
+
+
+
+
+        //  Bloques
+        Blockly.Blocks['avanzar'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("avanzar")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
+                    .appendField(new Blockly.FieldNumber(50, -10, 100, 1), "DISTANCIA")
+                    .appendField("cm");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.customFieldName = "DISTANCIA";
+                this.customFieldValue = 50;
+            },
+
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "DISTANCIA";
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("DISTANCIA"); // Establece el valor del FieldNumber en el teclado numérico
+                console.log("el valor es: " + inputNuevo.value);
+            }
+
+        };
+
+        Blockly.Blocks['foco_n2'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("luces")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["apagadas", "apagadas"],
+                        ["encendidas", "encendidas"],
+                        ["parpadeando", "parpadeando"]
+                    ]), "ESTADO_FOCO")
+
+                    .appendField("en color:")
+                    .appendField("rojo")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
+                    .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
+                    .appendField("  verde")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick2.bind(this)))
+                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "VERDE")
+                    .appendField("  azul")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick3.bind(this)))
+                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "AZUL");
+
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.customFieldName = "ROJO";
+                this.customFieldValue = 50;
+                this.customFieldName = "VERDE";
+                this.customFieldValue = 50;
+                this.customFieldName = "AZUL";
+                this.customFieldValue = 50;
+            },
+
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ROJO";
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("ROJO"); // Establece el valor del FieldNumber en el teclado numérico
+                console.log("el valor es: " + inputNuevo.value);
+            },
+            handleImageClick2: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VERDE";
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("VERDE"); // Establece el valor del FieldNumber en el teclado numérico
+                console.log("el valor es: " + inputNuevo.value);
+            },
+            handleImageClick3: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "AZUL";
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("AZUL"); // Establece el valor del FieldNumber en el teclado numérico
+                console.log("el valor es: " + inputNuevo.value);
+            }
+
+        };
+
+
+
+
+        Blockly.Blocks['prender_luz'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("Prender luz")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["Blanco", "blanco"],
+                        ["Rojo", "rojo"],
+                        ["Azul", "azul"],
+                        ["Amarillo", "amarillo"],
+                        ["Verde", "verde"]
+                    ]), "COLOR");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("Cambiar el color de la luz");
+                this.setHelpUrl("");
+            }
+        };
+
+
+        Blockly.Blocks['apagar_luz_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("img/foco_apagado.png", 35, 35, "*"));
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("apagado"), "ESTADO_LUZ")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+            }
+        };
+
+        Blockly.Blocks['bajar_rotulador_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("img/marcador_n1.png", 35, 35, "*"));
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput(true), "ESTADO_ROTU")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+            }
+        };
+
+        Blockly.Blocks['subir_rotulador_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("img/marcador_subir_n1.png", 35, 35, "*"));
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput(false), "ESTADO_ROTU")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+            }
+        };
+
+
+
+
+
+
+        Blockly.Blocks['avanzar_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("20", this.handleTextInputChange.bind(this)), "DISTANCIA")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "DISTANCIA";
+                this.customFieldValue = 20;
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState(20);
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "DISTANCIA";
+                tecladoSlider.style.display = "block";
+                slider.value = this.getFieldValue("DISTANCIA");
+                sliderValueSpan.value = this.getFieldValue("DISTANCIA");
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(sliderValueSpan.value));
+            },
+            handleTextInputChange: function (newValue) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(newValue));
+            },
+            updateImageState: function (value) {
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value < 0) {
+                    estadoImagen.setValue("flecha-abajo.png");
+                } else if (value === 0) {
+                    estadoImagen.setValue("detener.png");
+                } else {
+                    estadoImagen.setValue("flecha-arriba.png");
+                }
+            }
+        };
+
+
+
+
+
+        Blockly.Blocks['foco_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("yellow", this.handleTextInputChange.bind(this)), "COLOR")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "COLOR";
+                this.customFieldValue = "yellow";
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState("yellow");
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "COLOR";
+                tecladoFoco.style.display = "block";
+                slider.value = this.getFieldValue("COLOR");
+                inputColor1.value = this.getFieldValue("COLOR");
+                inputColor1.dispatchEvent(new Event('input'));
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(inputColor1.value);
+            },
+            handleTextInputChange: function (newValue) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(newValue);
+            },
+            updateImageState: function (value) {
+
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === "red") {
+                    estadoImagen.setValue("img/f_rojo_n1.png");
+                } else if (value === "orange") {
+                    estadoImagen.setValue("img/f_naranja_n1.png");
+                } else if (value === "yellow") {
+                    estadoImagen.setValue("img/f_amarillo_n1.png");
+                } else if (value === "green") {
+                    estadoImagen.setValue("img/f_verde_n1.png");
+                } else if (value === "lightblue") {
+                    estadoImagen.setValue("img/f_celeste_n1.png");
+                } else if (value === "blue") {
+                    estadoImagen.setValue("img/f_azul_n1.png");
+                } else if (value === "purple") {
+                    estadoImagen.setValue("img/f_morado_n1.png");
+                }
+                else {
+                    estadoImagen.setValue("img/f_blanco_n1.png");
+                }
+            }
+        };
+
+
+        Blockly.Blocks['foco_par_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("yellow", this.handleTextInputChange.bind(this)), "COLOR")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "COLOR";
+                this.customFieldValue = "yellow";
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState("yellow");
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "COLOR";
+                tecladoFoco.style.display = "block";
+                slider.value = this.getFieldValue("COLOR");
+                inputColor1.value = this.getFieldValue("COLOR");
+                inputColor1.dispatchEvent(new Event('input'));
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(inputColor1.value);
+            },
+            handleTextInputChange: function (newValue) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(newValue);
+            },
+            updateImageState: function (value) {
+
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === "red") {
+                    estadoImagen.setValue("img/rojoP.png");
+                } else if (value === "orange") {
+                    estadoImagen.setValue("img/naranjaP.png");
+                } else if (value === "yellow") {
+                    estadoImagen.setValue("img/amarilloP.png");
+                } else if (value === "green") {
+                    estadoImagen.setValue("img/verdeP.png");
+                } else if (value === "lightblue") {
+                    estadoImagen.setValue("img/celesteP.png");
+                } else if (value === "blue") {
+                    estadoImagen.setValue("img/azulP.png");
+                } else if (value === "purple") {
+                    estadoImagen.setValue("img/moradoP.png");
+                }
+                else {
+                    estadoImagen.setValue("img/blancoP.png");
+                }
+            }
+        };
+
+
+        Blockly.Blocks['audio_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("Fsos", this.handleTextInputChange.bind(this)), "AUDIO")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "AUDIO";
+                this.customFieldValue = "Fsos";
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState("Fsos");
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "AUDIO";
+                tecladoAudio.style.display = "block";
+                slider.value = this.getFieldValue("AUDIO");
+                inputAudio1.value = this.getFieldValue("AUDIO");
+                inputAudio1.dispatchEvent(new Event('input'));
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(inputAudio1.value);
+            },
+            handleTextInputChange: function (newValue) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(newValue);
+            },
+            updateImageState: function (value) {
+
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === "Csos") {
+                    estadoImagen.setValue("img/Csos.png");
+                } else if (value === "Dsos") {
+                    estadoImagen.setValue("img/Dsos.png");
+                } else if (value === "Fsos") {
+                    estadoImagen.setValue("img/Fsos.png");
+                } else if (value === "Gsos") {
+                    estadoImagen.setValue("img/Gsos.png");
+                } else if (value === "Asos") {
+                    estadoImagen.setValue("img/Asos.png");
+                } else if (value === "C") {
+                    estadoImagen.setValue("img/C.png");
+                } else if (value === "D") {
+                    estadoImagen.setValue("img/D.png");
+                } else if (value === "E") {
+                    estadoImagen.setValue("img/E.png");
+                } else if (value === "F") {
+                    estadoImagen.setValue("img/F.png");
+                } else if (value === "G") {
+                    estadoImagen.setValue("img/Gn.png");
+                } else if (value === "A") {
+                    estadoImagen.setValue("img/A.png");
+                }
+                else {
+                    estadoImagen.setValue("img/B.png");
+                }
+            }
+        };
+
+
+
+
+
+        Blockly.Blocks['repetir_n1'] = {
+            init: function () {
+                this.appendStatementInput("repetir_prueba")
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("10", this.handleTextInputChange.bind(this)), "VECES")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "VECES";
+                this.customFieldValue = 10;
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState(10);
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VECES";
+                tecladoRepetir.style.display = "block";
+                repSlider.value = this.getFieldValue("VECES");
+                repSliderValueSpan.value = this.getFieldValue("VECES");
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(repSliderValueSpan.value));
+            },
+            handleTextInputChange: function (newValue2) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue2);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(newValue2));
+            },
+            updateImageState: function (value) {
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === 0) {
+                    estadoImagen.setValue("img/repetir_0.png");
+                } else if (value === 1) {
+                    estadoImagen.setValue("img/repetir_1.png");
+                } else if (value === 2) {
+                    estadoImagen.setValue("img/repetir_2.png");
+                }
+                else if (value === 3) {
+                    estadoImagen.setValue("img/repetir_3.png");
+                }
+                else if (value === 4) {
+                    estadoImagen.setValue("img/repetir_4.png");
+                }
+                else if (value === 5) {
+                    estadoImagen.setValue("img/repetir_5.png");
+                }
+                else if (value === 6) {
+                    estadoImagen.setValue("img/repetir_6.png");
+                }
+                else if (value === 7) {
+                    estadoImagen.setValue("img/repetir_7.png");
+                }
+                else if (value === 8) {
+                    estadoImagen.setValue("img/repetir_8.png");
+                }
+                else if (value === 9) {
+                    estadoImagen.setValue("img/repetir_9.png");
+                }
+                else {
+                    estadoImagen.setValue("img/repetir_10.png");
+                }
+            }
+        };
+
+        Blockly.Blocks['girar_derecha_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("90", this.handleTextInputChange.bind(this)), "ANGULO")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ANGULO";
+                this.customFieldValue = 90;
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState(20);
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ANGULO";
+                tecladoAngulo.style.display = "block";
+                slider_angulo.value = this.getFieldValue("ANGULO");
+                output_angulo.value = this.getFieldValue("ANGULO");
+
+                updateSliderValue();
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(output_angulo.value));
+            },
+            handleTextInputChange: function (newValue1) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue1);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(newValue1));
+            },
+            updateImageState: function (value) {
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value < 0) {
+                    estadoImagen.setValue("giro_izquierda.png");
+                } else if (value === 0) {
+                    estadoImagen.setValue("detener.png");
+                } else {
+                    estadoImagen.setValue("giro_derecha.png");
+                }
+            }
+        };
+
+
+
+
+        Blockly.Blocks['girar_derecha'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("girar derecha")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
+                    .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO")
+                    .appendField("grados");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(160);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ANGULO";
+                this.customFieldValue = 90;
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ANGULO";
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("ANGULO"); // Establece el valor del FieldNumber en el teclado numérico
+                console.log("el valor es: " + inputNuevo.value);
+            }
+        };
+
+
+
+        Blockly.Blocks['girar_izquierda_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("-90", this.handleTextInputChange.bind(this)), "ANGULO")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ANGULO";
+                this.customFieldValue = -90;
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState(-20);
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ANGULO";
+                tecladoAngulo.style.display = "block";
+                slider_angulo.value = this.getFieldValue("ANGULO");
+                output_angulo.value = this.getFieldValue("ANGULO");
+
+                updateSliderValue();
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(output_angulo.value));
+            },
+            handleTextInputChange: function (newValue1) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue1);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(newValue1));
+            },
+            updateImageState: function (value) {
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value < 0) {
+                    estadoImagen.setValue("giro_izquierda.png");
+                } else if (value === 0) {
+                    estadoImagen.setValue("detener.png");
+                } else {
+                    estadoImagen.setValue("giro_derecha.png");
+                }
+            }
+        };
+
+
+
+
+
+        Blockly.Blocks['girar_izquierda'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("girar izquierda")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
+                    .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO_IZQUIERDA") // Cambié el nombre del campo
+                    .appendField("grados");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(160);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ANGULO_IZQUIERDA"; // Cambié el nombre de la propiedad
+                this.customFieldValue = 90;
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ANGULO_IZQUIERDA"; // Cambié el nombre del campo
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("ANGULO_IZQUIERDA"); // Cambié el nombre del campo
+                console.log("el valor es: " + inputNuevo.value);
+            }
+        };
+
+
+
+        //https://blockly-demo.appspot.com/static/demos/blockfactory/index.html?hl=es-419#wsr9e6
+        Blockly.Blocks['repetir'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("repetir")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
+                    .appendField(new Blockly.FieldNumber(0, 0, 10, 1), "VECES")
+                    .appendField("veces");
+                this.appendStatementInput("repetir")
+                    .setCheck(null);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "VECES";
+                this.customFieldValue = 0;
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VECES";
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("VECES"); // Establece el valor del FieldNumber en el teclado numérico
+                console.log("el valor es: " + inputNuevo.value);
+            }
+        };
+
+
+
+        Blockly.Blocks['prender_luz'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("Prender luz")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["Blanco", "blanco"],
+                        ["Rojo", "rojo"],
+                        ["Azul", "azul"],
+                        ["Amarillo", "amarillo"],
+                        ["Verde", "verde"]
+                    ]), "COLOR");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("Cambiar el color de la luz");
+                this.setHelpUrl("");
+            }
+        };
+
+
+
+
+        var MusicMaker = {
+            // Esta función añade el sonido a la cola para reproducir.
+            queueSound: function (soundFile) {
+                // Aquí puedes implementar la lógica para reproducir el sonido.
+                // Puedes utilizar la etiqueta de audio de HTML para reproducir el sonido.
+                // A continuación, se proporciona un ejemplo básico utilizando la etiqueta de audio.
+
+                // Crear un elemento de audio.
+                var audio = new Audio('sounds/' + soundFile);
+
+                // Reproducir el sonido.
+                audio.play();
+            }
+        };
+
+        Blockly.Blocks['audio'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("reproducir tono")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["C4", "c4.m4a"],
+                        ["D4", "d4.m4a"],
+                        ["E4", "e4.m4a"],
+                        ["F4", "f4.m4a"],
+                        ["G4", "g4.m4a"]
+                    ]), "AUDIO");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("Cambiar el sonido");
+                this.setHelpUrl("");
+            }
+        };
+
+        Blockly.Blocks['rotulador_n2'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField(new Blockly.FieldDropdown([
+                        ["bajar", "True"],
+                        ["subir", "False"]
+                    ]), "ESTADO_ROTU")
+                    .appendField("rotulador");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("Cambiar el sonido");
+                this.setHelpUrl("");
+            }
+        };
+
+        // Definir el generador de código en Blockly
+        Blockly.JavaScript['audio'] = function (block) {
+            var soundFile = block.getFieldValue('AUDIO');
+            var code = 'MusicMaker.queueSound("' + soundFile + '");\n';
+            return code;
+        };
+
+
+        Blockly.JavaScript['audio_n1'] = function (block) {
+            var soundFile = block.getFieldValue('AUDIO');
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            return code;
+        };
+
+
+    </script>
+
+<script>
+
+        // Generador de codigo
+
+        Blockly.JavaScript['avanzar'] = function (block) {
+            const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
+            var code = 'movePlayer(' + customStepSize + ');';
+            return code;
+        };
+
+
+        Blockly.JavaScript['foco_n2'] = function (block) {
+            const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
+            const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
+            const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
+            const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
+
+            // Llamar a la función encenderLuzRGB con los tres parámetros
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
+
+            return code;
+        };
+
+
+
+
+
+        Blockly.JavaScript['avanzar_n1'] = function (block) {
+            const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
+            var code = 'movePlayer(' + customStepSize + ');';
+            return code;
+        };
+
+        // Blockly.JavaScript['girar_derecha'] = function (block) {
+        //     var code = 'rotateRight();';
+        //     return code;
+        // };
+
+        Blockly.JavaScript['girar_derecha_n1'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO'));
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+
+        Blockly.JavaScript['girar_izquierda_n1'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO'));
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['girar_derecha'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO'));
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+        // Blockly.JavaScript['girar_izquierda'] = function (block) {
+        //     var code = 'rotateLeft();';
+        //     return code;
+        // };
+
+        Blockly.JavaScript['girar_izquierda'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO_IZQUIERDA')); // Cambié el nombre del campo
+            var code = 'rotateLeft(' + angle + ');';
+            return code;
+        };
+
+
+        Blockly.JavaScript['repetir'] = function (block) {
+            var repetitions = parseInt(block.getFieldValue('VECES'));
+            var code = '';
+            for (var i = 0; i < repetitions; i++) {
+                code += Blockly.JavaScript.statementToCode(block, 'repetir');
+            }
+            return code;
+        };
+
+        Blockly.JavaScript['repetir_n1'] = function (block) {
+            var repetitions = parseInt(block.getFieldValue('VECES'));
+            var code = '';
+            for (var i = 0; i < repetitions; i++) {
+                code += Blockly.JavaScript.statementToCode(block, 'repetir_prueba');
+            }
+            return code;
+        };
+
+
+        Blockly.JavaScript['prender_luz'] = function (block) {
+            var color = block.getFieldValue('COLOR');
+            var code = 'cambiarColor("' + color + '");\n'; // Llama a la función para cambiar el color
+            return code;
+        };
+
+        Blockly.JavaScript['foco_n1'] = function (block) {
+            var color = block.getFieldValue('COLOR');
+            var code = 'cambiarColor("' + color + '");\n'; // Llama a la función para cambiar el color
+            return code;
+        };
+
+
+
+        Blockly.JavaScript['foco_par_n1'] = function (block) {
+            var color = block.getFieldValue('COLOR');
+            var code = 'parpadear("' + color + '");\n'; // Llama a la función para cambiar el color
+            return code;
+        };
+
+        Blockly.JavaScript['apagar_luz_n1'] = function (block) {
+            var color = block.getFieldValue('ESTADO_LUZ');
+            var code = 'apagarParpadeo();'; // Llama a la función para cambiar el color
+            return code;
+        };
+
+
+        Blockly.JavaScript['bajar_rotulador_n1'] = function (block) {
+            var rotulador_esta = block.getFieldValue('ESTADO_ROTU');
+            var code = 'estado_rotulador(' + rotulador_esta + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['subir_rotulador_n1'] = function (block) {
+            var rotulador_esta = block.getFieldValue('ESTADO_ROTU');
+            var code = 'estado_rotulador(' + rotulador_esta + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['rotulador_n2'] = function (block) {
+            var rotulador_esta_str = block.getFieldValue('ESTADO_ROTU');
+            var rotulador_esta_bool = rotulador_esta_str === "True"; // Convierte la cadena a un booleano
+            var code = 'estado_rotulador(' + rotulador_esta_bool + ');\n';
+            return code;
+        };
+    </script>
+
+
+<!-- Dibujo de el objeto  -->
+<script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        // Objeto que vamos a controlar
+        const player = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            rotation: 0
+        };
+
+        let playerPositions = [];
+        let currentTrajectory = []; // Nuevo arreglo para la trayectoria actual
+        let previousTrajectories = [];
+        const trajectoryPoints = [];
+
+        const maxSteps = 30; // Número de pasos para completar la animación
+
+        // Ángulo de giro
+        const rotationAngle = Math.PI / 60; // 3 grados en radianes
+        const maxRotations = 30; // Número de rotaciones para completar la animación
+
+        let steps = 0; // Contador de pasos para la animación de movimiento
+        let rotations = 0; // Contador de rotaciones para la animación de giros
+        let animationFrame; // Variable para almacenar el identificador del fotograma de animación
+
+        let drawTrajectoryActive = false;
+
+        function estado_rotulador(rotulador_value) {
+            drawTrajectoryActive = rotulador_value;
+        }
+
+        function movePlayer(customStepSize) {
+            if (steps < maxSteps) {
+                const dx = (customStepSize / maxSteps) * Math.cos(player.rotation);
+                const dy = (customStepSize / maxSteps) * Math.sin(player.rotation);
+
+                player.x += dx;
+                player.y += dy;
+
+                playerPositions.push({ x: player.x, y: player.y });
+
+                if (drawTrajectoryActive) {
+                    currentTrajectory.push({ x: player.x, y: player.y });
+                    drawTrajectory();
+                }
+
+                drawPlayer();
+                steps++;
+
+                animationFrame = requestAnimationFrame(movePlayer.bind(null, customStepSize));
+            } else {
+                steps = 0;
+
+                // Solo almacenar la trayectoria actual si drawTrajectoryActive es true
+                if (drawTrajectoryActive) {
+                    previousTrajectories.push(currentTrajectory.slice());
+                    currentTrajectory = []; // Limpiar la trayectoria actual
+                    // drawTrajectory();
+                }
+
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+
+        function drawTrajectory() {
+            ctx.strokeStyle = 'rgba(0, 0, 0, 1)';
+            ctx.beginPath();
+
+            // Dibujar trayectorias anteriores
+            for (let i = 0; i < previousTrajectories.length; i++) {
+                const points = previousTrajectories[i];
+                if (points.length > 1) {
+                    ctx.moveTo(points[0].x, points[0].y);
+                    for (let j = 1; j < points.length; j++) {
+                        ctx.lineTo(points[j].x, points[j].y);
+                    }
+                }
+            }
+
+            // Dibujar la trayectoria actual solo si drawTrajectoryActive es true
+            if (drawTrajectoryActive && currentTrajectory.length > 1) {
+                ctx.moveTo(currentTrajectory[0].x, currentTrajectory[0].y);
+                for (let i = 1; i < currentTrajectory.length; i++) {
+                    ctx.lineTo(currentTrajectory[i].x, currentTrajectory[i].y);
+                }
+            }
+
+            ctx.stroke();
+        }
+
+        function rotateRight(angle) {
+            const targetRotation = player.rotation + (angle * Math.PI) / 180; // Convierte grados a radianes
+            rotateStep(targetRotation);
+            // trajectoryPoints.push({ x: player.x, y: player.y });
+        }
+
+        function rotateLeft(angle) {
+            const targetRotation = player.rotation - (angle * Math.PI) / 180; // Convierte grados a radianes
+            rotateStep(targetRotation);
+            // trajectoryPoints.push({ x: player.x, y: player.y });
+        }
+
+        function rotateStep(targetRotation) {
+            const rotationSpeed = 0.05;
+
+            if (Math.abs(player.rotation - targetRotation) > rotationSpeed) {
+                if (player.rotation < targetRotation) {
+                    player.rotation += rotationSpeed;
+                } else {
+                    player.rotation -= rotationSpeed;
+                }
+
+                drawPlayer();
+
+                if (drawTrajectoryActive) {
+                    trajectoryPoints.push({ x: player.x, y: player.y });
+                    drawTrajectory();
+                }
+
+                animationFrame = requestAnimationFrame(function () {
+                    rotateStep(targetRotation);
+                });
+            } else {
+                player.rotation = targetRotation;
+                drawPlayer();
+
+                if (drawTrajectoryActive) {
+                    trajectoryPoints.push({ x: player.x, y: player.y });
+                    drawTrajectory();
+                }
+
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+
+
+
+
+
+        function cambiarColor(color) {
+            switch (color) {
+                case 'white':
+                    luzPrendida = 'white';
+                    break;
+                case 'red':
+                    luzPrendida = 'red';
+                    break;
+                case 'orange':
+                    luzPrendida = 'orange';
+                    break;
+                case 'blue':
+                    luzPrendida = 'blue';
+                    break;
+                case 'yellow':
+                    luzPrendida = 'yellow';
+                    break;
+                case 'green':
+                    luzPrendida = 'green';
+                    break;
+                case 'lightblue':
+                    luzPrendida = 'lightblue';
+                    break;
+                case 'purple':
+                    luzPrendida = 'purple';
+                    break;
+                default:
+                    luzPrendida = 'white'; // Color por defecto
+            }
+
+            drawPlayer();
+        }
+
+        function encenderLuzRGB(red, green, blue, estado) {
+            // Validar que los valores estén en el rango correcto (0-255)
+            red = Math.max(0, Math.min(255, red));
+            green = Math.max(0, Math.min(255, green));
+            blue = Math.max(0, Math.min(255, blue));
+
+            // Crear el color en formato RGB
+            const color = `rgb(${red}, ${green}, ${blue})`;
+
+            // Establecer el color y redibujar el jugador según el estado
+            switch (estado) {
+                case 'encendidas':
+                    luzPrendida = color;
+                    drawPlayer();
+                    break;
+                case 'parpadeando':
+                    parpadear(color);
+                    break;
+                case 'apagadas':
+                    apagarParpadeo();
+                    break;
+                default:
+                    console.log('Estado no reconocido');
+            }
+        }
+
+
+
+        /*Funcion para parpadear luz*/
+        let parpadeoInterval;
+        function parpadear(color) {
+            clearInterval(parpadeoInterval); // Limpiar cualquier intervalo existente
+
+            // Iniciar el parpadeo con un intervalo de 500 milisegundos (ajusta según sea necesario)
+            parpadeoInterval = setInterval(function () {
+                if (luzPrendida === 'white') {
+                    luzPrendida = color; // Encender
+                } else {
+                    luzPrendida = 'white'; // Apagar
+                }
+
+                drawPlayer();
+            }, 50); // Intervalo de parpadeo (en milisegundos)
+        }
+
+        /*Funcion para apagar luz*/
+        function apagarParpadeo() {
+            clearInterval(parpadeoInterval); // Detener el parpadeo
+            luzPrendida = 'white'; // Restablecer al color original (puedes ajustar esto según sea necesario)
+            drawPlayer(); // Redibujar el jugador con el color original
+        }
+
+        let luzPrendida = 'white';
+
+        function drawPlayer() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (drawTrajectoryActive) {
+                drawTrajectory();
+            }
+
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.rotate(player.rotation);
+
+            // Dibuja la imagen del jugador
+            const playerImage = document.getElementById('playerImage');
+            ctx.drawImage(playerImage, -15, -15, 30, 30);
+
+            // Dibuja un círculo cuyo color depende del estado de la luz
+            ctx.fillStyle = luzPrendida;
+            ctx.beginPath();
+            ctx.arc(9, 0, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Dibuja el jugador inicialmente
+        drawPlayer();
+    </script>
+
+<script>
+
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        canvas.addEventListener('touchstart', function (e) {
+            const touch = e.touches[0];
+            const touchX = touch.clientX - canvas.getBoundingClientRect().left;
+            const touchY = touch.clientY - canvas.getBoundingClientRect().top;
+
+            if (touchX >= player.x - 15 && touchX <= player.x + 15 && touchY >= player.y - 15 && touchY <= player.y + 15) {
+                isDragging = true;
+                offsetX = player.x - touchX;
+                offsetY = player.y - touchY;
+            }
+        });
+
+        canvas.addEventListener('touchmove', function (e) {
+            if (isDragging) {
+                const touch = e.touches[0];
+                const touchX = touch.clientX - canvas.getBoundingClientRect().left;
+                const touchY = touch.clientY - canvas.getBoundingClientRect().top;
+
+                player.x = touchX + offsetX;
+                player.y = touchY + offsetY;
+                drawPlayer();
+            }
+        });
+
+        canvas.addEventListener('touchend', function () {
+            isDragging = false; 0
+        });
+
+
+        // ... (el resto de tu código JavaScript) ...
+    </script>
+
+<!-- Reajustando las dimenciones de canvas -->
+
+<!-- Ejecutar el codigo generado -->
+
+<script>
+        function runCode() {
+            // Genera el código JavaScript a partir de los bloques
+            window.LoopTrap = 1000;
+            javascript.javascriptGenerator.INFINITE_LOOP_TRAP =
+                'if (--window.LoopTrap < 0) throw "Infinite loop.";\n';
+            var code = javascript.javascriptGenerator.workspaceToCode(workspace);
+            javascript.javascriptGenerator.INFINITE_LOOP_TRAP = null;
+
+            // Divide el código en bloques individuales
+            var codeBlocks = code.split(';').filter(Boolean);
+
+
+            // Función para ejecutar los bloques secuencialmente
+            function executeBlock(index) {
+                if (index < codeBlocks.length) {
+                    try {
+                        eval(codeBlocks[index]);
+                    } catch (e) {
+                        alert(e);
+                    }
+                    setTimeout(function () {
+                        executeBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                    }, 1000); // Ajusta el tiempo de espera (en milisegundos) entre bloques si es necesario
+                }
+            }
+            // Inicia la ejecución con el primer bloque
+            executeBlock(0);
+        }
+    </script>
+</body>
+
+</html>

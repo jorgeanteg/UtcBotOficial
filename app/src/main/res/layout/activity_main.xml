@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- Encabezado con botones, logo y menú hamburguesa -->
+    <RelativeLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="1dp">
+
+        <!-- Botones a la esquina superior izquierda -->
+        <ImageButton
+            android:id="@+id/btn1"
+            android:layout_width="65dp"
+            android:layout_height="48dp"
+            android:src="@drawable/icono1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"/>
+
+        <ImageButton
+            android:id="@+id/btn2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/icono2"
+            android:layout_toEndOf="@id/btn1"
+            android:layout_alignParentTop="true"/>
+
+        <ImageButton
+            android:id="@+id/btn3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/icono3"
+            android:layout_toEndOf="@id/btn2"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Logo en el centro -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/robot"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <!-- Título "Mis Proyectos" -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mis Proyectos"
+        android:textSize="20sp"
+        android:layout_below="@id/headerLayout"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+
+
+
+    <!-- Tarjetas con scroll horizontal -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:id="@+id/cardsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>
