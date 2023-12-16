@@ -109,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Obtén una referencia al contenedor de tarjetas
+        LinearLayout cardsContainer = findViewById(R.id.cardsContainer);
 
+        // Llama a la función para mostrar las tarjetas desde la base de datos
+        mostrarTarjetasDesdeDB(cardsContainer);
     }
 }
 

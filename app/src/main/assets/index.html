@@ -527,13 +527,10 @@
         <canvas id="gameCanvas" width="200" height="280"></canvas>
         <img id="playerImage" src="irobot.png" style="display: none;">
     </div>
-    <div>
-        <h2>Nombre del Proyecto: <span id="proyectoNombre"></span></h2>
-        <p>Contenido del Proyecto: <span id="proyectoContenido"></span></p>
-    </div>
+
 </div>
 <button class="floating-play" onclick="runCode()">Play</button>
-<button class="floating-guardar" onclick="cargarDatos()">Guardar</button>
+<button class="floating-guardar" onclick="guardarDatos()">Guardar</button>
 
 
 <a href="#" class="floating-button" id="toggle-button">Botón</a>
@@ -1099,21 +1096,42 @@ Fin teclado Repetir -->
             // Parsear el JSON
             var datos = JSON.parse(datosJSON);
 
+
+
+
+
             // Mostrar los datos en la página
-            document.getElementById('proyectoNombre').innerHTML = '<strong>Nombre:</strong> ' + datos.nombre;
-            document.getElementById('proyectoContenido').innerHTML = '<strong>Contenido:</strong> ' + datos.contenido;
+            //document.getElementById('proyectoNombre').innerHTML = '<strong>Nombre:</strong> ' + datos.nombre;
+
+            // Escape del contenido XML antes de incrustarlo en HTML
+            //var contenidoEscapado = escapeHTML(datos.contenido);
+            //document.getElementById('proyectoContenido').innerHTML = '<strong>Contenido:</strong> ' + contenidoEscapado;
+
+            //Para cargar de nuevo los bloque en el el espacio de trabajo desde la base de datos
+            var bloques = datos.contenido;
+            try {
+                var xml = Blockly.utils.xml.textToDom(bloques);
+                Blockly.Xml.domToWorkspace(xml, workspace);
+                workspace.scrollCenter();
+
+            } catch (e) {
+                console.error('Error al cargar bloques desde XML:', e);
+            }
         }
 
+        // Función para escapar contenido HTML
+        function escapeHTML(html) {
+            var text = document.createTextNode(html);
+            var p = document.createElement('p');
+            p.appendChild(text);
+            return p.innerHTML;        }
 
 
-</script>
 
-
-
-    <script>
-        // Función para cambiar la orientación a horizontal
-        function forceLandscapeOrientation() {
-            if (window.orientation !== 90 && window.orientation !== -90) {
+</script>__
+_       // Función para cambiar la orientación a horizontal
+_        function forceLandscapeOrientation() {-1:
+>:           if (window.orientation !== 90 && window.orientation !== -90) {
                 // Cambia la orientación a horizontal
                 screen.orientation.lock("landscape").then(function success() {
                     console.log("La orientación se cambió a horizontal");
@@ -1138,6 +1156,7 @@ Fin teclado Repetir -->
             workspace.addChangeListener(function (event) {
                 saveBlocks();
             });
+
         };
 
         // Function to save blocks to localStorage
@@ -1168,7 +1187,7 @@ Fin teclado Repetir -->
         });
     </script>
 
-<script>
+    <script>
         document.getElementById('toggle-button').addEventListener('click', function () {
             onresize(); // Redimensiona blocklyDiv
 
@@ -1201,11 +1220,18 @@ Fin teclado Repetir -->
             drawPlayer();
         }
 
-        // Llama a la función para ajustar el tamaño del canvas cuando se carga la página
-        window.onload = adjustCanvasSize;
+        function onPageLoad() {
+            adjustCanvasSize();
+            cargarDatos();
+            // Agrega llamadas a otras funciones según sea necesario
+        }
 
-        // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
-        window.addEventListener('resize', adjustCanvasSize);
+    // Llama a la nueva función para ajustar el tamaño del canvas y otras funciones
+    window.onload = onPageLoad;
+
+
+    // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
+    window.addEventListener('resize', adjustCanvasSize);
     </script>
 <script>
 
