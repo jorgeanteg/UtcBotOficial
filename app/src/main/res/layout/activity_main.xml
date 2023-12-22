@@ -38,12 +38,18 @@
             android:layout_alignParentTop="true"/>
 
         <!-- Logo en el centro -->
-        <ImageView
-            android:id="@+id/logo"
+        <!--<ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/robot"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"/> -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Irobot UTC"
+            android:textSize="25sp" />
 
     </RelativeLayout>
 
@@ -67,6 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvTitle"
         android:layout_marginTop="8dp">
+        
 
         <LinearLayout
             android:id="@+id/cardsContainer"

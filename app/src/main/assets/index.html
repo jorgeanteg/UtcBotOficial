@@ -18,6 +18,7 @@
     <script src="javascript.js"></script>
 
 
+
     <style>
         html,
         body {
@@ -103,20 +104,32 @@
         .floating-play {
             position: fixed;
             bottom: 200px;
-            left: 20px;
-            background-color: #007BFF;
-            color: #f10e0e;
+            left: 10px;
+            background-color: transparent;
             border: none;
-            border-radius: 30%;
-            width: 50px;
-            height: 50px;
+            border-radius: 20px 20px 20px 20px;
+            width: 35px;
+            height: 60px;
             text-align: center;
             font-size: 18px;
-            line-height: 50px;
+            line-height: 60px;
             text-decoration: none;
             cursor: pointer;
+            border: 2px solid #383838;
             z-index: 999;
+
+            /* Añadí estilos de flexbox para centrar la imagen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
+        .floating-play img {
+            width: 25px;
+            height: auto;
+        }
+
+
         .floating-guardar {
             position: fixed;
             bottom: 100px;
@@ -232,7 +245,8 @@
         #cerrarModal3,
         #cerrarModal4,
         #cerrarModal5,
-        #cerrarModal6 {
+        #cerrarModal6,
+        #cerrarModal7 {
             border-radius: 50%;
             padding: 5px 10px;
             box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.3);
@@ -412,6 +426,57 @@
 
         /* Fin teclado repetir */
 
+
+        /* Teclado esperar */
+        .esp-modal_slider {
+            display: flex;
+            justify-content: center;
+            height: 100px;
+            margin: 0;
+        }
+
+        .esp-slider-container {
+            text-align: center;
+            position: relative;
+        }
+
+        #esp-image-container {
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        #esp-slider-value-span {
+            margin-top: -2px;
+            position: absolute;
+            width: 15px;
+            top: 50%;
+            left: 42%;
+            transform: translate(100%, -30%);
+            font-size: 20px;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .rep-slider-value p {
+            margin-top: -2px;
+            position: absolute;
+            width: 15px;
+            top: 50%;
+            left: 42%;
+            transform: translate(90%, 50%);
+            font-size: 17px;
+            z-index: 1;
+        }
+
+        #esp-slider-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Fin teclado esperar */
+
         /* Inicio teclado prender luz */
         .image-container {
             text-align: center;
@@ -477,41 +542,173 @@
             text-align: center;
         }
 
-        .audio-box {
-            width: 30px;
-            height: 30px;
-            margin: 5px;
-            border: 2px solid #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* Alinea el contenido horizontalmente */
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        .image-container img {
+            width: 40px;
+            height: 40px !important;
         }
-
-        .letter {
-            font-size: 16px;
-            /* Ajusta el tamaño de la letra según sea necesario */
-        }
-
 
         .audio-box.selected2 {
-            transform: scale(1.2);
-            border-color: #000;
+            background-color: #67aef1 !important;
             /* Cambiar el color del borde cuando está seleccionado */
         }
 
+
         .row_audio {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .audio-container {
+            display: flex;
+            position: relative;
+        }
+
+        .audio-box {
+            width: 36px;
+            height: 100px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .audio-box.sostenido {
+            position: absolute;
+            width: 26px;
+            height: 50px;
+            background-color: #000;
+            color: #fff;
+            z-index: 1;
+        }
+
+        .Csos,
+        .Dsos,
+        .Fsos,
+        .Gsos,
+        .Asos {
+            margin-left: 22px;
+        }
+
+        .letter {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* botones flotantes para ir atras, guardar y bloutoo*/
+        .floating-container {
+            position: fixed;
+            top: 1px;
+            /* Cambiado a la esquina superior */
+            left: 1px;
+            /* Cambiado a la esquina superior */
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 0px 8px 8px 0px;
+            padding: 2px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+        }
+
+        .floating-container a,
+        .floating-container input {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .floating-container a:last-child {
+            margin-right: 0;
+        }
+
+        /* Fin  botones flotantes para ir atras, guardar y bloutoo*/
+
+
+        /* Estilos para el modal */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        #modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 2px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #modal-content label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #modal-content input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        #modal-content div {
             display: flex;
             justify-content: center;
         }
 
+        #modal-content p {
+            margin-top: 4px;
+            margin-bottom: 10px;
+            color: #818080;
+            font-weight: 500;
 
-        /* Fin teclado Audio */
+        }
+
+        #modal-content button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            font-weight: 400;
+            width: 110px;
+        }
+
+        #modal-content #guardar-btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        #modal-content #editar-btn {
+            background-color: #0fc5e6;
+            color: #fff;
+            display: none;
+        }
+
+        #modal-content #cancelar-btn {
+            background-color: #FFA500;
+            color: #fff;
+        }
     </style>
 </head>
+
 
 <body>
 <div class="container">
@@ -527,10 +724,39 @@
         <canvas id="gameCanvas" width="200" height="280"></canvas>
         <img id="playerImage" src="irobot.png" style="display: none;">
     </div>
-
 </div>
-<button class="floating-play" onclick="runCode()">Play</button>
-<button class="floating-guardar" onclick="guardarDatos()">Guardar</button>
+
+<button class="floating-play" onclick="playActivarSimulador()">
+    <img src="img/play.png" alt="">
+</button>
+
+<div class="floating-container">
+    <a href="javascript:regresarAPantallaInicial2()">
+        <img src="img/atras.png" alt="atras">
+    </a>
+    <input type="text" value="Nuevo Proyecto" id="nombre_proyecto" onclick="abrirModalGuardar();" readonly>
+    <a href="">
+        <img src="img/bluetooth.png" alt="Otro">
+    </a>
+</div>
+
+
+<!-- Contenido del modal -->
+<div id="modal-overlay">
+    <div id="modal-content">
+        <label>Nombre del proyecto</label>
+        <input type="text" id="nombre_nuevo_proyecto" value="hola" oninput="actualizarNombreProyecto(this.value)">
+        <input type="text" name="miInput" id="miInput" hidden>
+        <p id="mensajeConfirmación"></p>
+
+        <div>
+            <button id="guardar-btn" onclick="guardarDatos()">GUARDAR</button>
+            <button id="editar-btn" onclick="editarDatos()">GUARDAR</button>
+            <button id="cancelar-btn" onclick="cancelarModal()">CANCELAR</button>
+        </div>
+    </div>
+</div>
+
 
 
 <a href="#" class="floating-button" id="toggle-button">Botón</a>
@@ -802,6 +1028,60 @@
 <!--
 Fin teclado Repetir -->
 
+<!-- Inicio teclado Esperar -->
+
+<div id="tecladoEsperar" class="modal">
+    <div class="esp-modal_slider">
+        <div class="esp-slider-container">
+            <div id="esp-image-container">
+                <img src="img/esperar.png" alt="Imagen" id="esp-slider-image">
+                <div class="rep-slider-value" id="rep-slider-value">
+                    <input class="numero_slider" type="number" id="esp-slider-value-span" value="5">
+                    <p>s</p>
+                </div>
+            </div>
+            <input type="range" id="esp-custom-slider" min="0" max="5" value="5" step="1" />
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal7">x</button>
+    </div>
+</div>
+
+<script>
+        const espSlider = document.getElementById('esp-custom-slider');
+        const espSliderValueSpan = document.getElementById('esp-slider-value-span');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tecladoEsperar = document.getElementById("tecladoEsperar");
+
+            espSlider.addEventListener('input', function () {
+                espSliderValueSpan.value = espSlider.value;
+
+                if (selectedBlock && selectedBlockFieldName) {
+                    const newValue2 = parseFloat(espSlider.value);
+
+                    console.log("Esperar provando: " + newValue2)
+                    if (!isNaN(newValue2)) {
+                        selectedBlock.setFieldValue(newValue2, selectedBlockFieldName);
+                    } else {
+                        console.log("Error")
+                    }
+                }
+            });
+        });
+
+
+        document.querySelector("#cerrarModal7").addEventListener("click", () => {
+            tecladoEsperar.style.display = "none";
+
+        });
+    </script>
+
+<!--Fin teclado Esperar -->
+
 <!-- Inicio teclado prender_luz -->
 
 <div id="tecladoFoco" class="modal">
@@ -923,21 +1203,34 @@ Fin teclado Repetir -->
         <img src="img/nota-musical.png" alt="Imagen" width="55" height="55">
     </div>
     <div class="row_audio">
-        <div class="audio-box Csos" onclick="selectAudio('Csos')"><span class="letter">C#</span></div>
-        <div class="audio-box Dsos" onclick="selectAudio('Dsos')"><span class="letter">D#</span></div>
-        <div class="audio-box Fsos" onclick="selectAudio('Fsos')"><span class="letter">F#</span></div>
-        <div class="audio-box Gsos" onclick="selectAudio('Gsos')"><span class="letter">G#</span></div>
-        <div class="audio-box Asos" onclick="selectAudio('Asos')"><span class="letter">A#</span></div>
+        <div class="audio-container">
+            <div class="audio-box C" onclick="selectAudio('C')"><span class="letter">C</span></div>
+            <div class="audio-box Csos sostenido" onclick="selectAudio('Csos')"><span class="letter">C#</span></div>
+        </div>
+        <div class="audio-container">
+            <div class="audio-box D" onclick="selectAudio('D')"><span class="letter">D</span></div>
+            <div class="audio-box Dsos sostenido" onclick="selectAudio('Dsos')"><span class="letter">D#</span></div>
+        </div>
+        <div class="audio-container">
+            <div class="audio-box E" onclick="selectAudio('E')"><span class="letter">E</span></div>
+        </div>
+        <div class="audio-container">
+            <div class="audio-box F" onclick="selectAudio('F')"><span class="letter">F</span></div>
+            <div class="audio-box Fsos sostenido" onclick="selectAudio('Fsos')"><span class="letter">F#</span></div>
+        </div>
+        <div class="audio-container">
+            <div class="audio-box G" onclick="selectAudio('G')"><span class="letter">G</span></div>
+            <div class="audio-box Gsos sostenido" onclick="selectAudio('Gsos')"><span class="letter">G#</span></div>
+        </div>
+        <div class="audio-container">
+            <div class="audio-box A" onclick="selectAudio('A')"><span class="letter">A</span></div>
+            <div class="audio-box Asos sostenido" onclick="selectAudio('Asos')"><span class="letter">A#</span></div>
+        </div>
+        <div class="audio-container">
+            <div class="audio-box B" onclick="selectAudio('B')"><span class="letter">B</span></div>
+        </div>
     </div>
-    <div class="row_audio">
-        <div class="audio-box C" onclick="selectAudio('C')"><span class="letter">C</span></div>
-        <div class="audio-box D" onclick="selectAudio('D')"><span class="letter">D</span></div>
-        <div class="audio-box E" onclick="selectAudio('E')"><span class="letter">E</span></div>
-        <div class="audio-box F" onclick="selectAudio('F')"><span class="letter">F</span></div>
-        <div class="audio-box G" onclick="selectAudio('G')"><span class="letter">G</span></div>
-        <div class="audio-box A" onclick="selectAudio('A')"><span class="letter">A</span></div>
-        <div class="audio-box B" onclick="selectAudio('B')"><span class="letter">B</span></div>
-    </div>
+
 
     <div>
         <label for="audioInput">Ingrese el color: </label>
@@ -1050,6 +1343,9 @@ Fin teclado Repetir -->
         <block type="foco_par_n1"></block>
         <block type="bajar_rotulador_n1"></block>
         <block type="subir_rotulador_n1"></block>
+        <block type="esperar_n1"></block>
+
+
 
     </category>
     <category name="Nivel 2">
@@ -1061,10 +1357,8 @@ Fin teclado Repetir -->
         <block type="prender_luz"></block>
         <block type="audio"></block>
         <block type="rotulador_n2"></block>
-
-
-
     </category>
+
     <category name="Nivel 3">
         <block type="avanzar"></block>
         <block type="girar_derecha"></block>
@@ -1077,61 +1371,125 @@ Fin teclado Repetir -->
 
 <script>
 
-    function guardarDatos() {
-        var xml = Blockly.Xml.workspaceToDom(workspace);
-        contenido = Blockly.Xml.domToPrettyText(xml);
 
-        var nombre = "Proyecto 1";
-        Android.insertarDatos(nombre, contenido); // Accede a la variable global
-    }
 
-    workspace.addChangeListener(function (event) {
-        guardarDatos();
-    });
+        var idProyecto;
+        var nombre;
+        var verificarGuardarEditar;
 
-    function cargarDatos() {
+        function cargarDatos() {
             // Llamada al método obtenerDatos en la interfaz Android
             var datosJSON = Android.obtenerDatos();
 
             // Parsear el JSON
             var datos = JSON.parse(datosJSON);
 
+            idProyecto = datos.id;
 
+            nombre = datos.nombre;
 
+            // Obtener el elemento párrafo por su ID
+            var parrafo = document.getElementById("mensajeConfirmación");
 
+            // Verificar si el nombre está definido
+            if (nombre === undefined) {
+                nombre = "Nuevo Proyecto";
+                document.getElementById('editar-btn').style.display = 'none';
+                // Cambiar el texto del párrafo
+                parrafo.innerHTML = "¿Desea guardar el Proyecto?";
+                document.getElementById('miInput').value = "Guardar";
 
-            // Mostrar los datos en la página
-            //document.getElementById('proyectoNombre').innerHTML = '<strong>Nombre:</strong> ' + datos.nombre;
+            } else {
+                document.getElementById('guardar-btn').style.display = 'none';
+                document.getElementById('editar-btn').style.display = 'inline';
 
-            // Escape del contenido XML antes de incrustarlo en HTML
-            //var contenidoEscapado = escapeHTML(datos.contenido);
-            //document.getElementById('proyectoContenido').innerHTML = '<strong>Contenido:</strong> ' + contenidoEscapado;
+                parrafo.innerHTML = "¿Desea guardar los cambios?";
+                document.getElementById('miInput').value = "Editar";
+            }
 
-            //Para cargar de nuevo los bloque en el el espacio de trabajo desde la base de datos
+            document.getElementById('nombre_proyecto').value = nombre;
+
+            //Para cargar de nuevo los bloque en el espacio de trabajo desde la base de datos
             var bloques = datos.contenido;
             try {
                 var xml = Blockly.utils.xml.textToDom(bloques);
                 Blockly.Xml.domToWorkspace(xml, workspace);
                 workspace.scrollCenter();
-
             } catch (e) {
                 console.error('Error al cargar bloques desde XML:', e);
             }
+
+
         }
 
-        // Función para escapar contenido HTML
-        function escapeHTML(html) {
-            var text = document.createTextNode(html);
-            var p = document.createElement('p');
-            p.appendChild(text);
-            return p.innerHTML;        }
+
+        function regresarAPantallaInicial() {
+            Android.regresarAPantallaInicial();
+        }
 
 
 
-</script>__
-_       // Función para cambiar la orientación a horizontal
-_        function forceLandscapeOrientation() {-1:
->:           if (window.orientation !== 90 && window.orientation !== -90) {
+        function regresarAPantallaInicial2() {
+            verificarGuardarEditar = document.getElementById('miInput').value;
+
+            if (verificarGuardarEditar === "Editar") {
+                editarDatos();
+            } else {
+                guardarDatos();
+            }
+        }
+
+
+        function abrirModalGuardar() {
+            document.getElementById('nombre_nuevo_proyecto').value = document.getElementById('nombre_proyecto').value;
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function cancelarModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+
+        }
+
+        function actualizarNombreProyecto(valor) {
+            document.getElementById('nombre_proyecto').value = valor;
+
+        }
+
+        function guardarDatos() {
+            var nombre = document.getElementById('nombre_proyecto').value;
+
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            contenido = Blockly.Xml.domToPrettyText(xml);
+
+            Android.insertarDatos(nombre, contenido); // Accede a la variable global
+
+            regresarAPantallaInicial();
+        }
+
+        workspace.addChangeListener(function (event) {
+            guardarDatos();
+        });
+
+
+        function editarDatos() {
+            var nombre = document.getElementById('nombre_proyecto').value;
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            contenido = Blockly.Xml.domToPrettyText(xml);
+
+            // Si estamos editando, llama a la función de edición
+            Android.editarDatos(idProyecto, nombre, contenido);
+            // Cierra el modal
+            cancelarModal();
+            regresarAPantallaInicial();
+        }
+
+    </script>
+
+
+<script>
+        // Función para cambiar la orientación a horizontal
+        function forceLandscapeOrientation() {
+            if (window.orientation !== 90 && window.orientation !== -90) {
                 // Cambia la orientación a horizontal
                 screen.orientation.lock("landscape").then(function success() {
                     console.log("La orientación se cambió a horizontal");
@@ -1156,7 +1514,6 @@ _        function forceLandscapeOrientation() {-1:
             workspace.addChangeListener(function (event) {
                 saveBlocks();
             });
-
         };
 
         // Function to save blocks to localStorage
@@ -1187,19 +1544,46 @@ _        function forceLandscapeOrientation() {-1:
         });
     </script>
 
-    <script>
-        document.getElementById('toggle-button').addEventListener('click', function () {
-            onresize(); // Redimensiona blocklyDiv
 
+<script>
+
+
+        // Definir la función activarSimulador
+        function activarSimulador() {
+            onresize(); // Redimensiona blocklyDiv
             adjustCanvasSize();
             document.querySelector('.container').classList.toggle('active'); // Activa/desactiva el segundo div
 
             // Asegúrate de redimensionar nuevamente después de que se active el segundo div
             setTimeout(function () {
                 onresize();
-                adjustCanvasSize()
+                adjustCanvasSize();
             }, 500); // 500ms es un tiempo aproximado para que el segundo div se active completamente
-        });
+        }
+
+        // Agregar un event listener al botón para ejecutar activarSimulador al hacer clic
+        document.getElementById('toggle-button').addEventListener('click', activarSimulador);
+
+
+        //Funcion para activar el simulador y ejecutar el codigo
+        function playActivarSimulador() {
+            var miDiv = document.querySelector('.container');
+
+            // Verifica si el div tiene la clase "active"
+            if (miDiv.classList.contains('active')) {
+                runCode();
+                console.log('El div tiene la clase "active"');
+            } else {
+                activarSimulador();
+                setTimeout(function () {
+                    runCode();
+                    console.log('El div NO tiene la clase "active"');
+                }, 1500);
+            }
+
+        }
+
+
     </script>
 
 <script>
@@ -1226,12 +1610,12 @@ _        function forceLandscapeOrientation() {-1:
             // Agrega llamadas a otras funciones según sea necesario
         }
 
-    // Llama a la nueva función para ajustar el tamaño del canvas y otras funciones
-    window.onload = onPageLoad;
+        // Llama a la nueva función para ajustar el tamaño del canvas y otras funciones
+        window.onload = onPageLoad;
 
 
-    // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
-    window.addEventListener('resize', adjustCanvasSize);
+        // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
+        window.addEventListener('resize', adjustCanvasSize);
     </script>
 <script>
 
@@ -1295,7 +1679,7 @@ _        function forceLandscapeOrientation() {-1:
             horizontalLayout: true,
             toolboxPosition: 'end',
             css: true,
-            media: 'https://blockly-demo.appspot.com/static/media/',
+            media: 'media',
             rtl: false,
             scrollbars: true,
             sounds: true,
@@ -1338,25 +1722,25 @@ _        function forceLandscapeOrientation() {-1:
     </script>
 
 <!-- <script>
-    function toXml() {
-        var xml = Blockly.Xml.workspaceToDom(workspace);
-        var xmlText = Blockly.Xml.domToPrettyText(xml);
-        localStorage.setItem('savedBlocks', xmlText);
-    }
+function toXml() {
+var xml = Blockly.Xml.workspaceToDom(workspace);
+var xmlText = Blockly.Xml.domToPrettyText(xml);
+localStorage.setItem('savedBlocks', xmlText);
+}
 
-    // Cargar los bloques desde localStorage al cargar la página
-    window.onload = function () {
-        var savedWorkspace = localStorage.getItem('savedBlocks');
-        if (savedWorkspace) {
-            var xml = Blockly.utils.xml.textToDom(savedWorkspace);
-            Blockly.Xml.domToWorkspace(xml, workspace);
-            workspace.scrollCenter();
-        }
+// Cargar los bloques desde localStorage al cargar la página
+window.onload = function () {
+var savedWorkspace = localStorage.getItem('savedBlocks');
+if (savedWorkspace) {
+var xml = Blockly.utils.xml.textToDom(savedWorkspace);
+Blockly.Xml.domToWorkspace(xml, workspace);
+workspace.scrollCenter();
+}
 
-        workspace.addChangeListener(function (event) {
-            toXml();
-        });
-    };
+workspace.addChangeListener(function (event) {
+toXml();
+});
+};
 
 </script> -->
 <script>
@@ -1867,6 +2251,68 @@ _        function forceLandscapeOrientation() {-1:
                 }
             }
         };
+
+
+        Blockly.Blocks['esperar_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("5", this.handleTextInputChange.bind(this)), "ESPERAR")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ESPERAR";
+                this.customFieldValue = 5;
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState(10);
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ESPERAR";
+                tecladoEsperar.style.display = "block";
+                espSlider.value = this.getFieldValue("ESPERAR");
+                espSliderValueSpan.value = this.getFieldValue("ESPERAR");
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(espSliderValueSpan.value));
+            },
+            handleTextInputChange: function (newValue2) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Esperar: " + newValue2);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(newValue2));
+            },
+            updateImageState: function (value) {
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === 0) {
+                    estadoImagen.setValue("img/esperar0.png");
+                } else if (value === 1) {
+                    estadoImagen.setValue("img/esperar1.png");
+                } else if (value === 2) {
+                    estadoImagen.setValue("img/esperar2.png");
+                }
+                else if (value === 3) {
+                    estadoImagen.setValue("img/esperar3.png");
+                }
+                else if (value === 4) {
+                    estadoImagen.setValue("img/esperar4.png");
+                }
+                else {
+                    estadoImagen.setValue("img/esperar5.png");
+                }
+            }
+        };
+
 
         Blockly.Blocks['girar_derecha_n1'] = {
             init: function () {

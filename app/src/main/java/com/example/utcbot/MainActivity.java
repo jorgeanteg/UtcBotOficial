@@ -1,5 +1,6 @@
 package com.example.utcbot;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -7,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +29,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Codigo para poner la pantalla horizontal
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //codigo para ocultar la barra de estado del celular
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // Ocultar la barra de navegación y los botones de navegación
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+
 
         // Crear tarjetas dinámicamente y agregarlas al contenedor
         LinearLayout cardsContainer = findViewById(R.id.cardsContainer);
@@ -74,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     TextView projectName = cardView.findViewById(R.id.projectName);
 
                     // Establecer la imagen y el nombre del proyecto según los datos
-                    projectImage.setImageResource(R.drawable.icono1); // Cambia esto según tus necesidades
+                    projectImage.setImageResource(R.drawable.proyecto); // Cambia esto según tus necesidades
                     projectName.setText(nombre);
 
                     cardView.setOnClickListener(new View.OnClickListener() {
@@ -82,11 +95,63 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             // Lanzar la nueva actividad cuando se hace clic en la tarjeta
                             Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                            intent.putExtra("id", id);
                             intent.putExtra("nombre", nombre);
                             intent.putExtra("contenido", contenido);
                             startActivity(intent);
                         }
                     });
+
+                    // Fuera del método onLongClick en MainActivity
+                    final AlertDialog[] alertDialog = {null};
+
+                    // Dentro del método onLongClick en MainActivity
+                    cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            // Crear un cuadro de diálogo personalizado
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            View dialogView = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_dialog, null);
+                            builder.setView(dialogView);
+
+                            // Obtener referencias a los elementos en el cuadro de diálogo personalizado
+                            TextView dialogMessage = dialogView.findViewById(R.id.dialog_message);
+                            Button btnEliminar = dialogView.findViewById(R.id.btnEliminar);
+                            Button btnCancelar = dialogView.findViewById(R.id.btnCancelar);
+
+                            // Configurar el mensaje del cuadro de diálogo
+                            dialogMessage.setText("¿Estás seguro de eliminar este proyecto?");
+
+                            // Configurar los botones del cuadro de diálogo
+                            btnEliminar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Eliminar la tarjeta de la base de datos
+                                    eliminarTarjeta(id);
+                                    // Cerrar el cuadro de diálogo
+                                    alertDialog[0].dismiss();
+                                }
+                            });
+
+                            btnCancelar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // No hacer nada si se selecciona Cancelar
+                                    // Cerrar el cuadro de diálogo
+                                    alertDialog[0].dismiss();
+                                }
+                            });
+
+                            // Asignar el cuadro de diálogo creado al array alertDialog
+                            alertDialog[0] = builder.create();
+
+                            // Mostrar el cuadro de diálogo
+                            alertDialog[0].show();
+
+                            return true;
+                        }
+                    });
+
 
                     cardsContainer.addView(cardView);
                 } else {
@@ -115,5 +180,27 @@ public class MainActivity extends AppCompatActivity {
         // Llama a la función para mostrar las tarjetas desde la base de datos
         mostrarTarjetasDesdeDB(cardsContainer);
     }
+
+    private void eliminarTarjeta(int id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        int rowsAffected = db.delete(
+                DatabaseHelper.TABLE_NAME,
+                DatabaseHelper.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)}
+        );
+
+        if (rowsAffected > 0) {
+            Toast.makeText(this, "Tarjeta eliminada correctamente", Toast.LENGTH_SHORT).show();
+            // Actualizar la vista después de eliminar la tarjeta
+            LinearLayout cardsContainer = findViewById(R.id.cardsContainer);
+            mostrarTarjetasDesdeDB(cardsContainer);
+        } else {
+            Toast.makeText(this, "Error al eliminar tarjeta", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
+    }
+
 }
 
