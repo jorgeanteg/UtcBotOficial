@@ -448,22 +448,22 @@
         #esp-slider-value-span {
             margin-top: -2px;
             position: absolute;
-            width: 15px;
+            width: 22px;
             top: 50%;
             left: 42%;
-            transform: translate(100%, -30%);
+            transform: translate(10%, -30%);
             font-size: 20px;
             font-weight: 600;
             z-index: 1;
         }
 
-        .rep-slider-value p {
+        .esp-slider-value p {
             margin-top: -2px;
             position: absolute;
             width: 15px;
             top: 50%;
             left: 42%;
-            transform: translate(90%, 50%);
+            transform: translate(20%, 50%);
             font-size: 17px;
             z-index: 1;
         }
@@ -1035,12 +1035,12 @@ Fin teclado Repetir -->
         <div class="esp-slider-container">
             <div id="esp-image-container">
                 <img src="img/esperar.png" alt="Imagen" id="esp-slider-image">
-                <div class="rep-slider-value" id="rep-slider-value">
-                    <input class="numero_slider" type="number" id="esp-slider-value-span" value="5">
+                <div class="esp-slider-value" id="esp-slider-value">
+                    <input class="numero_slider" type="number" id="esp-slider-value-span" value="10">
                     <p>s</p>
                 </div>
             </div>
-            <input type="range" id="esp-custom-slider" min="0" max="5" value="5" step="1" />
+            <input type="range" id="esp-custom-slider" min="0" max="10" value="10" step="1" />
             <br>
             <br>
         </div>
@@ -1357,13 +1357,17 @@ Fin teclado Repetir -->
         <block type="prender_luz"></block>
         <block type="audio"></block>
         <block type="rotulador_n2"></block>
+        <block type="esperar_n2"></block>
+
+
     </category>
 
     <category name="Nivel 3">
-        <block type="avanzar"></block>
-        <block type="girar_derecha"></block>
-        <block type="girar_izquierda"></block>
-        <block type="repetir"></block>
+        <block type="play_n3"></block>
+        <block type="avanzar_n3"></block>
+        <block type="girar_izquierda_n3"></block>
+        <block type="girar_derecha_n3"></block>
+        <block type="repetir_n3"></block>
         <block type="prender_luz"></block>
     </category>
 
@@ -1776,6 +1780,36 @@ toXml();
             }
 
         };
+
+
+        Blockly.Blocks['esperar_n2'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("esperar")
+                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
+                    .appendField(new Blockly.FieldNumber(10, 0, 100, 1), "ESPERAR")
+                    .appendField("seg");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.customFieldName = "ESPERAR";
+                this.customFieldValue = 10;
+            },
+
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ESPERAR";
+                tecladoNumerico.style.display = "block";
+                inputNuevo.value = this.getFieldValue("ESPERAR"); // Establece el valor del FieldNumber en el teclado numérico
+                console.log("el valor es: " + inputNuevo.value);
+            }
+
+        };
+
+
 
         Blockly.Blocks['foco_n2'] = {
             init: function () {
@@ -2260,7 +2294,7 @@ toXml();
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField(new Blockly.FieldTextInput("5", this.handleTextInputChange.bind(this)), "ESPERAR")
+                    .appendField(new Blockly.FieldTextInput("10", this.handleTextInputChange.bind(this)), "ESPERAR")
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -2268,7 +2302,7 @@ toXml();
                 this.setTooltip("");
                 this.setHelpUrl("");
                 this.customFieldName = "ESPERAR";
-                this.customFieldValue = 5;
+                this.customFieldValue = 10;
 
                 // Configuramos el estado inicial de la imagen del bloque
                 this.updateImageState(10);
@@ -2307,8 +2341,23 @@ toXml();
                 else if (value === 4) {
                     estadoImagen.setValue("img/esperar4.png");
                 }
-                else {
+                else if (value === 5) {
                     estadoImagen.setValue("img/esperar5.png");
+                }
+                else if (value === 6) {
+                    estadoImagen.setValue("img/esperar6.png");
+                }
+                else if (value === 7) {
+                    estadoImagen.setValue("img/esperar7.png");
+                }
+                else if (value === 8) {
+                    estadoImagen.setValue("img/esperar8.png");
+                }
+                else if (value === 9) {
+                    estadoImagen.setValue("img/esperar9.png");
+                }
+                else {
+                    estadoImagen.setValue("img/esperar10.png");
                 }
             }
         };
@@ -2480,6 +2529,7 @@ toXml();
 
 
         //https://blockly-demo.appspot.com/static/demos/blockfactory/index.html?hl=es-419#wsr9e6
+
         Blockly.Blocks['repetir'] = {
             init: function () {
                 this.appendDummyInput()
@@ -2506,6 +2556,176 @@ toXml();
                 console.log("el valor es: " + inputNuevo.value);
             }
         };
+
+        Blockly.Blocks['play_n3'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("def al_presionar_play( ):")
+                this.appendStatementInput("repetir")
+                    .setCheck(null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+            }
+        };
+
+
+        Blockly.Blocks['avanzar_n3'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("avanzar(")
+                    .appendField(new Blockly.FieldNumber(0, -100, 100, 1), "DISTANCIA")
+                    .appendField(")");
+                this.setInputsInline(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "DISTANCIA";
+                this.customFieldValue = 5;
+
+                // Utiliza onMouseDown para manejar el clic en el FieldNumber
+                this.getField("DISTANCIA").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+            },
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "DISTANCIA";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("DISTANCIA");
+                console.log("El valor es: " + inputNuevo.value);
+            }
+        };
+
+
+        Blockly.Blocks['girar_izquierda_n3'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("girar_izquierda(")
+                    .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO")
+                    .appendField(")");
+                this.setInputsInline(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ANGULO";
+                this.customFieldValue = 5;
+
+                // Utiliza onMouseDown para manejar el clic en el FieldNumber
+                this.getField("ANGULO").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+            },
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ANGULO";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ANGULO");
+                console.log("El valor es: " + inputNuevo.value);
+            }
+        };
+
+
+        Blockly.Blocks['girar_derecha_n3'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("girar_derecha(")
+                    .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO")
+                    .appendField(")");
+                this.setInputsInline(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ANGULO";
+                this.customFieldValue = 5;
+
+                // Utiliza onMouseDown para manejar el clic en el FieldNumber
+                this.getField("ANGULO").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+            },
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ANGULO";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ANGULO");
+                console.log("El valor es: " + inputNuevo.value);
+            }
+        };
+
+
+        Blockly.Blocks['repetir_n3'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("for i in range(")
+                    .appendField(new Blockly.FieldNumber(50, 10, 100, 1), "VECES")
+                    .appendField(")");
+                this.appendStatementInput("repetir")
+                    .setCheck(null);
+                this.setInputsInline(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "VECES";
+                this.customFieldValue = 10;
+
+                // Utiliza onMouseDown para manejar el clic en el FieldNumber
+                this.getField("VECES").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+            },
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VECES";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("VECES");
+                console.log("El valor es: " + inputNuevo.value);
+            }
+        };
+
+
+
+
 
 
 
@@ -2607,6 +2827,14 @@ toXml();
             var code = 'movePlayer(' + customStepSize + ');';
             return code;
         };
+
+        Blockly.JavaScript['avanzar_n3'] = function (block) {
+            const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
+            var code = 'movePlayer(' + customStepSize + ');';
+            return code;
+        };
+
+
 
 
         Blockly.JavaScript['foco_n2'] = function (block) {
@@ -2729,6 +2957,19 @@ toXml();
             var rotulador_esta_str = block.getFieldValue('ESTADO_ROTU');
             var rotulador_esta_bool = rotulador_esta_str === "True"; // Convierte la cadena a un booleano
             var code = 'estado_rotulador(' + rotulador_esta_bool + ');\n';
+            return code;
+        };
+
+
+        Blockly.JavaScript['esperar_n1'] = function (block) {
+            const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
+            var code = 'esperar(' + tiempoEspera + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['esperar_n2'] = function (block) {
+            const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
+            var code = 'esperar(' + tiempoEspera + ');';
             return code;
         };
     </script>
@@ -2987,6 +3228,9 @@ toXml();
 
         // Dibuja el jugador inicialmente
         drawPlayer();
+
+
+
     </script>
 
 <script>
@@ -3044,21 +3288,52 @@ toXml();
 
 
             // Función para ejecutar los bloques secuencialmente
+
             function executeBlock(index) {
                 if (index < codeBlocks.length) {
                     try {
-                        eval(codeBlocks[index]);
+                        if (codeBlocks[index].includes("rotateRight")) {
+                            var angle = parseInt(codeBlocks[index].match(/\d+/)[0]);
+                            // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                            var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                            if (angle > 140 && angle <= 240) {
+                                tiempoEsperaAntes = 1000;
+                            } else if (angle > 240) {
+                                tiempoEsperaAntes = 1000;
+                            }
+
+                            // Establece el tiempo de espera antes de ejecutar el bloque
+                            setTimeout(function () {
+                                eval(codeBlocks[index]);
+                                // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                setTimeout(function () {
+                                    executeBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                }, tiempoEsperaDespues);
+                            }, tiempoEsperaAntes);
+                        } else if (codeBlocks[index].includes("esperar(")) {
+                            // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                            var tiempoEspera = parseFloat(codeBlocks[index].match(/\d+/)[0]);
+                            tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
+                            setTimeout(function () {
+                                executeBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                            }, tiempoEspera);
+                        } else {
+                            eval(codeBlocks[index]);
+                            setTimeout(function () {
+                                executeBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                            }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                        }
                     } catch (e) {
                         alert(e);
                     }
-                    setTimeout(function () {
-                        executeBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                    }, 1000); // Ajusta el tiempo de espera (en milisegundos) entre bloques si es necesario
                 }
             }
+
             // Inicia la ejecución con el primer bloque
             executeBlock(0);
         }
+
     </script>
 </body>
 
