@@ -1354,7 +1354,6 @@ Fin teclado Repetir -->
         <block type="girar_derecha"></block>
         <block type="girar_izquierda"></block>
         <block type="repetir"></block>
-        <block type="prender_luz"></block>
         <block type="audio"></block>
         <block type="rotulador_n2"></block>
         <block type="esperar_n2"></block>
@@ -1368,7 +1367,10 @@ Fin teclado Repetir -->
         <block type="girar_izquierda_n3"></block>
         <block type="girar_derecha_n3"></block>
         <block type="repetir_n3"></block>
-        <block type="prender_luz"></block>
+        <block type="foco_n3"></block>
+        <block type="audio_n3"></block>
+        <block type="rotulador_n3"></block>
+
     </category>
 
 </xml>
@@ -1872,26 +1874,6 @@ toXml();
         };
 
 
-
-
-        Blockly.Blocks['prender_luz'] = {
-            init: function () {
-                this.appendDummyInput()
-                    .appendField("Prender luz")
-                    .appendField(new Blockly.FieldDropdown([
-                        ["Blanco", "blanco"],
-                        ["Rojo", "rojo"],
-                        ["Azul", "azul"],
-                        ["Amarillo", "amarillo"],
-                        ["Verde", "verde"]
-                    ]), "COLOR");
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("Cambiar el color de la luz");
-                this.setHelpUrl("");
-            }
-        };
 
 
         Blockly.Blocks['apagar_luz_n1'] = {
@@ -2723,30 +2705,130 @@ toXml();
             }
         };
 
-
-
-
-
-
-
-        Blockly.Blocks['prender_luz'] = {
+        Blockly.Blocks['foco_n3'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
-                    .appendField("Prender luz")
+                    .appendField("luces (")
                     .appendField(new Blockly.FieldDropdown([
-                        ["Blanco", "blanco"],
-                        ["Rojo", "rojo"],
-                        ["Azul", "azul"],
-                        ["Amarillo", "amarillo"],
-                        ["Verde", "verde"]
-                    ]), "COLOR");
+                        ["apagadas", "apagadas"],
+                        ["encendidas", "encendidas"],
+                        ["parpadeando", "parpadeando"]
+                    ]), "ESTADO_FOCO")
+
+                    .appendField(",")
+                    .appendField("(")
+                    .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
+                    .appendField(",")
+                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "VERDE")
+                    .appendField(",")
+                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "AZUL")
+                    .appendField("))");
+
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setColour(230);
-                this.setTooltip("Cambiar el color de la luz");
+                this.setTooltip("");
+                this.customFieldName = "ROJO";
+                this.customFieldValue = 50;
+                this.customFieldName = "VERDE";
+                this.customFieldValue = 50;
+                this.customFieldName = "AZUL";
+                this.customFieldValue = 50;
+
+                // Utiliza onMouseDown para manejar el clic en el FieldNumber
+                this.getField("ROJO").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+                this.getField("VERDE").onMouseDown_ = function (e) {
+                    block.handleInputClick2();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+                this.getField("AZUL").onMouseDown_ = function (e) {
+                    block.handleInputClick3();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+            },
+
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ROJO";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ROJO");
+                console.log("El valor es: " + inputNuevo.value);
+            },
+            handleInputClick2: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VERDE";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("VERDE");
+                console.log("El valor es: " + inputNuevo.value);
+            },
+            handleInputClick3: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "AZUL";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("AZUL");
+                console.log("El valor es: " + inputNuevo.value);
+            },
+
+        };
+
+
+        Blockly.Blocks['audio_n3'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("tono(")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["C4", "c4.m4a"],
+                        ["D4", "d4.m4a"],
+                        ["E4", "e4.m4a"],
+                        ["F4", "f4.m4a"],
+                        ["G4", "g4.m4a"]
+                    ]), "AUDIO")
+                    .appendField(")");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("Cambiar el sonido");
                 this.setHelpUrl("");
             }
         };
+
+        Blockly.Blocks['rotulador_n3'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("rotulador(")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["True", "True"],
+                        ["False", "False"]
+                    ]), "ESTADO_ROTU")
+                    .appendField(")");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(230);
+                this.setTooltip("Cambiar el sonido");
+                this.setHelpUrl("");
+            }
+        };
+
+
 
 
 
@@ -2914,11 +2996,7 @@ toXml();
         };
 
 
-        Blockly.JavaScript['prender_luz'] = function (block) {
-            var color = block.getFieldValue('COLOR');
-            var code = 'cambiarColor("' + color + '");\n'; // Llama a la función para cambiar el color
-            return code;
-        };
+
 
         Blockly.JavaScript['foco_n1'] = function (block) {
             var color = block.getFieldValue('COLOR');
