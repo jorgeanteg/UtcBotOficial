@@ -1761,10 +1761,10 @@ toXml();
         //  Bloques
         Blockly.Blocks['avanzar'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("avanzar")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
                     .appendField(new Blockly.FieldNumber(50, -10, 100, 1), "DISTANCIA")
                     .appendField("cm");
                 this.setPreviousStatement(true, null);
@@ -1773,26 +1773,34 @@ toXml();
                 this.setTooltip("");
                 this.customFieldName = "DISTANCIA";
                 this.customFieldValue = 50;
-            },
 
-            handleImageClick: function () {
+                this.getField("DISTANCIA").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+            },
+            handleInputClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "DISTANCIA";
-                tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("DISTANCIA"); // Establece el valor del FieldNumber en el teclado numérico
-                console.log("el valor es: " + inputNuevo.value);
-            }
 
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("DISTANCIA");
+                console.log("El valor es: " + inputNuevo.value);
+            }
         };
+
 
 
         Blockly.Blocks['esperar_n2'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("esperar")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
                     .appendField(new Blockly.FieldNumber(10, 0, 100, 1), "ESPERAR")
                     .appendField("seg");
                 this.setPreviousStatement(true, null);
@@ -1801,23 +1809,33 @@ toXml();
                 this.setTooltip("");
                 this.customFieldName = "ESPERAR";
                 this.customFieldValue = 10;
-            },
 
-            handleImageClick: function () {
+                this.getField("ESPERAR").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+            },
+            handleInputClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ESPERAR";
+
+                // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("ESPERAR"); // Establece el valor del FieldNumber en el teclado numérico
-                console.log("el valor es: " + inputNuevo.value);
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ESPERAR");
+                console.log("El valor es: " + inputNuevo.value);
             }
 
         };
 
 
 
+
         Blockly.Blocks['foco_n2'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .appendField("luces")
                     .appendField(new Blockly.FieldDropdown([
@@ -1828,13 +1846,10 @@ toXml();
 
                     .appendField("en color:")
                     .appendField("rojo")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
                     .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
                     .appendField("  verde")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick2.bind(this)))
                     .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "VERDE")
                     .appendField("  azul")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick3.bind(this)))
                     .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "AZUL");
 
                 this.setPreviousStatement(true, null);
@@ -1847,31 +1862,58 @@ toXml();
                 this.customFieldValue = 50;
                 this.customFieldName = "AZUL";
                 this.customFieldValue = 50;
+
+                this.getField("ROJO").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+
+                this.getField("VERDE").onMouseDown_ = function (e) {
+                    block.handleInputClick2();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+
+                this.getField("AZUL").onMouseDown_ = function (e) {
+                    block.handleInputClick3();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
             },
 
-            handleImageClick: function () {
+            handleInputClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ROJO";
+
+                // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("ROJO"); // Establece el valor del FieldNumber en el teclado numérico
-                console.log("el valor es: " + inputNuevo.value);
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ROJO");
+                console.log("El valor rojo es: " + inputNuevo.value);
             },
-            handleImageClick2: function () {
+            handleInputClick2: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "VERDE";
+
+                // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("VERDE"); // Establece el valor del FieldNumber en el teclado numérico
-                console.log("el valor es: " + inputNuevo.value);
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("VERDE");
+                console.log("El valor verde es: " + inputNuevo.value);
             },
-            handleImageClick3: function () {
+            handleInputClick3: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "AZUL";
+
+                // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("AZUL"); // Establece el valor del FieldNumber en el teclado numérico
-                console.log("el valor es: " + inputNuevo.value);
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("AZUL");
+                console.log("El valor azul es: " + inputNuevo.value);
             }
 
         };
@@ -2402,12 +2444,11 @@ toXml();
 
 
 
-
         Blockly.Blocks['girar_derecha'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .appendField("girar derecha")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
                     .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO")
                     .appendField("grados");
                 this.setPreviousStatement(true, null);
@@ -2417,14 +2458,23 @@ toXml();
                 this.setHelpUrl("");
                 this.customFieldName = "ANGULO";
                 this.customFieldValue = 90;
+
+                this.getField("ANGULO").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
             },
-            handleImageClick: function () {
+            handleInputClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ANGULO";
+
+                // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("ANGULO"); // Establece el valor del FieldNumber en el teclado numérico
-                console.log("el valor es: " + inputNuevo.value);
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ANGULO");
+                console.log("El valor es: " + inputNuevo.value);
             }
         };
 
@@ -2485,12 +2535,11 @@ toXml();
 
 
 
-
         Blockly.Blocks['girar_izquierda'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .appendField("girar izquierda")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
                     .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO_IZQUIERDA") // Cambié el nombre del campo
                     .appendField("grados");
                 this.setPreviousStatement(true, null);
@@ -2500,14 +2549,23 @@ toXml();
                 this.setHelpUrl("");
                 this.customFieldName = "ANGULO_IZQUIERDA"; // Cambié el nombre de la propiedad
                 this.customFieldValue = 90;
+
+                this.getField("ANGULO_IZQUIERDA").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
             },
-            handleImageClick: function () {
+            handleInputClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
-                selectedBlockFieldName = "ANGULO_IZQUIERDA"; // Cambié el nombre del campo
+                selectedBlockFieldName = "ANGULO_IZQUIERDA";
+
+                // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("ANGULO_IZQUIERDA"); // Cambié el nombre del campo
-                console.log("el valor es: " + inputNuevo.value);
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ANGULO_IZQUIERDA");
+                console.log("El valor es: " + inputNuevo.value);
             }
         };
 
@@ -2515,11 +2573,13 @@ toXml();
 
         //https://blockly-demo.appspot.com/static/demos/blockfactory/index.html?hl=es-419#wsr9e6
 
+
+
         Blockly.Blocks['repetir'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .appendField("repetir")
-                    .appendField(new Blockly.FieldImage("img/editar.png", 23, 23, "*", this.handleImageClick.bind(this)))
                     .appendField(new Blockly.FieldNumber(0, 0, 10, 1), "VECES")
                     .appendField("veces");
                 this.appendStatementInput("repetir")
@@ -2531,14 +2591,23 @@ toXml();
                 this.setHelpUrl("");
                 this.customFieldName = "VECES";
                 this.customFieldValue = 0;
+
+                this.getField("VECES").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
             },
-            handleImageClick: function () {
+            handleInputClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "VECES";
+
+                // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
-                inputNuevo.value = this.getFieldValue("VECES"); // Establece el valor del FieldNumber en el teclado numérico
-                console.log("el valor es: " + inputNuevo.value);
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("VECES");
+                console.log("El valor es: " + inputNuevo.value);
             }
         };
 
