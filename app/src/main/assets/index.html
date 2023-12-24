@@ -18,7 +18,6 @@
     <script src="javascript.js"></script>
 
 
-
     <style>
         html,
         body {
@@ -58,14 +57,51 @@
         }
 
         .container .second-div {
+            position: relative;
             width: 0;
             background-color: rgb(224, 211, 224);
             transition: width 0.5s;
             overflow: hidden;
         }
 
+
+        .zoom {
+            position: absolute;
+            bottom: 10px;
+            /* Ajusta el margen inferior según sea necesario */
+            left: 10px;
+            /* Ajusta el margen izquierdo según sea necesario */
+            z-index: 1;
+            border: 2px solid #adadad;
+            /* Borde gris */
+            border-radius: 10px;
+            /* Esquinas redondeadas */
+            overflow: hidden;
+            /* Asegura que el contenido no sobresalga de las esquinas redondeadas */
+        }
+
+        .zoom button {
+            padding: 5px;
+            /* Ajusta el relleno de los botones según sea necesario */
+            font-size: 14px;
+            /* Ajusta el tamaño de la fuente según sea necesario */
+            border: none;
+            /* Elimina el borde del botón si lo deseas */
+            background: none;
+            /* Elimina el fondo del botón si lo deseas */
+            cursor: pointer;
+            /* Cambia el cursor a una mano al pasar sobre el botón */
+        }
+
+        .zoom button img {
+            width: 25px;
+            height: 25px;
+        }
+
         .container.active .second-div {
             width: 45%;
+            height: 94% !important;
+            margin: 10px;
         }
 
 
@@ -74,6 +110,7 @@
             padding: 0;
             margin: 0;
         }
+
 
         /* Boton flotante */
 
@@ -706,6 +743,22 @@
             background-color: #FFA500;
             color: #fff;
         }
+
+
+        #canvasContainer {
+            text-align: center;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        #gameCanvas {
+
+            transition: transform 0.5s ease;
+        }
     </style>
 </head>
 
@@ -721,10 +774,60 @@
         </table>
     </div>
     <div class="second-div" id="canvasContainer">
-        <canvas id="gameCanvas" width="200" height="280"></canvas>
+        <canvas id="gameCanvas" width="1000" height="1000"></canvas>
         <img id="playerImage" src="irobot.png" style="display: none;">
+        <div class="zoom">
+            <button onclick="zoomIn()"><img src="img/mas.png" alt=""></button>
+            <button onclick="zoomOut()"><img src="img/menos.png" alt=""></button>
+            <button onclick="resetPositionAndZoom()"><img src="img/recargar.png" alt=""></button>
+        </div>
     </div>
+
 </div>
+
+<script>
+        // ... Tu código JavaScript existente ...
+
+        function zoomIn() {
+            const scaleFactor = 1.1; // Ajusta este valor para el aumento de zoom deseado
+            lastScale *= scaleFactor;
+            applyZoom();
+        }
+
+        function zoomOut() {
+            const scaleFactor = 0.9; // Ajusta este valor para la disminución de zoom deseada
+            lastScale *= scaleFactor;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            // Limita el valor mínimo y máximo de escala
+            const minScale = 0.1;
+            const maxScale = 3.0;
+            lastScale = Math.max(minScale, Math.min(maxScale, lastScale));
+
+            // Aplica el zoom al canvas
+            canvas.style.transform = `scale(${lastScale})`;
+        }
+
+        function resetPositionAndZoom() {
+    // Restablece la posición inicial del objeto
+    player.x = canvas.width / 2;
+    player.y = canvas.height / 2;
+
+    // Restablece el zoom al valor original
+    canvas.style.transform = "scale(1)";
+    lastScale = 1;
+
+    // Limpia la trayectoria
+    previousTrajectories = [];
+    currentTrajectory = [];
+
+    // Dibuja el objeto en la nueva posición y limpia la trayectoria
+    drawPlayer();
+}
+
+    </script>
 
 <button class="floating-play" onclick="playActivarSimulador()">
     <img src="img/play.png" alt="">
@@ -1560,13 +1663,13 @@ Fin teclado Repetir -->
         // Definir la función activarSimulador
         function activarSimulador() {
             onresize(); // Redimensiona blocklyDiv
-            adjustCanvasSize();
+            // adjustCanvasSize();
             document.querySelector('.container').classList.toggle('active'); // Activa/desactiva el segundo div
 
             // Asegúrate de redimensionar nuevamente después de que se active el segundo div
             setTimeout(function () {
                 onresize();
-                adjustCanvasSize();
+                // adjustCanvasSize();
             }, 500); // 500ms es un tiempo aproximado para que el segundo div se active completamente
         }
 
@@ -1596,25 +1699,25 @@ Fin teclado Repetir -->
     </script>
 
 <script>
-        function adjustCanvasSize() {
-            // Obtén una referencia al contenedor del canvas
-            const canvasContainer = document.getElementById('canvasContainer');
-            const canvas2 = document.getElementById('gameCanvas');
+        // function adjustCanvasSize() {
+        //     // Obtén una referencia al contenedor del canvas
+        //     const canvasContainer = document.getElementById('canvasContainer');
+        //     const canvas2 = document.getElementById('gameCanvas');
 
-            // Calcula el ancho y alto del contenedor
-            const containerWidth = canvasContainer.clientWidth;
-            const containerHeight = canvasContainer.clientHeight;
+        //     // Calcula el ancho y alto del contenedor
+        //     const containerWidth = canvasContainer.clientWidth;
+        //     const containerHeight = canvasContainer.clientHeight;
 
-            // Asigna los valores calculados al canvas
-            canvas2.width = containerWidth;
-            canvas2.height = containerHeight;
+        //     // Asigna los valores calculados al canvas
+        //     canvas2.width = containerWidth;
+        //     canvas2.height = containerHeight;
 
-            // Asegúrate de volver a dibujar el jugador en las nuevas dimensiones
-            drawPlayer();
-        }
+        //     // Asegúrate de volver a dibujar el jugador en las nuevas dimensiones
+        //     drawPlayer();
+        // }
 
         function onPageLoad() {
-            adjustCanvasSize();
+            // adjustCanvasSize();
             cargarDatos();
             // Agrega llamadas a otras funciones según sea necesario
         }
@@ -1623,8 +1726,8 @@ Fin teclado Repetir -->
         window.onload = onPageLoad;
 
 
-        // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
-        window.addEventListener('resize', adjustCanvasSize);
+        // // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
+        // window.addEventListener('resize', adjustCanvasSize);
     </script>
 <script>
 
@@ -3213,6 +3316,7 @@ toXml();
 <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+
         // Objeto que vamos a controlar
         const player = {
             x: canvas.width / 2,
@@ -3449,7 +3553,8 @@ toXml();
 
             // Dibuja la imagen del jugador
             const playerImage = document.getElementById('playerImage');
-            ctx.drawImage(playerImage, -15, -15, 30, 30);
+            //Tamaño del robot
+            ctx.drawImage(playerImage, -25, -25, 50, 50);
 
             // Dibuja un círculo cuyo color depende del estado de la luz
             ctx.fillStyle = luzPrendida;
@@ -3464,44 +3569,94 @@ toXml();
         drawPlayer();
 
 
-
     </script>
 
 <script>
-
         let isDragging = false;
         let offsetX, offsetY;
+        let lastScale = 1;
+        let initialTouchDistance = 0;
 
-        canvas.addEventListener('touchstart', function (e) {
-            const touch = e.touches[0];
-            const touchX = touch.clientX - canvas.getBoundingClientRect().left;
-            const touchY = touch.clientY - canvas.getBoundingClientRect().top;
+        canvas.addEventListener("touchstart", function (e) {
+            const touches = e.touches;
 
-            if (touchX >= player.x - 15 && touchX <= player.x + 15 && touchY >= player.y - 15 && touchY <= player.y + 15) {
-                isDragging = true;
-                offsetX = player.x - touchX;
-                offsetY = player.y - touchY;
+            if (touches.length === 1) {
+                // Arrastre si solo hay un toque
+                const touch = touches[0];
+                const touchX = touch.clientX - canvas.getBoundingClientRect().left;
+                const touchY = touch.clientY - canvas.getBoundingClientRect().top;
+
+                if (
+                    touchX >= player.x - 15 &&
+                    touchX <= player.x + 15 &&
+                    touchY >= player.y - 15 &&
+                    touchY <= player.y + 15
+                ) {
+                    isDragging = true;
+                    offsetX = player.x - touchX;
+                    offsetY = player.y - touchY;
+                }
+            } else if (touches.length === 2) {
+                // Inicializa la distancia entre los dos toques para el pellizco
+                initialTouchDistance = getTouchDistance(touches);
             }
         });
 
-        canvas.addEventListener('touchmove', function (e) {
-            if (isDragging) {
-                const touch = e.touches[0];
+        canvas.addEventListener("touchmove", function (e) {
+            e.preventDefault();
+            const touches = e.touches;
+
+            if (isDragging && touches.length === 1) {
+                // Arrastre si solo hay un toque
+                const touch = touches[0];
                 const touchX = touch.clientX - canvas.getBoundingClientRect().left;
                 const touchY = touch.clientY - canvas.getBoundingClientRect().top;
 
                 player.x = touchX + offsetX;
                 player.y = touchY + offsetY;
                 drawPlayer();
+            } else if (touches.length === 2) {
+                // Zoom si hay dos toques
+                const currentTouchDistance = getTouchDistance(touches);
+                const scaleDelta = currentTouchDistance / initialTouchDistance;
+                initialTouchDistance = currentTouchDistance;
+
+                const scaleFactor = 0.01; // Ajusta este valor para mayor sensibilidad
+                const newScale = lastScale * scaleDelta;
+
+                // Limita el valor mínimo y máximo de escala
+                const minScale = 0.1;
+                const maxScale = 3.0;
+                lastScale = Math.max(minScale, Math.min(maxScale, newScale));
+
+                // Aplica el zoom al canvas
+                canvas.style.transform = `scale(${lastScale})`;
             }
         });
 
-        canvas.addEventListener('touchend', function () {
-            isDragging = false; 0
+        canvas.addEventListener("touchend", function () {
+            isDragging = false;
+            // Restablece la distancia inicial para pellizco
+            initialTouchDistance = 0;
+
+            // Almacena el zoom actual
+            lastScale = getComputedStyle(canvas).transform;
+            lastScale = new WebKitCSSMatrix(lastScale).a;
         });
 
+        // Restablece el zoom al hacer doble clic
+        canvas.addEventListener("dblclick", function () {
+            canvas.style.transform = "scale(1)";
+            lastScale = 1;
+        });
 
-        // ... (el resto de tu código JavaScript) ...
+        function getTouchDistance(touches) {
+            const dx = touches[0].clientX - touches[1].clientX;
+            const dy = touches[0].clientY - touches[1].clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+
     </script>
 
 <!-- Reajustando las dimenciones de canvas -->
