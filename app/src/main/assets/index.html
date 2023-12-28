@@ -152,7 +152,7 @@
             line-height: 60px;
             text-decoration: none;
             cursor: pointer;
-            border: 2px solid #383838;
+            border: 5px solid #383838;
             z-index: 999;
 
             /* Añadí estilos de flexbox para centrar la imagen */
@@ -2241,176 +2241,66 @@ toXml();
 };
 
 </script> -->
+
+
 <script>
 
 
+        // Blockly.Blocks['avanzar_n2'] = {
+        //     init: function () {
+        //         var block = this;
+        //         this.appendDummyInput()
+        //             .setAlign(Blockly.ALIGN_CENTRE)
+        //             .appendField("avanzar")
+        //             .appendField(new Blockly.FieldNumber(50, -10, 100, 1), "DISTANCIA")
+        //             .appendField("cm");
+        //         this.setPreviousStatement(true, null);
+        //         this.setNextStatement(true, null);
+        //         this.setColour(230);
+        //         this.setTooltip("");
+        //         this.customFieldName = "DISTANCIA";
+        //         this.customFieldValue = 50;
+
+        //         this.getField("DISTANCIA").onMouseDown_ = function (e) {
+        //             block.handleInputClick();
+        //             Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+        //         };
+        //     },
+        //     handleInputClick: function () {
+        //         console.log("Clic capturado");
+        //         selectedBlock = this;
+        //         selectedBlockFieldName = "DISTANCIA";
+
+        //         // Muestra el modal (teclado numerico personalizado)
+        //         tecladoNumerico.style.display = "block";
+
+        //         // Establece el valor del FieldNumber en el teclado numérico
+        //         inputNuevo.value = this.getFieldValue("DISTANCIA");
+        //         console.log("El valor es: " + inputNuevo.value);
+        //     }
+        // };
 
 
-
-        //  Bloques
-        Blockly.Blocks['avanzar_n2'] = {
+        //  Bloques Nivel 1
+        Blockly.Blocks['play_n1'] = {
             init: function () {
-                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField("avanzar")
-                    .appendField(new Blockly.FieldNumber(50, -10, 100, 1), "DISTANCIA")
-                    .appendField("cm");
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
+                    .appendField("  ")
+                    .appendField(new Blockly.FieldImage("img/eventoPlay.png", 35, 35, "*"))
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setPreviousStatement(false, null);
+                this.setNextStatement(false, null);
                 this.setColour(230);
                 this.setTooltip("");
-                this.customFieldName = "DISTANCIA";
-                this.customFieldValue = 50;
-
-                this.getField("DISTANCIA").onMouseDown_ = function (e) {
-                    block.handleInputClick();
-                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
-                };
-            },
-            handleInputClick: function () {
-                console.log("Clic capturado");
-                selectedBlock = this;
-                selectedBlockFieldName = "DISTANCIA";
-
-                // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
-
-                // Establece el valor del FieldNumber en el teclado numérico
-                inputNuevo.value = this.getFieldValue("DISTANCIA");
-                console.log("El valor es: " + inputNuevo.value);
+                this.setHelpUrl("");
             }
         };
-
-
-
-        Blockly.Blocks['esperar_n2'] = {
-            init: function () {
-                var block = this;
-                this.appendDummyInput()
-                    .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField("esperar")
-                    .appendField(new Blockly.FieldNumber(10, 0, 100, 1), "ESPERAR")
-                    .appendField("seg");
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("");
-                this.customFieldName = "ESPERAR";
-                this.customFieldValue = 10;
-
-                this.getField("ESPERAR").onMouseDown_ = function (e) {
-                    block.handleInputClick();
-                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
-                };
-            },
-            handleInputClick: function () {
-                console.log("Clic capturado");
-                selectedBlock = this;
-                selectedBlockFieldName = "ESPERAR";
-
-                // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
-
-                // Establece el valor del FieldNumber en el teclado numérico
-                inputNuevo.value = this.getFieldValue("ESPERAR");
-                console.log("El valor es: " + inputNuevo.value);
-            }
-
-        };
-
-
-
-
-        Blockly.Blocks['foco_n2'] = {
-            init: function () {
-                var block = this;
-                this.appendDummyInput()
-                    .appendField("luces")
-                    .appendField(new Blockly.FieldDropdown([
-                        ["apagadas", "apagadas"],
-                        ["encendidas", "encendidas"],
-                        ["parpadeando", "parpadeando"]
-                    ]), "ESTADO_FOCO")
-
-                    .appendField("en color:")
-                    .appendField("rojo")
-                    .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
-                    .appendField("  verde")
-                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "VERDE")
-                    .appendField("  azul")
-                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "AZUL");
-
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("");
-                this.customFieldName = "ROJO";
-                this.customFieldValue = 50;
-                this.customFieldName = "VERDE";
-                this.customFieldValue = 50;
-                this.customFieldName = "AZUL";
-                this.customFieldValue = 50;
-
-                this.getField("ROJO").onMouseDown_ = function (e) {
-                    block.handleInputClick();
-                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
-                };
-
-                this.getField("VERDE").onMouseDown_ = function (e) {
-                    block.handleInputClick2();
-                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
-                };
-
-                this.getField("AZUL").onMouseDown_ = function (e) {
-                    block.handleInputClick3();
-                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
-                };
-            },
-
-            handleInputClick: function () {
-                console.log("Clic capturado");
-                selectedBlock = this;
-                selectedBlockFieldName = "ROJO";
-
-                // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
-
-                // Establece el valor del FieldNumber en el teclado numérico
-                inputNuevo.value = this.getFieldValue("ROJO");
-                console.log("El valor rojo es: " + inputNuevo.value);
-            },
-            handleInputClick2: function () {
-                console.log("Clic capturado");
-                selectedBlock = this;
-                selectedBlockFieldName = "VERDE";
-
-                // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
-
-                // Establece el valor del FieldNumber en el teclado numérico
-                inputNuevo.value = this.getFieldValue("VERDE");
-                console.log("El valor verde es: " + inputNuevo.value);
-            },
-            handleInputClick3: function () {
-                console.log("Clic capturado");
-                selectedBlock = this;
-                selectedBlockFieldName = "AZUL";
-
-                // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
-
-                // Establece el valor del FieldNumber en el teclado numérico
-                inputNuevo.value = this.getFieldValue("AZUL");
-                console.log("El valor azul es: " + inputNuevo.value);
-            }
-
-        };
-
-
 
         Blockly.Blocks['avanzar_n1'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
@@ -2420,6 +2310,7 @@ toXml();
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -2428,6 +2319,11 @@ toXml();
 
                 // Configuramos el estado inicial de la imagen del bloque
                 this.updateImageState(20);
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleImageClick: function () {
                 console.log("Clic capturado");
@@ -2457,85 +2353,208 @@ toXml();
                 } else {
                     estadoImagen.setValue("flecha-arriba.png");
                 }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
-        Blockly.Blocks['play_n1'] = {
+        Blockly.Blocks['girar_derecha_n1'] = {
             init: function () {
-                this.appendDummyInput()
-                    .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField("  ")
-                    .appendField(new Blockly.FieldImage("img/eventoPlay.png", 35, 35, "*"))
-                this.appendStatementInput("cuerpo")
-                    .setCheck(null);
-                this.setPreviousStatement(false, null);
-                this.setNextStatement(false, null);
-                this.setColour(230);
-                this.setTooltip("");
-                this.setHelpUrl("");
-            }
-        };
-
-
-
-
-        Blockly.Blocks['rotulador_n1'] = {
-            init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField(new Blockly.FieldTextInput("True", this.handleTextInputChange.bind(this)), "ESTADO_ROTU")
+                    .appendField(new Blockly.FieldTextInput("90", this.handleTextInputChange.bind(this)), "ANGULO")
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
-                this.customFieldName = "ESTADO_ROTU";
-                this.customFieldValue = "True";
+                this.customFieldName = "ANGULO";
+                this.customFieldValue = 90;
 
                 // Configuramos el estado inicial de la imagen del bloque
-                this.updateImageState("True");
+                this.updateImageState(20);
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleImageClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
-                selectedBlockFieldName = "ESTADO_ROTU";
-                tecladoRotulador.style.display = "block";
-                slider.value = this.getFieldValue("ESTADO_ROTU");
-                inputRotulador1.value = this.getFieldValue("ESTADO_ROTU");
-                inputRotulador1.dispatchEvent(new Event('input'));
+                selectedBlockFieldName = "ANGULO";
+                tecladoAngulo.style.display = "block";
+                slider_angulo.value = this.getFieldValue("ANGULO");
+                output_angulo.value = this.getFieldValue("ANGULO");
 
+                updateSliderValue();
                 // Actualizamos la imagen del bloque según el nuevo valor
-                this.updateImageState(inputRotulador1.value);
+                this.updateImageState(parseFloat(output_angulo.value));
             },
-            handleTextInputChange: function (newValue) {
+            handleTextInputChange: function (newValue1) {
                 // Manejar el cambio en el campo de texto si es necesario
-                console.log("Cambio en el campo de texto: " + newValue);
+                console.log("Cambio en el campo de texto: " + newValue1);
 
                 // Actualizamos la imagen del bloque según el nuevo valor
-                this.updateImageState(newValue);
+                this.updateImageState(parseFloat(newValue1));
             },
             updateImageState: function (value) {
-
                 // Actualizamos la imagen del bloque según el valor
                 const estadoImagen = this.getField("ESTADO_IMAGEN");
-                if (value === "True") {
-                    estadoImagen.setValue("img/marcador_n1.png");
+                if (value < 0) {
+                    estadoImagen.setValue("giro_izquierda.png");
+                } else if (value === 0) {
+                    estadoImagen.setValue("detener.png");
+                } else {
+                    estadoImagen.setValue("giro_derecha.png");
                 }
-                else {
-                    estadoImagen.setValue("img/marcador_subir_n1.png");
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
                 }
             }
         };
 
+        Blockly.Blocks['girar_izquierda_n1'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("-90", this.handleTextInputChange.bind(this)), "ANGULO")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ANGULO";
+                this.customFieldValue = -90;
 
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState(-20);
 
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ANGULO";
+                tecladoAngulo.style.display = "block";
+                slider_angulo.value = this.getFieldValue("ANGULO");
+                output_angulo.value = this.getFieldValue("ANGULO");
+
+                updateSliderValue();
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(output_angulo.value));
+            },
+            handleTextInputChange: function (newValue1) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue1);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(parseFloat(newValue1));
+            },
+            updateImageState: function (value) {
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value < 0) {
+                    estadoImagen.setValue("giro_izquierda.png");
+                } else if (value === 0) {
+                    estadoImagen.setValue("detener.png");
+                } else {
+                    estadoImagen.setValue("giro_derecha.png");
+                }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
 
         Blockly.Blocks['foco_n1'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
@@ -2549,6 +2568,7 @@ toXml();
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -2560,6 +2580,11 @@ toXml();
 
                 // Configuramos el estado inicial de la imagen del bloque
                 this.updateImageState("yellow", "encendidas");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleImageClick: function () {
                 console.log("Clic capturado");
@@ -2639,14 +2664,38 @@ toXml();
                         estadoImagen.setValue("img/f_blanco_n1.png");
                     }
                 }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
-
-
-
         Blockly.Blocks['audio_n1'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
@@ -2656,6 +2705,7 @@ toXml();
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -2664,6 +2714,11 @@ toXml();
 
                 // Configuramos el estado inicial de la imagen del bloque
                 this.updateImageState("Fsos");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleImageClick: function () {
                 console.log("Clic capturado");
@@ -2714,15 +2769,38 @@ toXml();
                 else {
                     estadoImagen.setValue("img/B.png");
                 }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
-
-
-
-
         Blockly.Blocks['repetir_n1'] = {
             init: function () {
+                var block = this;
                 this.appendStatementInput("repetir")
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
@@ -2732,6 +2810,7 @@ toXml();
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -2740,6 +2819,11 @@ toXml();
 
                 // Configuramos el estado inicial de la imagen del bloque
                 this.updateImageState(10);
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleImageClick: function () {
                 console.log("Clic capturado");
@@ -2793,12 +2877,123 @@ toXml();
                 else {
                     estadoImagen.setValue("img/repetir_10.png");
                 }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
+        Blockly.Blocks['rotulador_n1'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("True", this.handleTextInputChange.bind(this)), "ESTADO_ROTU")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ESTADO_ROTU";
+                this.customFieldValue = "True";
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState("True");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ESTADO_ROTU";
+                tecladoRotulador.style.display = "block";
+                slider.value = this.getFieldValue("ESTADO_ROTU");
+                inputRotulador1.value = this.getFieldValue("ESTADO_ROTU");
+                inputRotulador1.dispatchEvent(new Event('input'));
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(inputRotulador1.value);
+            },
+            handleTextInputChange: function (newValue) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(newValue);
+            },
+            updateImageState: function (value) {
+
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === "True") {
+                    estadoImagen.setValue("img/marcador_n1.png");
+                }
+                else {
+                    estadoImagen.setValue("img/marcador_subir_n1.png");
+                }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
 
         Blockly.Blocks['esperar_n1'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
@@ -2808,6 +3003,7 @@ toXml();
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -2816,6 +3012,11 @@ toXml();
 
                 // Configuramos el estado inicial de la imagen del bloque
                 this.updateImageState(10);
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleImageClick: function () {
                 console.log("Clic capturado");
@@ -2869,63 +3070,287 @@ toXml();
                 else {
                     estadoImagen.setValue("img/esperar10.png");
                 }
-            }
-        };
-
-
-        Blockly.Blocks['girar_derecha_n1'] = {
-            init: function () {
-                this.appendDummyInput()
-                    .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
-                this.appendDummyInput()
-                    .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField(new Blockly.FieldTextInput("90", this.handleTextInputChange.bind(this)), "ANGULO")
-                    .setVisible(false);
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("");
-                this.setHelpUrl("");
-                this.customFieldName = "ANGULO";
-                this.customFieldValue = 90;
-
-                // Configuramos el estado inicial de la imagen del bloque
-                this.updateImageState(20);
             },
-            handleImageClick: function () {
-                console.log("Clic capturado");
-                selectedBlock = this;
-                selectedBlockFieldName = "ANGULO";
-                tecladoAngulo.style.display = "block";
-                slider_angulo.value = this.getFieldValue("ANGULO");
-                output_angulo.value = this.getFieldValue("ANGULO");
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
 
-                updateSliderValue();
-                // Actualizamos la imagen del bloque según el nuevo valor
-                this.updateImageState(parseFloat(output_angulo.value));
-            },
-            handleTextInputChange: function (newValue1) {
-                // Manejar el cambio en el campo de texto si es necesario
-                console.log("Cambio en el campo de texto: " + newValue1);
-
-                // Actualizamos la imagen del bloque según el nuevo valor
-                this.updateImageState(parseFloat(newValue1));
-            },
-            updateImageState: function (value) {
-                // Actualizamos la imagen del bloque según el valor
-                const estadoImagen = this.getField("ESTADO_IMAGEN");
-                if (value < 0) {
-                    estadoImagen.setValue("giro_izquierda.png");
-                } else if (value === 0) {
-                    estadoImagen.setValue("detener.png");
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
                 } else {
-                    estadoImagen.setValue("giro_derecha.png");
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
                 }
             }
         };
 
 
+        //  Bloques Nivel 2
+
+        Blockly.Blocks['avanzar_n2'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("avanzar")
+                    .appendField(new Blockly.FieldNumber(50, -10, 100, 1), "DISTANCIA")
+                    .appendField("cm");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour(230);
+                this.setTooltip("");
+                this.customFieldName = "DISTANCIA";
+                this.customFieldValue = 50;
+
+                this.getField("DISTANCIA").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "DISTANCIA";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("DISTANCIA");
+                console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+        Blockly.Blocks['esperar_n2'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("esperar")
+                    .appendField(new Blockly.FieldNumber(10, 0, 100, 1), "ESPERAR")
+                    .appendField("seg");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour(230);
+                this.setTooltip("");
+                this.customFieldName = "ESPERAR";
+                this.customFieldValue = 10;
+
+                this.getField("ESPERAR").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ESPERAR";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ESPERAR");
+                console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar conectado a otro bloque.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar conectado a un bloque activo.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+
+        };
+
+        Blockly.Blocks['foco_n2'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .appendField("luces")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["apagadas", "apagadas"],
+                        ["encendidas", "encendidas"],
+                        ["parpadeando", "parpadeando"]
+                    ]), "ESTADO_FOCO")
+
+                    .appendField("en color:")
+                    .appendField("rojo")
+                    .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
+                    .appendField("  verde")
+                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "VERDE")
+                    .appendField("  azul")
+                    .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "AZUL");
+
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour(230);
+                this.setTooltip("");
+                this.customFieldName = "ROJO";
+                this.customFieldValue = 50;
+                this.customFieldName = "VERDE";
+                this.customFieldValue = 50;
+                this.customFieldName = "AZUL";
+                this.customFieldValue = 50;
+
+                this.getField("ROJO").onMouseDown_ = function (e) {
+                    block.handleInputClick();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+
+                this.getField("VERDE").onMouseDown_ = function (e) {
+                    block.handleInputClick2();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+
+                this.getField("AZUL").onMouseDown_ = function (e) {
+                    block.handleInputClick3();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+
+            handleInputClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ROJO";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("ROJO");
+                console.log("El valor rojo es: " + inputNuevo.value);
+            },
+            handleInputClick2: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VERDE";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("VERDE");
+                console.log("El valor verde es: " + inputNuevo.value);
+            },
+            handleInputClick3: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "AZUL";
+
+                // Muestra el modal (teclado numerico personalizado)
+                tecladoNumerico.style.display = "block";
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("AZUL");
+                console.log("El valor azul es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+
+        };
 
         Blockly.Blocks['girar_derecha_n2'] = {
             init: function () {
@@ -2936,6 +3361,7 @@ toXml();
                     .appendField("grados");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(160);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -2946,6 +3372,10 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleInputClick: function () {
                 console.log("Clic capturado");
@@ -2958,65 +3388,34 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
                 console.log("El valor es: " + inputNuevo.value);
-            }
-        };
-
-
-
-        Blockly.Blocks['girar_izquierda_n1'] = {
-            init: function () {
-                this.appendDummyInput()
-                    .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
-                this.appendDummyInput()
-                    .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField(new Blockly.FieldTextInput("-90", this.handleTextInputChange.bind(this)), "ANGULO")
-                    .setVisible(false);
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("");
-                this.setHelpUrl("");
-                this.customFieldName = "ANGULO";
-                this.customFieldValue = -90;
-
-                // Configuramos el estado inicial de la imagen del bloque
-                this.updateImageState(-20);
             },
-            handleImageClick: function () {
-                console.log("Clic capturado");
-                selectedBlock = this;
-                selectedBlockFieldName = "ANGULO";
-                tecladoAngulo.style.display = "block";
-                slider_angulo.value = this.getFieldValue("ANGULO");
-                output_angulo.value = this.getFieldValue("ANGULO");
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
 
-                updateSliderValue();
-                // Actualizamos la imagen del bloque según el nuevo valor
-                this.updateImageState(parseFloat(output_angulo.value));
-            },
-            handleTextInputChange: function (newValue1) {
-                // Manejar el cambio en el campo de texto si es necesario
-                console.log("Cambio en el campo de texto: " + newValue1);
-
-                // Actualizamos la imagen del bloque según el nuevo valor
-                this.updateImageState(parseFloat(newValue1));
-            },
-            updateImageState: function (value) {
-                // Actualizamos la imagen del bloque según el valor
-                const estadoImagen = this.getField("ESTADO_IMAGEN");
-                if (value < 0) {
-                    estadoImagen.setValue("giro_izquierda.png");
-                } else if (value === 0) {
-                    estadoImagen.setValue("detener.png");
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
                 } else {
-                    estadoImagen.setValue("giro_derecha.png");
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
                 }
             }
         };
-
-
-
 
         Blockly.Blocks['girar_izquierda_n2'] = {
             init: function () {
@@ -3027,6 +3426,7 @@ toXml();
                     .appendField("grados");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(160);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -3037,6 +3437,11 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleInputClick: function () {
                 console.log("Clic capturado");
@@ -3049,14 +3454,36 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
-
-
         //https://blockly-demo.appspot.com/static/demos/blockfactory/index.html?hl=es-419#wsr9e6
-
-
 
         Blockly.Blocks['repetir_n2'] = {
             init: function () {
@@ -3069,6 +3496,7 @@ toXml();
                     .setCheck(null);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -3079,6 +3507,11 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleInputClick: function () {
                 console.log("Clic capturado");
@@ -3091,6 +3524,32 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("VECES");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
@@ -3106,6 +3565,115 @@ toXml();
             }
         };
 
+        Blockly.Blocks['audio_n2'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .appendField("reproducir tono")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["C", "C"],
+                        ["D", "D"],
+                        ["E", "E"],
+                        ["F", "F"],
+                        ["G", "G"],
+                        ["A", "A"],
+                        ["B", "B"],
+                        ["C#", "Csos"],
+                        ["D#", "Dsos"],
+                        ["F#", "Fsos"],
+                        ["G#", "Gsos"],
+                        ["A#", "Asos"]
+                    ]), "AUDIO");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour(230);
+                this.setTooltip("Cambiar el sonido");
+                this.setHelpUrl("");
+
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+        Blockly.Blocks['rotulador_n2'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .appendField(new Blockly.FieldDropdown([
+                        ["bajar", "True"],
+                        ["subir", "False"]
+                    ]), "ESTADO_ROTU")
+                    .appendField("rotulador");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour(230);
+                this.setTooltip("Cambiar el sonido");
+                this.setHelpUrl("");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+        //  Bloques Nivel 3
+
         Blockly.Blocks['play_n3'] = {
             init: function () {
                 this.appendDummyInput()
@@ -3118,7 +3686,6 @@ toXml();
             }
         };
 
-
         Blockly.Blocks['avanzar_n3'] = {
             init: function () {
                 var block = this;
@@ -3130,6 +3697,7 @@ toXml();
                 this.setInputsInline(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -3141,6 +3709,11 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleInputClick: function () {
                 console.log("Clic capturado");
@@ -3153,9 +3726,34 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("DISTANCIA");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
-
 
         Blockly.Blocks['girar_izquierda_n3'] = {
             init: function () {
@@ -3168,6 +3766,7 @@ toXml();
                 this.setInputsInline(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -3179,6 +3778,11 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleInputClick: function () {
                 console.log("Clic capturado");
@@ -3191,9 +3795,34 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
-
 
         Blockly.Blocks['girar_derecha_n3'] = {
             init: function () {
@@ -3206,6 +3835,7 @@ toXml();
                 this.setInputsInline(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -3217,6 +3847,11 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleInputClick: function () {
                 console.log("Clic capturado");
@@ -3229,9 +3864,34 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
-
 
         Blockly.Blocks['repetir_n3'] = {
             init: function () {
@@ -3246,6 +3906,7 @@ toXml();
                 this.setInputsInline(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.setHelpUrl("");
@@ -3257,6 +3918,11 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
             handleInputClick: function () {
                 console.log("Clic capturado");
@@ -3269,6 +3935,32 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("VECES");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
@@ -3299,6 +3991,7 @@ toXml();
 
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.customFieldName = "ROJO";
@@ -3321,6 +4014,11 @@ toXml();
                     block.handleInputClick3();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
             },
 
             handleInputClick: function () {
@@ -3359,12 +4057,38 @@ toXml();
                 inputNuevo.value = this.getFieldValue("AZUL");
                 console.log("El valor es: " + inputNuevo.value);
             },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
 
         };
 
-
         Blockly.Blocks['audio_n3'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .appendField("tono(")
                     .appendField(new Blockly.FieldDropdown([
@@ -3384,14 +4108,47 @@ toXml();
                     .appendField(")");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("Cambiar el sonido");
                 this.setHelpUrl("");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
 
         Blockly.Blocks['rotulador_n3'] = {
             init: function () {
+                var block = this;
                 this.appendDummyInput()
                     .appendField("rotulador(")
                     .appendField(new Blockly.FieldDropdown([
@@ -3401,12 +4158,43 @@ toXml();
                     .appendField(")");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("Cambiar el sonido");
                 this.setHelpUrl("");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
         };
-
 
         Blockly.Blocks['esperar_n3'] = {
             init: function () {
@@ -3418,6 +4206,7 @@ toXml();
                     .appendField("seg");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
                 this.setColour(230);
                 this.setTooltip("");
                 this.customFieldName = "ESPERAR";
@@ -3427,6 +4216,11 @@ toXml();
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
 
             },
             handleInputClick: function () {
@@ -3440,6 +4234,32 @@ toXml();
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ESPERAR");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
             }
 
         };
@@ -3461,62 +4281,6 @@ toXml();
                 audio.play();
             }
         };
-        Blockly.Blocks['audio_n2'] = {
-            init: function () {
-                this.appendDummyInput()
-                    .appendField("reproducir tono")
-                    .appendField(new Blockly.FieldDropdown([
-                        ["C", "C"],
-                        ["D", "D"],
-                        ["E", "E"],
-                        ["F", "F"],
-                        ["G", "G"],
-                        ["A", "A"],
-                        ["B", "B"],
-                        ["C#", "Csos"],
-                        ["D#", "Dsos"],
-                        ["F#", "Fsos"],
-                        ["G#", "Gsos"],
-                        ["A#", "Asos"]
-                    ]), "AUDIO");
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("Cambiar el sonido");
-                this.setHelpUrl("");
-            }
-        };
-
-
-
-        Blockly.Blocks['rotulador_n2'] = {
-            init: function () {
-                this.appendDummyInput()
-                    .appendField(new Blockly.FieldDropdown([
-                        ["bajar", "True"],
-                        ["subir", "False"]
-                    ]), "ESTADO_ROTU")
-                    .appendField("rotulador");
-                this.setPreviousStatement(true, null);
-                this.setNextStatement(true, null);
-                this.setColour(230);
-                this.setTooltip("Cambiar el sonido");
-                this.setHelpUrl("");
-            }
-        };
-
-        Blockly.JavaScript['audio_n2'] = function (block) {
-            var soundFile = block.getFieldValue('AUDIO');
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
-            return code;
-        };
-
-
-        Blockly.JavaScript['audio_n1'] = function (block) {
-            var soundFile = block.getFieldValue('AUDIO');
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
-            return code;
-        };
 
 
     </script>
@@ -3524,85 +4288,10 @@ toXml();
 <script>
 
         // Generador de codigo
-
-        Blockly.JavaScript['avanzar_n2'] = function (block) {
-            const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
-            var code = 'movePlayer(' + customStepSize + ');';
-            return code;
-        };
-
-
-
-
-        Blockly.JavaScript['foco_n2'] = function (block) {
-            const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
-            const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
-            const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
-            const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
-
-            // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
-
-            return code;
-        };
-
-        Blockly.JavaScript['avanzar_n3'] = function (block) {
-            const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
-            var code = 'movePlayer(' + customStepSize + ');';
-            return code;
-        };
-
-        Blockly.JavaScript['foco_n3'] = function (block) {
-            const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
-            const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
-            const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
-            const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
-
-            // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
-
-            return code;
-        };
-
-        Blockly.JavaScript['girar_derecha_n3'] = function (block) {
-            var angle = parseInt(block.getFieldValue('ANGULO'));
-            var code = 'rotateRight(' + angle + ');';
-            return code;
-        };
-
-
-        Blockly.JavaScript['girar_izquierda_n3'] = function (block) {
-            var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
-            var code = 'rotateRight(' + angle + ');';
-            return code;
-        };
-
-        Blockly.JavaScript['repetir_n3'] = function (block) {
-            var repetitions = parseInt(block.getFieldValue('VECES'));
-            var code = '';
-            for (var i = 0; i < repetitions; i++) {
-                code += Blockly.JavaScript.statementToCode(block, 'repetir');
-            }
-            return code;
-        };
-
-
-        Blockly.JavaScript['audio_n3'] = function (block) {
-            var soundFile = block.getFieldValue('AUDIO');
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
-            return code;
-        };
-
-        Blockly.JavaScript['rotulador_n3'] = function (block) {
-            var rotulador_esta_str = block.getFieldValue('ESTADO_ROTU');
-            var rotulador_esta_bool = rotulador_esta_str === "True"; // Convierte la cadena a un booleano
-            var code = 'estado_rotulador(' + rotulador_esta_bool + ');\n';
-            return code;
-        };
-
-        Blockly.JavaScript['esperar_n3'] = function (block) {
-            const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
-            var code = 'esperar(' + tiempoEspera + ');';
+        //  Bloques Nivel 1
+        Blockly.JavaScript['play_n1'] = function (block) {
+            // Generar el código para el bloque personalizado 'play_n3'
+            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
             return code;
         };
 
@@ -3624,42 +4313,6 @@ toXml();
             return code;
         };
 
-        Blockly.JavaScript['girar_derecha_n2'] = function (block) {
-            var angle = parseInt(block.getFieldValue('ANGULO'));
-            var code = 'rotateRight(' + angle + ');';
-            return code;
-        };
-
-        Blockly.JavaScript['girar_izquierda_n2'] = function (block) {
-            var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
-            var code = 'rotateRight(' + angle + ');';
-            return code;
-        };
-
-
-        Blockly.JavaScript['repetir_n2'] = function (block) {
-            var repetitions = parseInt(block.getFieldValue('VECES'));
-            var code = '';
-            for (var i = 0; i < repetitions; i++) {
-                code += Blockly.JavaScript.statementToCode(block, 'repetir');
-            }
-            return code;
-        };
-
-        Blockly.JavaScript['repetir_n1'] = function (block) {
-            var repetitions = parseInt(block.getFieldValue('VECES'));
-            var code = '';
-            for (var i = 0; i < repetitions; i++) {
-                code += Blockly.JavaScript.statementToCode(block, 'repetir');
-            }
-            return code;
-        };
-
-
-
-
-
-
         Blockly.JavaScript['foco_n1'] = function (block) {
             const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
             const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
@@ -3672,7 +4325,20 @@ toXml();
             return code;
         };
 
+        Blockly.JavaScript['repetir_n1'] = function (block) {
+            var repetitions = parseInt(block.getFieldValue('VECES'));
+            var code = '';
+            for (var i = 0; i < repetitions; i++) {
+                code += Blockly.JavaScript.statementToCode(block, 'repetir');
+            }
+            return code;
+        };
 
+        Blockly.JavaScript['audio_n1'] = function (block) {
+            var soundFile = block.getFieldValue('AUDIO');
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            return code;
+        };
 
         Blockly.JavaScript['rotulador_n1'] = function (block) {
             var rotulador_esta_str = block.getFieldValue('ESTADO_ROTU');
@@ -3681,19 +4347,69 @@ toXml();
             return code;
         };
 
+        Blockly.JavaScript['esperar_n1'] = function (block) {
+            const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
+            var code = 'esperar(' + tiempoEspera + ');';
+            return code;
+        };
 
+        //  Bloques Nivel 2
+
+        Blockly.JavaScript['play_n2'] = function (block) {
+            // Generar el código para el bloque personalizado 'play_n3'
+            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
+            return code;
+        };
+
+        Blockly.JavaScript['avanzar_n2'] = function (block) {
+            const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
+            var code = 'movePlayer(' + customStepSize + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['girar_derecha_n2'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO'));
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['girar_izquierda_n2'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['foco_n2'] = function (block) {
+            const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
+            const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
+            const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
+            const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
+
+            // Llamar a la función encenderLuzRGB con los tres parámetros
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
+
+            return code;
+        };
+
+        Blockly.JavaScript['repetir_n2'] = function (block) {
+            var repetitions = parseInt(block.getFieldValue('VECES'));
+            var code = '';
+            for (var i = 0; i < repetitions; i++) {
+                code += Blockly.JavaScript.statementToCode(block, 'repetir');
+            }
+            return code;
+        };
+
+        Blockly.JavaScript['audio_n2'] = function (block) {
+            var soundFile = block.getFieldValue('AUDIO');
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            return code;
+        };
 
         Blockly.JavaScript['rotulador_n2'] = function (block) {
             var rotulador_esta_str = block.getFieldValue('ESTADO_ROTU');
             var rotulador_esta_bool = rotulador_esta_str === "True"; // Convierte la cadena a un booleano
             var code = 'estado_rotulador(' + rotulador_esta_bool + ');\n';
-            return code;
-        };
-
-
-        Blockly.JavaScript['esperar_n1'] = function (block) {
-            const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
-            var code = 'esperar(' + tiempoEspera + ');';
             return code;
         };
 
@@ -3703,23 +4419,73 @@ toXml();
             return code;
         };
 
-        Blockly.JavaScript['play_n1'] = function (block) {
-            // Generar el código para el bloque personalizado 'play_n3'
-            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
-            return code;
-        };
 
-        Blockly.JavaScript['play_n2'] = function (block) {
-            // Generar el código para el bloque personalizado 'play_n3'
-            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
-            return code;
-        };
+
+        //  Bloques Nivel 3
+
         Blockly.JavaScript['play_n3'] = function (block) {
             // Generar el código para el bloque personalizado 'play_n3'
             var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
             return code;
         };
 
+        Blockly.JavaScript['avanzar_n3'] = function (block) {
+            const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
+            var code = 'movePlayer(' + customStepSize + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['girar_derecha_n3'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO'));
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['girar_izquierda_n3'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['foco_n3'] = function (block) {
+            const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
+            const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
+            const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
+            const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
+
+            // Llamar a la función encenderLuzRGB con los tres parámetros
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
+
+            return code;
+        };
+
+        Blockly.JavaScript['repetir_n3'] = function (block) {
+            var repetitions = parseInt(block.getFieldValue('VECES'));
+            var code = '';
+            for (var i = 0; i < repetitions; i++) {
+                code += Blockly.JavaScript.statementToCode(block, 'repetir');
+            }
+            return code;
+        };
+
+        Blockly.JavaScript['audio_n3'] = function (block) {
+            var soundFile = block.getFieldValue('AUDIO');
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            return code;
+        };
+
+        Blockly.JavaScript['rotulador_n3'] = function (block) {
+            var rotulador_esta_str = block.getFieldValue('ESTADO_ROTU');
+            var rotulador_esta_bool = rotulador_esta_str === "True"; // Convierte la cadena a un booleano
+            var code = 'estado_rotulador(' + rotulador_esta_bool + ');\n';
+            return code;
+        };
+
+        Blockly.JavaScript['esperar_n3'] = function (block) {
+            const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
+            var code = 'esperar(' + tiempoEspera + ');';
+            return code;
+        };
 
 
     </script>
