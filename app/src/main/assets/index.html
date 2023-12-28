@@ -1767,6 +1767,7 @@ Fin teclado Repetir -->
 
 <xml id="toolbox" style="display: none">
     <category name="Nivel 1">
+        <block type="play_n1"></block>
         <block type="avanzar_n1"></block>
         <block type="girar_derecha_n1"></block>
         <block type="girar_izquierda_n1"></block>
@@ -1778,6 +1779,7 @@ Fin teclado Repetir -->
 
     </category>
     <category name="Nivel 2">
+        <block type="play_n2"></block>
         <block type="avanzar_n2"></block>
         <block type="girar_derecha_n2"></block>
         <block type="girar_izquierda_n2"></block>
@@ -2458,6 +2460,23 @@ toXml();
             }
         };
 
+        Blockly.Blocks['play_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("  ")
+                    .appendField(new Blockly.FieldImage("img/eventoPlay.png", 35, 35, "*"))
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setPreviousStatement(false, null);
+                this.setNextStatement(false, null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+            }
+        };
+
+
 
 
         Blockly.Blocks['rotulador_n1'] = {
@@ -3075,6 +3094,18 @@ toXml();
             }
         };
 
+        Blockly.Blocks['play_n2'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("al presionar play")
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setColour(230);
+                this.setTooltip("");
+                this.setHelpUrl("");
+            }
+        };
+
         Blockly.Blocks['play_n3'] = {
             init: function () {
                 this.appendDummyInput()
@@ -3672,6 +3703,17 @@ toXml();
             return code;
         };
 
+        Blockly.JavaScript['play_n1'] = function (block) {
+            // Generar el código para el bloque personalizado 'play_n3'
+            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
+            return code;
+        };
+
+        Blockly.JavaScript['play_n2'] = function (block) {
+            // Generar el código para el bloque personalizado 'play_n3'
+            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
+            return code;
+        };
         Blockly.JavaScript['play_n3'] = function (block) {
             // Generar el código para el bloque personalizado 'play_n3'
             var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
