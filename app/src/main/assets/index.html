@@ -1778,12 +1778,12 @@ Fin teclado Repetir -->
 
     </category>
     <category name="Nivel 2">
-        <block type="avanzar"></block>
+        <block type="avanzar_n2"></block>
+        <block type="girar_derecha_n2"></block>
+        <block type="girar_izquierda_n2"></block>
+        <block type="repetir_n2"></block>
         <block type="foco_n2"></block>
-        <block type="girar_derecha"></block>
-        <block type="girar_izquierda"></block>
-        <block type="repetir"></block>
-        <block type="audio"></block>
+        <block type="audio_n2"></block>
         <block type="rotulador_n2"></block>
         <block type="esperar_n2"></block>
     </category>
@@ -2246,7 +2246,7 @@ toXml();
 
 
         //  Bloques
-        Blockly.Blocks['avanzar'] = {
+        Blockly.Blocks['avanzar_n2'] = {
             init: function () {
                 var block = this;
                 this.appendDummyInput()
@@ -2908,7 +2908,7 @@ toXml();
 
 
 
-        Blockly.Blocks['girar_derecha'] = {
+        Blockly.Blocks['girar_derecha_n2'] = {
             init: function () {
                 var block = this;
                 this.appendDummyInput()
@@ -2999,22 +2999,22 @@ toXml();
 
 
 
-        Blockly.Blocks['girar_izquierda'] = {
+        Blockly.Blocks['girar_izquierda_n2'] = {
             init: function () {
                 var block = this;
                 this.appendDummyInput()
                     .appendField("girar izquierda")
-                    .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO_IZQUIERDA") // Cambié el nombre del campo
+                    .appendField(new Blockly.FieldNumber(-90, -360, 360, 1), "ANGULO") // Cambié el nombre del campo
                     .appendField("grados");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setColour(160);
                 this.setTooltip("");
                 this.setHelpUrl("");
-                this.customFieldName = "ANGULO_IZQUIERDA"; // Cambié el nombre de la propiedad
-                this.customFieldValue = 90;
+                this.customFieldName = "ANGULO"; // Cambié el nombre de la propiedad
+                this.customFieldValue = -90;
 
-                this.getField("ANGULO_IZQUIERDA").onMouseDown_ = function (e) {
+                this.getField("ANGULO").onMouseDown_ = function (e) {
                     block.handleInputClick();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
@@ -3022,13 +3022,13 @@ toXml();
             handleInputClick: function () {
                 console.log("Clic capturado");
                 selectedBlock = this;
-                selectedBlockFieldName = "ANGULO_IZQUIERDA";
+                selectedBlockFieldName = "ANGULO";
 
                 // Muestra el modal (teclado numerico personalizado)
                 tecladoNumerico.style.display = "block";
 
                 // Establece el valor del FieldNumber en el teclado numérico
-                inputNuevo.value = this.getFieldValue("ANGULO_IZQUIERDA");
+                inputNuevo.value = this.getFieldValue("ANGULO");
                 console.log("El valor es: " + inputNuevo.value);
             }
         };
@@ -3039,7 +3039,7 @@ toXml();
 
 
 
-        Blockly.Blocks['repetir'] = {
+        Blockly.Blocks['repetir_n2'] = {
             init: function () {
                 var block = this;
                 this.appendDummyInput()
@@ -3132,7 +3132,7 @@ toXml();
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("girar_izquierda(")
-                    .appendField(new Blockly.FieldNumber(90, -360, 360, 1), "ANGULO")
+                    .appendField(new Blockly.FieldNumber(-90, -360, 360, 1), "ANGULO")
                     .appendField(")");
                 this.setInputsInline(false);
                 this.setPreviousStatement(true, null);
@@ -3141,7 +3141,7 @@ toXml();
                 this.setTooltip("");
                 this.setHelpUrl("");
                 this.customFieldName = "ANGULO";
-                this.customFieldValue = 5;
+                this.customFieldValue = -90;
 
                 // Utiliza onMouseDown para manejar el clic en el FieldNumber
                 this.getField("ANGULO").onMouseDown_ = function (e) {
@@ -3209,7 +3209,7 @@ toXml();
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("for i in range(")
                     .appendField(new Blockly.FieldNumber(0, 1, 100, 1), "VECES")
-                    .appendField(")");
+                    .appendField("):");
                 this.appendStatementInput("repetir")
                     .setCheck(null);
                 this.setInputsInline(false);
@@ -3430,17 +3430,23 @@ toXml();
                 audio.play();
             }
         };
-
-        Blockly.Blocks['audio'] = {
+        Blockly.Blocks['audio_n2'] = {
             init: function () {
                 this.appendDummyInput()
                     .appendField("reproducir tono")
                     .appendField(new Blockly.FieldDropdown([
-                        ["C4", "c4.m4a"],
-                        ["D4", "d4.m4a"],
-                        ["E4", "e4.m4a"],
-                        ["F4", "f4.m4a"],
-                        ["G4", "g4.m4a"]
+                        ["C", "C"],
+                        ["D", "D"],
+                        ["E", "E"],
+                        ["F", "F"],
+                        ["G", "G"],
+                        ["A", "A"],
+                        ["B", "B"],
+                        ["C#", "Csos"],
+                        ["D#", "Dsos"],
+                        ["F#", "Fsos"],
+                        ["G#", "Gsos"],
+                        ["A#", "Asos"]
                     ]), "AUDIO");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -3449,6 +3455,8 @@ toXml();
                 this.setHelpUrl("");
             }
         };
+
+
 
         Blockly.Blocks['rotulador_n2'] = {
             init: function () {
@@ -3466,10 +3474,9 @@ toXml();
             }
         };
 
-        // Definir el generador de código en Blockly
-        Blockly.JavaScript['audio'] = function (block) {
+        Blockly.JavaScript['audio_n2'] = function (block) {
             var soundFile = block.getFieldValue('AUDIO');
-            var code = 'MusicMaker.queueSound("' + soundFile + '");\n';
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
             return code;
         };
 
@@ -3487,7 +3494,7 @@ toXml();
 
         // Generador de codigo
 
-        Blockly.JavaScript['avanzar'] = function (block) {
+        Blockly.JavaScript['avanzar_n2'] = function (block) {
             const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
             var code = 'movePlayer(' + customStepSize + ');';
             return code;
@@ -3535,7 +3542,7 @@ toXml();
 
         Blockly.JavaScript['girar_izquierda_n3'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
-            var code = 'rotateLeft(' + angle + ');';
+            var code = 'rotateRight(' + angle + ');';
             return code;
         };
 
@@ -3580,27 +3587,26 @@ toXml();
             return code;
         };
 
-
         Blockly.JavaScript['girar_izquierda_n1'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
+            var code = 'rotateRight(' + angle + ');';
+            return code;
+        };
+
+        Blockly.JavaScript['girar_derecha_n2'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO'));
             var code = 'rotateRight(' + angle + ');';
             return code;
         };
 
-        Blockly.JavaScript['girar_derecha'] = function (block) {
-            var angle = parseInt(block.getFieldValue('ANGULO'));
+        Blockly.JavaScript['girar_izquierda_n2'] = function (block) {
+            var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
             var code = 'rotateRight(' + angle + ');';
             return code;
         };
 
-        Blockly.JavaScript['girar_izquierda'] = function (block) {
-            var angle = parseInt(block.getFieldValue('ANGULO_IZQUIERDA')); // Cambié el nombre del campo
-            var code = 'rotateLeft(' + angle + ');';
-            return code;
-        };
 
-
-        Blockly.JavaScript['repetir'] = function (block) {
+        Blockly.JavaScript['repetir_n2'] = function (block) {
             var repetitions = parseInt(block.getFieldValue('VECES'));
             var code = '';
             for (var i = 0; i < repetitions; i++) {
@@ -3613,7 +3619,7 @@ toXml();
             var repetitions = parseInt(block.getFieldValue('VECES'));
             var code = '';
             for (var i = 0; i < repetitions; i++) {
-                code += Blockly.JavaScript.statementToCode(block, 'repetir_prueba');
+                code += Blockly.JavaScript.statementToCode(block, 'repetir');
             }
             return code;
         };
