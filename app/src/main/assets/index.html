@@ -868,6 +868,7 @@
             previousTrajectories = [];
             currentTrajectory = [];
 
+            encenderLuzRGB(0, 0, 0, "apagadas");
             // Dibuja el objeto en la nueva posición y limpia la trayectoria
             drawPlayer();
         }
@@ -879,7 +880,7 @@
 </button>
 
 <div class="floating-container">
-    <a href="javascript:regresarAPantallaInicial2()">
+    <a href="javascript:abrirModalGuardar()">
         <img src="img/atras.png" alt="atras">
     </a>
     <input type="text" value="Nuevo Proyecto" id="nombre_proyecto" onclick="cambiarCategoriaSeleccionada('n3')"
@@ -1834,6 +1835,11 @@ Fin teclado Repetir -->
                 parrafo.innerHTML = "¿Desea guardar el Proyecto?";
                 document.getElementById('miInput').value = "Guardar";
 
+                // Cargar el bloque 'play_n1' por defecto al espacio de trabajo de Blockly
+                var defaultXmlString = '<xml><block type="play_n1" x="100" y="50"></block></xml>';
+                var defaultXml = Blockly.utils.xml.textToDom(defaultXmlString);
+                Blockly.Xml.domToWorkspace(defaultXml, workspace);
+
             } else {
                 document.getElementById('guardar-btn').style.display = 'none';
                 document.getElementById('editar-btn').style.display = 'inline';
@@ -1864,15 +1870,15 @@ Fin teclado Repetir -->
 
 
 
-        function regresarAPantallaInicial2() {
-            verificarGuardarEditar = document.getElementById('miInput').value;
+        // function regresarAPantallaInicial2() {
+        //     verificarGuardarEditar = document.getElementById('miInput').value;
 
-            if (verificarGuardarEditar === "Editar") {
-                editarDatos();
-            } else {
-                guardarDatos();
-            }
-        }
+        //     if (verificarGuardarEditar === "Editar") {
+        //         editarDatos();
+        //     } else {
+        //         guardarDatos();
+        //     }
+        // }
 
 
         function abrirModalGuardar() {
@@ -1882,6 +1888,7 @@ Fin teclado Repetir -->
 
         function cancelarModal() {
             document.getElementById('modal-overlay').style.display = 'none';
+            regresarAPantallaInicial();
 
         }
 
