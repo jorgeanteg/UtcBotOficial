@@ -1,6 +1,8 @@
 package com.example.utcbot;
 
-import android.content.DialogInterface;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -10,24 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
+public class ListadoProyectos extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_listado_proyectos);
 
         //Codigo para poner la pantalla horizontal
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -41,37 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Crear tarjetas dinámicamente y agregarlas al contenedor
-        LinearLayout cardsContainer = findViewById(R.id.cardsContainer);
+        GridLayout cardsContainer = findViewById(R.id.cardsContainer);
 
         dbHelper = new DatabaseHelper(this);
         mostrarTarjetasDesdeDB(cardsContainer);
 
-        // Obtén una referencia al botón btn3
-        ImageButton btn3 = findViewById(R.id.btn3);
-
-        // Agrega un controlador de eventos al botón btn3
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Lanzar la nueva actividad cuando se hace clic en btn3
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton btn2 = findViewById(R.id.btn2);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Lanzar la nueva actividad cuando se hace clic en btn3
-                Intent intent = new Intent(MainActivity.this, ListadoProyectos.class);
-                startActivity(intent);
-            }
-        });
     }
 
     // Método para cargar tarjetas desde la base de datos
-    private void mostrarTarjetasDesdeDB(LinearLayout cardsContainer) {
+    private void mostrarTarjetasDesdeDB(GridLayout cardsContainer) {
         cardsContainer.removeAllViews(); // Limpiar las tarjetas existentes
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -104,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             // Lanzar la nueva actividad cuando se hace clic en la tarjeta
-                            Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                            Intent intent = new Intent(ListadoProyectos.this, MainActivity2.class);
                             intent.putExtra("id", id);
                             intent.putExtra("nombre", nombre);
                             intent.putExtra("contenido", contenido);
@@ -120,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public boolean onLongClick(View view) {
                             // Crear un cuadro de diálogo personalizado
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            View dialogView = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_dialog, null);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ListadoProyectos.this);
+                            View dialogView = LayoutInflater.from(ListadoProyectos.this).inflate(R.layout.custom_dialog, null);
                             builder.setView(dialogView);
 
                             // Obtener referencias a los elementos en el cuadro de diálogo personalizado
@@ -185,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // Obtén una referencia al contenedor de tarjetas
-        LinearLayout cardsContainer = findViewById(R.id.cardsContainer);
+        GridLayout cardsContainer = findViewById(R.id.cardsContainer);
 
         // Llama a la función para mostrar las tarjetas desde la base de datos
         mostrarTarjetasDesdeDB(cardsContainer);
@@ -203,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         if (rowsAffected > 0) {
             Toast.makeText(this, "Tarjeta eliminada correctamente", Toast.LENGTH_SHORT).show();
             // Actualizar la vista después de eliminar la tarjeta
-            LinearLayout cardsContainer = findViewById(R.id.cardsContainer);
+            GridLayout cardsContainer = findViewById(R.id.cardsContainer);
             mostrarTarjetasDesdeDB(cardsContainer);
         } else {
             Toast.makeText(this, "Error al eliminar tarjeta", Toast.LENGTH_SHORT).show();
@@ -211,6 +186,4 @@ public class MainActivity extends AppCompatActivity {
 
         db.close();
     }
-
 }
-
