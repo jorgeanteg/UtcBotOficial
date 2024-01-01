@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="1dp"
+        android:background="@drawable/fondo_encabezado"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -20,11 +21,14 @@
         <!-- Botones a la esquina superior izquierda -->
         <ImageButton
             android:id="@+id/btn1"
-            android:layout_width="65dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/icono1" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_background"
+            android:scaleType="center"
+            android:src="@drawable/inicio" />
 
         <ImageButton
             android:id="@+id/btn2"
@@ -32,7 +36,8 @@
             android:layout_height="48dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/btn1"
-            android:src="@drawable/icono2" />
+            android:src="@drawable/carpeta2"
+            android:background="@drawable/button_background"/>
 
         <ImageButton
             android:id="@+id/btn3"
@@ -40,15 +45,28 @@
             android:layout_height="48dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/btn2"
-            android:src="@drawable/icono3" />
+            android:src="@drawable/mas1"
+            android:background="@drawable/button_background"/>
 
         <!-- Logo en el centro -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Irobot UTC"
+            android:text="IrobotUTC Education"
             android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="130dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/utc" />
+
+
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -58,7 +76,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerLayout">
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        android:background="@drawable/fondo_cuerpo">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -69,22 +88,23 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/targeta"
+                android:elevation="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
+
+                <ImageButton
                     android:id="@+id/btnNuevoP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="90dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/targeta"
-                    android:text="+"
-                    android:textColor="#000"
-                    android:textSize="70sp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/fondo_boton_nuevo"
+                    android:src="@drawable/nuevo" />
+
 
             </LinearLayout>
 

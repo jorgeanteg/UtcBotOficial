@@ -3,15 +3,15 @@
     <!-- Estado predeterminado -->
     <item android:state_pressed="false">
         <shape>
-            <solid android:color="#FFFFFF" />
-            <corners android:radius="10dp" />
+            <solid android:color="#DCE4F4" />
+            <corners android:radius="5dp" />
         </shape>
     </item>
     <!-- Estado presionado -->
     <item android:state_pressed="true">
         <shape>
             <solid android:color="#c9d5ee" /> <!-- Cambia el color cuando se presiona -->
-            <corners android:radius="10dp" />
+            <corners android:radius="5dp" />
         </shape>
     </item>
 </selector>

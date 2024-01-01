@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,42 @@ public class ListadoProyectos extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         mostrarTarjetasDesdeDB(cardsContainer);
+
+
+        // Obtén una referencia al botón btn3
+        ImageButton btn3 = findViewById(R.id.btn3);
+
+        // Agrega un controlador de eventos al botón btn3
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lanzar la nueva actividad cuando se hace clic en btn3
+                Intent intent = new Intent(ListadoProyectos.this, MainActivity2.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton btn1 = findViewById(R.id.btn1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lanzar la nueva actividad cuando se hace clic en btn3
+                Intent intent = new Intent(ListadoProyectos.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+        ImageButton btnNuevoP = findViewById(R.id.btnNuevoP);
+        btnNuevoP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lanzar la nueva actividad cuando se hace clic en btn3
+                Intent intent = new Intent(ListadoProyectos.this, MainActivity2.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

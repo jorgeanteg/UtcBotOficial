@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:topLeftRadius="10dp" android:topRightRadius="15dp"/>
-    <solid android:color="@android:color/white"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- Estado predeterminado -->
+<item android:state_pressed="false">
+    <shape>
+        <solid android:color="#FFFFFF" />
+        <corners android:topLeftRadius="10dp" android:topRightRadius="15dp"/>
+    </shape>
+</item>
+<!-- Estado presionado -->
+<item android:state_pressed="true">
+    <shape>
+        <solid android:color="#c9d5ee" /> <!-- Cambia el color cuando se presiona -->
+        <corners android:topLeftRadius="10dp" android:topRightRadius="15dp"/>
+    </shape>
+</item>
+</selector>
