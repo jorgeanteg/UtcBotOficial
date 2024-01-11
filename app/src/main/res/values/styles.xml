@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SpinnerStyle">
+        <item name="android:height">150dp</item>
+        <item name="android:width">300dp</item>
+    </style>
+</resources>

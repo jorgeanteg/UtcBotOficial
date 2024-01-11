@@ -100,7 +100,7 @@
 
         .container.active .second-div {
             width: 45%;
-            height: 95% !important;
+            height: 93% !important;
             margin: 10px;
         }
 
@@ -886,7 +886,7 @@
     </a>
     <input type="text" value="Nuevo Proyecto" id="nombre_proyecto" onclick="cambiarCategoriaSeleccionada('n3')"
            readonly>
-    <a href="">
+    <a href="javascript:activarBluethoo()">
         <img src="img/bluetooth.png" alt="Otro">
     </a>
 </div>
@@ -1105,11 +1105,11 @@
 
         function getImageForSliderValue(value) {
             if (value > 0) {
-                return 'derecha.png';
+                return 'img/derecha.png';
             } else if (value < 0) {
-                return 'izquierda.png';
+                return 'img/izquierda.png';
             } else {
-                return 'detener_angulo.png';
+                return 'img/detener_angulo.png';
             }
         }
 
@@ -1835,7 +1835,7 @@ Fin teclado Repetir -->
             var parrafo = document.getElementById("mensajeConfirmación");
 
             // Verificar si el nombre está definido
-            if (nombre === undefined) {
+            if (nombre === undefined || nombre === "Movimientos Básicos") {
                 nombre = "Nuevo Proyecto";
                 document.getElementById('editar-btn').style.display = 'none';
                 // Cambiar el texto del párrafo
@@ -1874,6 +1874,12 @@ Fin teclado Repetir -->
         function regresarAPantallaInicial() {
             Android.regresarAPantallaInicial();
         }
+
+
+        function activarBluethoo() {
+            Android.activarBluethoo();
+        }
+
 
 
 
@@ -1935,37 +1941,45 @@ Fin teclado Repetir -->
     </script>
 
 <script>
-        function cambiarCategoria(categoria) {
-            var xml = Blockly.Xml.workspaceToDom(workspace);
-            var bloques = xml.getElementsByTagName('block');
+        var categoriaActual = 'Niveln1'; // Variable para almacenar la categoría actual
 
-            function cambiarTipo(index) {
-                if (index < bloques.length) {
-                    var blockNode = bloques[index];
-                    var tipoOriginal = blockNode.getAttribute('type');
-                    var nuevoTipo = cambiarTipoCategoria(tipoOriginal, categoria);
-                    blockNode.setAttribute('type', nuevoTipo);
+function cambiarCategoria(categoria) {
+    // Verificar si la categoría seleccionada es diferente de la actual
+    if (categoria !== categoriaActual) {
+        var xml = Blockly.Xml.workspaceToDom(workspace);
+        var bloques = xml.getElementsByTagName('block');
 
-                    // Recarga los bloques en el espacio de trabajo después de cambiar el tipo
-                    Blockly.Xml.clearWorkspaceAndLoadFromXml(xml, workspace);
+        function cambiarTipo(index) {
+            if (index < bloques.length) {
+                var blockNode = bloques[index];
+                var tipoOriginal = blockNode.getAttribute('type');
+                var nuevoTipo = cambiarTipoCategoria(tipoOriginal, categoria);
+                blockNode.setAttribute('type', nuevoTipo);
 
-                    // Llama recursivamente para el siguiente bloque después de un pequeño retraso
-                    setTimeout(function () {
-                        cambiarTipo(index + 1);
-                    }, 0.1);  // Ajusta el tiempo de espera según sea necesario
-                }
+                // Recarga los bloques en el espacio de trabajo después de cambiar el tipo
+                Blockly.Xml.clearWorkspaceAndLoadFromXml(xml, workspace);
+
+                // Llama recursivamente para el siguiente bloque después de un pequeño retraso
+                setTimeout(function () {
+                    cambiarTipo(index + 1);
+                }, 0.1);  // Ajusta el tiempo de espera según sea necesario
+            } else {
+                // Actualiza la categoría actual después de cambiar todos los bloques
+                categoriaActual = categoria;
             }
-
-            // Inicia el proceso de cambio de tipo desde el primer bloque
-            cambiarTipo(0);
         }
 
-        function cambiarTipoCategoria(tipoOriginal, nuevaCategoria) {
-            var sufijoActual = tipoOriginal.slice(-2);
-            var nuevoSufijo = nuevaCategoria.slice(-2);
-            var nuevoTipo = tipoOriginal.replace(sufijoActual, nuevoSufijo);
-            return nuevoTipo;
-        }
+        // Inicia el proceso de cambio de tipo desde el primer bloque
+        cambiarTipo(0);
+    }
+}
+
+function cambiarTipoCategoria(tipoOriginal, nuevaCategoria) {
+    var sufijoActual = tipoOriginal.slice(-2);
+    var nuevoSufijo = nuevaCategoria.slice(-2);
+    var nuevoTipo = tipoOriginal.replace(sufijoActual, nuevoSufijo);
+    return nuevoTipo;
+}
 
 
     </script>
@@ -2361,11 +2375,11 @@ toXml();
                 // Actualizamos la imagen del bloque según el valor
                 const estadoImagen = this.getField("ESTADO_IMAGEN");
                 if (value < 0) {
-                    estadoImagen.setValue("flecha-abajo.png");
+                    estadoImagen.setValue("img/avanzar_atras.png");
                 } else if (value === 0) {
-                    estadoImagen.setValue("detener.png");
+                    estadoImagen.setValue("img/detener.png");
                 } else {
-                    estadoImagen.setValue("flecha-arriba.png");
+                    estadoImagen.setValue("img/avanzar_adelante.png");
                 }
             },
             checkConnection: function () {
@@ -2446,11 +2460,11 @@ toXml();
                 // Actualizamos la imagen del bloque según el valor
                 const estadoImagen = this.getField("ESTADO_IMAGEN");
                 if (value < 0) {
-                    estadoImagen.setValue("giro_izquierda.png");
+                    estadoImagen.setValue("img/giro_izquierda.png");
                 } else if (value === 0) {
-                    estadoImagen.setValue("detener.png");
+                    estadoImagen.setValue("img/detener.png");
                 } else {
-                    estadoImagen.setValue("giro_derecha.png");
+                    estadoImagen.setValue("img/giro_derecha.png");
                 }
             },
             checkConnection: function () {
@@ -2531,11 +2545,11 @@ toXml();
                 // Actualizamos la imagen del bloque según el valor
                 const estadoImagen = this.getField("ESTADO_IMAGEN");
                 if (value < 0) {
-                    estadoImagen.setValue("giro_izquierda.png");
+                    estadoImagen.setValue("img/giro_izquierda.png");
                 } else if (value === 0) {
-                    estadoImagen.setValue("detener.png");
+                    estadoImagen.setValue("img/detener.png");
                 } else {
-                    estadoImagen.setValue("giro_derecha.png");
+                    estadoImagen.setValue("img/giro_derecha.png");
                 }
             },
             checkConnection: function () {
@@ -4303,27 +4317,34 @@ toXml();
 
         // Generador de codigo
         //  Bloques Nivel 1
+
         Blockly.JavaScript['play_n1'] = function (block) {
-            // Generar el código para el bloque personalizado 'play_n3'
-            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
+            var code = '';
+            code += 'inicio();\n';
+            // Generar el código dentro del bloque 'cuerpo'
+            code += Blockly.JavaScript.statementToCode(block, 'cuerpo');
             return code;
         };
 
+        function inicio() {
+            console.log("Iniciando")
+        }
+
         Blockly.JavaScript['avanzar_n1'] = function (block) {
             const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
-            var code = 'movePlayer(' + customStepSize + ');';
+            var code = 'movePlayer(' + customStepSize + ');\n';
             return code;
         };
 
         Blockly.JavaScript['girar_derecha_n1'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO'));
-            var code = 'rotateRight(' + angle + ');';
+            var code = 'rotateRight(' + angle + ');\n';
             return code;
         };
 
         Blockly.JavaScript['girar_izquierda_n1'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
-            var code = 'rotateRight(' + angle + ');';
+            var code = 'rotateRight(' + angle + ');\n';
             return code;
         };
 
@@ -4334,7 +4355,7 @@ toXml();
             const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
 
             // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');\n';
 
             return code;
         };
@@ -4363,7 +4384,7 @@ toXml();
 
         Blockly.JavaScript['esperar_n1'] = function (block) {
             const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
-            var code = 'esperar(' + tiempoEspera + ');';
+            var code = 'esperar(' + tiempoEspera + ');\n';
             return code;
         };
 
@@ -4857,6 +4878,8 @@ toXml();
 <!-- Ejecutar el codigo generado -->
 
 <script>
+
+        var bloquesBluethoo;
         function runCode() {
             // Genera el código JavaScript a partir de los bloques
             window.LoopTrap = 1000;
@@ -4873,6 +4896,22 @@ toXml();
 
             function executeBlock(index) {
                 if (index < codeBlocks.length) {
+
+                    //PPara sacr las funciones del bloque
+                    var bloquesBluethoo = codeBlocks[index];
+                    console.log('Código del bloque ' + (index + 1) + ':', bloquesBluethoo);
+
+                    function enviarDatosBlue() {
+                        try {
+                            Android.enviarDatosBlue(bloquesBluethoo);
+                        } catch (error) {
+                            console.error("Error al enviar datos por Bluetooth:", error);
+                        }
+                    }
+
+                    enviarDatosBlue();
+
+
                     try {
                         if (codeBlocks[index].includes("rotateRight")) {
                             var angle = parseInt(codeBlocks[index].match(/\d+/)[0]);
@@ -4915,6 +4954,8 @@ toXml();
             // Inicia la ejecución con el primer bloque
             executeBlock(0);
         }
+
+
 
     </script>
 </body>
