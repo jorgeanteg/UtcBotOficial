@@ -14,12 +14,14 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
 
     </WebView>
 
@@ -63,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
             android:text="Seleccione un dispositivo:"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,8 +75,8 @@
         <!-- Spinner -->
         <Spinner
             android:id="@+id/IdDisEncontrados"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:spinnerMode="dropdown"
             android:theme="@style/SpinnerStyle"
@@ -82,16 +85,25 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/bluetooth_des"
+            app:layout_constraintBottom_toTopOf="@+id/IdBtnConectar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/IdDisEncontrados" />
 
         <Button
             android:id="@+id/IdBtnConectar"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="Conectar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/IdDisEncontrados" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Botón 3 -->
 

@@ -19,11 +19,22 @@
 
 
     <style>
+        @font-face {
+            font-family: 'MadrasRegular';
+            src: url('fuente/MadrasRegular.ttf');
+        }
+
+        @font-face {
+            font-family: 'MadrasBold';
+            src: url('fuente/MadrasBold.ttf');
+        }
+
         html,
         body {
             height: 100%;
             margin: 0;
             padding: 0;
+
         }
 
         body {
@@ -248,12 +259,33 @@
         .btn-borrar {
             margin-left: 2.5px;
             margin-right: 2.5px;
+            padding: 0px 16px !important;
         }
 
         .btn-borrar-todo {
             flex: 1;
             background-color: red;
+            padding: 0px 16px !important;
+            display: flex;
+            align-items: center;
+            /* Centra verticalmente */
+            justify-content: center;
+            /* Centra horizontalmente */
+            text-align: center;
 
+        }
+
+
+        .borrar-todo img {
+            max-width: 100%;
+            /* Ajusta el tamaño máximo de la imagen */
+            margin-right: 10px;
+            /* Ajusta el espacio entre la imagen y el texto */
+        }
+
+        .borrar-todo p {
+            margin: 0;
+            font-family: 'MadrasRegular';
         }
 
         button {
@@ -285,7 +317,8 @@
         #cerrarModal5,
         #cerrarModal6,
         #cerrarModal7,
-        #cerrarModal8 {
+        #cerrarModal8,
+        #cerrarModal9  {
             border-radius: 50%;
             padding: 5px 10px;
             box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.3);
@@ -523,7 +556,7 @@
 
         .image-containerFoco {
             display: inline-block;
-            margin: 2px;
+            margin: 10px 2px;
             cursor: pointer;
             transition: transform 0.3s;
             /* Agregamos una transición suave */
@@ -532,6 +565,7 @@
         .image-containerFoco.selectedFoco {
             border: 2px solid #00bcd4;
             /* Color celeste */
+            border-radius: 5px;
             transform: scale(1.1);
             /* Aumentar el tamaño al seleccionar */
         }
@@ -554,12 +588,14 @@
 
         .color-box.selected {
             transform: scale(1.2);
-            border-color: #000;
+            border-color: #00bcd4;
             /* Cambiar el color del borde cuando está seleccionado */
         }
 
         .row {
             display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .color-box.red {
@@ -604,7 +640,7 @@
 
         .image-containerRotulador {
             display: inline-block;
-            margin: 2px;
+            margin: 10px 2px;
             cursor: pointer;
             transition: transform 0.3s;
             /* Agregamos una transición suave */
@@ -612,12 +648,38 @@
 
         .image-containerRotulador.selectedRotulador {
             border: 2px solid #00bcd4;
+            border-radius: 5px;
             /* Color celeste */
             transform: scale(1.1);
             /* Aumentar el tamaño al seleccionar */
         }
 
         /* Aumentar teclado Rotulador */
+
+
+        /* Inicio teclado Ifelse */
+        .container_ifelse {
+            text-align: center;
+        }
+
+        .image-containerIfelse {
+            padding: 5px;
+            display: inline-block;
+            margin: 10px 2px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            /* Agregamos una transición suave */
+        }
+
+        .image-containerIfelse.selectedIfelse {
+            border: 2px solid #00bcd4;
+            border-radius: 5px;
+            /* Color celeste */
+            transform: scale(1.1);
+            /* Aumentar el tamaño al seleccionar */
+        }
+
+        /* Aumentar teclado Ifelse */
 
 
         /* Inicio teclado Audio */
@@ -861,6 +923,9 @@
             player.x = canvas.width / 2;
             player.y = canvas.height / 2;
 
+            // Restablece la rotación a cero (posición inicial)
+            player.rotation = 0;
+
             // Restablece el zoom al valor original
             canvas.style.transform = "scale(1)";
             lastScale = 1;
@@ -884,11 +949,12 @@
     <a href="javascript:abrirModalGuardar()">
         <img src="img/atras.png" alt="atras">
     </a>
-    <input type="text" value="Nuevo Proyecto" id="nombre_proyecto" onclick="cambiarCategoriaSeleccionada('n3')"
-           readonly>
+    <input type="text" value="Nuevo Proyecto" id="nombre_proyecto" onclick="abrirModalGuardar()" readonly>
+
     <a href="javascript:activarBluethoo()">
-        <img src="img/bluetooth.png" alt="Otro">
+        <img id="bluetoothImage" src="img/bluetooth_des.png" alt="Otro" width="32" height="32">
     </a>
+
 </div>
 
 
@@ -914,11 +980,13 @@
 
 <div id="tecladoNumerico" class="modal">
     <div class="fila">
-        <input class="pantalla_teclado" type="number" id="inputNuevo">
+        <input class="pantalla_teclado" type="number" id="inputNuevo" readonly>
     </div>
     <div class="fila">
-        <button class="borrar-todo btn-borrar-todo btn-borrar">Borrar</button>
-        <button class="borrar btn-borrar"> <- </button>
+        <button class="borrar-todo btn-borrar-todo btn-borrar"><img src="img/actualizar.png" alt="">
+            <p>Borrar</p>
+        </button>
+        <button class="borrar btn-borrar"><img src="img/borrar.png" alt=""></button>
     </div>
     <div class="fila">
         <button class="numero">7</button>
@@ -949,10 +1017,10 @@
 <div id="tecladoSlider" class="modal">
     <div class="modal_slider">
         <div class="slider-container">
-            <div id="slider-value"><input class="numero_slider" type="number" id="slider-value-span"
-                                          value="20"><span>
+            <div id="slider-value"><input class="numero_slider" type="number" id="slider-value-span" value="20"
+                                          readonly><span>
                         cm</span></div>
-            <input type="range" id="custom-slider" min="-20" max="20" value="20" step="1" />
+            <input type="range" id="custom-slider" min="-20" max="20" value="20" step="1" readonly />
             <div id="image-container">
                 <img src="" alt="Imagen" id="slider-image">
             </div>
@@ -1268,11 +1336,11 @@ Fin teclado Repetir -->
 
 
     <div>
-        <input type="text" id="colorInput" onchange="selectColorFromInput()">
-        <input type="text" id="colorRojo" onchange="selectColorFromInput()" hidden>
-        <input type="text" id="colorVerde" onchange="selectColorFromInput()" hidden>
-        <input type="text" id="colorAzul" onchange="selectColorFromInput()" hidden>
-        <input type="text" id="estadoF" onchange="selectFocoEsFromInput()">
+        <input type="text" id="colorInput" onchange="selectColorFromInput()" hidden readonly>
+        <input type="text" id="colorRojo" onchange="selectColorFromInput()" hidden readonly>
+        <input type="text" id="colorVerde" onchange="selectColorFromInput()" hidden readonly>
+        <input type="text" id="colorAzul" onchange="selectColorFromInput()" hidden readonly>
+        <input type="text" id="estadoF" onchange="selectFocoEsFromInput()" hidden readonly>
     </div>
     <div class="contenedor_cerrar">
         <button id="cerrarModal5">x</button>
@@ -1540,12 +1608,13 @@ Fin teclado Repetir -->
         <div class="image-containerRotulador False" onclick="selectRotulador('False')">
             <img src="img/marcador_subir_n1.png" alt="Encendido" width="65" height="65">
         </div>
+        <br>
     </div>
 
 
 
     <div>
-        <input type="text" id="rotuladorInput" onchange="selectRotuladorFromInput()">
+        <input type="text" id="rotuladorInput" onchange="selectRotuladorFromInput()" hidden readonly>
     </div>
     <div class="contenedor_cerrar">
         <button id="cerrarModal8">x</button>
@@ -1631,6 +1700,110 @@ Fin teclado Repetir -->
 
 <!-- Fin teclado rotulador -->
 
+<!-- Inicio teclado ifelse -->
+
+<div id="tecladoIfelse" class="modal">
+
+    <div class="container_ifelse">
+        <div class="image-containerIfelse True" onclick="selectIfelse('True')">
+            <img src="img/if.png" alt="Apagado" width="65" height="65">
+        </div>
+
+        <div class="image-containerIfelse False" onclick="selectIfelse('False')">
+            <img src="img/else.png" alt="Encendido" width="65" height="65">
+        </div>
+        <br>
+    </div>
+
+
+
+    <div>
+        <input type="text" id="ifelseInput" onchange="selectIfelseFromInput()" hidden readonly>
+    </div>
+    <div class="contenedor_cerrar">
+        <button id="cerrarModal9">x</button>
+    </div>
+</div>
+
+<script>
+
+        var selectedIfelse = null;
+        const tecladoIfelse = document.getElementById('tecladoIfelse');
+
+        function selectIfelse(estadoIfelse) {
+            console.log('Hola seleccionado:', estadoIfelse);
+            resetIfelseBoxes(); // Deseleccionar todos los cuadros
+            document.querySelector('.image-containerIfelse.' + estadoIfelse).classList.add('selectedIfelse');
+            selectedIfelse = estadoIfelse;
+            updateIfelseInput(estadoIfelse); // Nueva línea para actualizar el input
+            // Puedes realizar otras acciones aquí con el estadoIfelse seleccionado
+
+            if (selectedBlock && selectedBlockFieldName) {
+                const newValue = selectedIfelse;
+
+                if (newValue) {
+                    selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                } else {
+                    console.log("Error")
+                }
+            }
+        }
+
+        const inputIfelse1 = document.getElementById('ifelseInput');
+
+        function selectIfelseFromInput() {
+
+            var inputIfelse = document.getElementById('ifelseInput').value;
+            var validIfelse = ['True', 'False'];
+
+            if (validIfelse.includes(inputIfelse)) {
+                console.log('rotulador seleccionado:', inputIfelse);
+                resetIfelseBoxes(); // Deseleccionar todos los cuadros
+                document.querySelector('.image-containerIfelse.' + inputIfelse).classList.add('selectedIfelse');
+                selectedIfelse = inputIfelse;
+                // Puedes realizar otras acciones aquí con el sonido seleccionado
+            } else {
+                console.log('rotulador no válido. Por favor, ingrese un estado válido.');
+            }
+
+            if (selectedBlock && selectedBlockFieldName) {
+                const newValue = selectedIfelse;
+
+                if (newValue) {
+                    selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                } else {
+                    console.log("Error")
+                }
+            }
+
+            updateIfelseInput(inputIfelse); // Nueva línea para actualizar el input
+        }
+
+        function resetIfelseBoxes() {
+            var ifelseBoxes = document.querySelectorAll('.image-containerIfelse');
+            ifelseBoxes.forEach(function (box) {
+                box.classList.remove('selectedIfelse');
+            });
+        }
+
+        function updateIfelseInput(estadoIfelse) {
+            document.getElementById('ifelseInput').value = estadoIfelse;
+        }
+
+        // Agregar un evento de entrada al input para actualizar la selección
+        document.getElementById('ifelseInput').addEventListener('input', function () {
+            selectIfelseFromInput();
+        });
+
+
+        document.querySelector("#cerrarModal9").addEventListener("click", () => {
+            tecladoIfelse.style.display = "none";
+
+        });
+    </script>
+
+<!-- Fin teclado ifelse -->
+
 
 <!-- Inicio teclado audio -->
 
@@ -1667,13 +1840,8 @@ Fin teclado Repetir -->
         </div>
     </div>
 
-
     <div>
-        <label for="audioInput">Ingrese el color: </label>
-    </div>
-
-    <div>
-        <input type="text" id="audioInput" onchange="selectAudioFromInput()">
+        <input type="text" id="audioInput" onchange="selectAudioFromInput()" hidden readonly>
     </div>
     <div class="contenedor_cerrar">
         <button id="cerrarModal6">x</button>
@@ -1769,6 +1937,7 @@ Fin teclado Repetir -->
 
 <xml id="toolbox" style="display: none">
     <category name="Nivel 1">
+
         <block type="play_n1"></block>
         <block type="avanzar_n1"></block>
         <block type="girar_derecha_n1"></block>
@@ -1780,9 +1949,12 @@ Fin teclado Repetir -->
 
         <block type="repetir_n1"></block>
         <block type="esperar_n1"></block>
+        <block type="condicionalIf_n1"></block>
+        <block type="condicionalIfElse_n1"></block>
 
     </category>
     <category name="Nivel 2">
+
         <block type="play_n2"></block>
         <block type="avanzar_n2"></block>
         <block type="girar_derecha_n2"></block>
@@ -1794,9 +1966,12 @@ Fin teclado Repetir -->
 
         <block type="repetir_n2"></block>
         <block type="esperar_n2"></block>
+        <block type="condicionalIf_n2"></block>
+        <block type="condicionalIfElse_n2"></block>
     </category>
 
     <category name="Nivel 3">
+
         <block type="play_n3"></block>
         <block type="avanzar_n3"></block>
         <block type="girar_izquierda_n3"></block>
@@ -1808,6 +1983,8 @@ Fin teclado Repetir -->
 
         <block type="repetir_n3"></block>
         <block type="esperar_n3"></block>
+        <block type="condicionalIf_n3"></block>
+        <block type="condicionalIfElse_n3"></block>
     </category>
 
 </xml>
@@ -1880,6 +2057,21 @@ Fin teclado Repetir -->
             Android.activarBluethoo();
         }
 
+        function bluetoothActivo() {
+            // Obtener el elemento de la imagen por su id
+            var imagen = document.getElementById("bluetoothImage");
+            // Cambiar la fuente de la imagen
+            imagen.src = "img/bluetooth_act.png";
+
+        }
+
+        function bluetoothDesactivo() {
+            // Obtener el elemento de la imagen por su id
+            var imagen = document.getElementById("bluetoothImage");
+            // Cambiar la fuente de la imagen
+            imagen.src = "img/bluetooth_des.png";
+
+        }
 
 
 
@@ -1943,43 +2135,43 @@ Fin teclado Repetir -->
 <script>
         var categoriaActual = 'Niveln1'; // Variable para almacenar la categoría actual
 
-function cambiarCategoria(categoria) {
-    // Verificar si la categoría seleccionada es diferente de la actual
-    if (categoria !== categoriaActual) {
-        var xml = Blockly.Xml.workspaceToDom(workspace);
-        var bloques = xml.getElementsByTagName('block');
+        function cambiarCategoria(categoria) {
+            // Verificar si la categoría seleccionada es diferente de la actual
+            if (categoria !== categoriaActual) {
+                var xml = Blockly.Xml.workspaceToDom(workspace);
+                var bloques = xml.getElementsByTagName('block');
 
-        function cambiarTipo(index) {
-            if (index < bloques.length) {
-                var blockNode = bloques[index];
-                var tipoOriginal = blockNode.getAttribute('type');
-                var nuevoTipo = cambiarTipoCategoria(tipoOriginal, categoria);
-                blockNode.setAttribute('type', nuevoTipo);
+                function cambiarTipo(index) {
+                    if (index < bloques.length) {
+                        var blockNode = bloques[index];
+                        var tipoOriginal = blockNode.getAttribute('type');
+                        var nuevoTipo = cambiarTipoCategoria(tipoOriginal, categoria);
+                        blockNode.setAttribute('type', nuevoTipo);
 
-                // Recarga los bloques en el espacio de trabajo después de cambiar el tipo
-                Blockly.Xml.clearWorkspaceAndLoadFromXml(xml, workspace);
+                        // Recarga los bloques en el espacio de trabajo después de cambiar el tipo
+                        Blockly.Xml.clearWorkspaceAndLoadFromXml(xml, workspace);
 
-                // Llama recursivamente para el siguiente bloque después de un pequeño retraso
-                setTimeout(function () {
-                    cambiarTipo(index + 1);
-                }, 0.1);  // Ajusta el tiempo de espera según sea necesario
-            } else {
-                // Actualiza la categoría actual después de cambiar todos los bloques
-                categoriaActual = categoria;
+                        // Llama recursivamente para el siguiente bloque después de un pequeño retraso
+                        setTimeout(function () {
+                            cambiarTipo(index + 1);
+                        }, 0.1);  // Ajusta el tiempo de espera según sea necesario
+                    } else {
+                        // Actualiza la categoría actual después de cambiar todos los bloques
+                        categoriaActual = categoria;
+                    }
+                }
+
+                // Inicia el proceso de cambio de tipo desde el primer bloque
+                cambiarTipo(0);
             }
         }
 
-        // Inicia el proceso de cambio de tipo desde el primer bloque
-        cambiarTipo(0);
-    }
-}
-
-function cambiarTipoCategoria(tipoOriginal, nuevaCategoria) {
-    var sufijoActual = tipoOriginal.slice(-2);
-    var nuevoSufijo = nuevaCategoria.slice(-2);
-    var nuevoTipo = tipoOriginal.replace(sufijoActual, nuevoSufijo);
-    return nuevoTipo;
-}
+        function cambiarTipoCategoria(tipoOriginal, nuevaCategoria) {
+            var sufijoActual = tipoOriginal.slice(-2);
+            var nuevoSufijo = nuevaCategoria.slice(-2);
+            var nuevoTipo = tipoOriginal.replace(sufijoActual, nuevoSufijo);
+            return nuevoTipo;
+        }
 
 
     </script>
@@ -2187,7 +2379,7 @@ function cambiarTipoCategoria(tipoOriginal, nuevaCategoria) {
                 wheel: true,
                 startScale: 1,
                 maxScale: 3,
-                minScale: 0.3,
+                minScale: 0.9,
                 scaleSpeed: 1.2
             }
         };
@@ -2825,6 +3017,191 @@ toXml();
                 }
             }
         };
+
+
+        Blockly.Blocks['condicionalIf_n1'] = {
+            init: function () {
+                var block = this;
+                this.appendStatementInput("condicional")
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("True", this.handleTextInputChange.bind(this)), "ESTADO_IF")
+                    .setVisible(false);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour('#DF7A0D');
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ESTADO_IF";
+                this.customFieldValue = "True";
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState("True");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ESTADO_IF";
+                tecladoIfelse.style.display = "block";
+                slider.value = this.getFieldValue("ESTADO_IF");
+                inputIfelse1.value = this.getFieldValue("ESTADO_IF");
+                inputIfelse1.dispatchEvent(new Event('input'));
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(inputIfelse1.value);
+            },
+            handleTextInputChange: function (newValue) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(newValue);
+            },
+            updateImageState: function (value) {
+
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === "True") {
+                    estadoImagen.setValue("img/if.png");
+                }
+                else {
+                    estadoImagen.setValue("img/else.png");
+                }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+        Blockly.Blocks['condicionalIfElse_n1'] = {
+            init: function () {
+                var block = this;
+                this.appendStatementInput("condicional")
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 20, 20, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldTextInput("True", this.handleTextInputChange.bind(this)), "ESTADO_IF")
+                    .setVisible(false);
+                this.appendStatementInput("condicionalelse")
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField(new Blockly.FieldImage("", 20, 20, "*"), "ESTADO_IMAGEN2");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour('#DF7A0D');
+                this.setTooltip("");
+                this.setHelpUrl("");
+                this.customFieldName = "ESTADO_IF";
+                this.customFieldValue = "True";
+
+
+                // Configuramos el estado inicial de la imagen del bloque
+                this.updateImageState("True");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            handleImageClick: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "ESTADO_IF";
+                tecladoIfelse.style.display = "block";
+                slider.value = this.getFieldValue("ESTADO_IF");
+                inputIfelse1.value = this.getFieldValue("ESTADO_IF");
+                inputIfelse1.dispatchEvent(new Event('input'));
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(inputIfelse1.value);
+            },
+            handleTextInputChange: function (newValue) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio en el campo de texto: " + newValue);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(newValue);
+            },
+            updateImageState: function (value) {
+
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen = this.getField("ESTADO_IMAGEN");
+                if (value === "True") {
+                    estadoImagen.setValue("img/if.png");
+                }
+                else {
+                    estadoImagen.setValue("img/else.png");
+                }
+
+                // Actualizamos la imagen del bloque según el valor
+                const estadoImagen2 = this.getField("ESTADO_IMAGEN2");
+                if (value != "True") {
+                    estadoImagen2.setValue("img/if.png");
+                }
+                else {
+                    estadoImagen2.setValue("img/else.png");
+                }
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
 
         Blockly.Blocks['repetir_n1'] = {
             init: function () {
@@ -3700,6 +4077,121 @@ toXml();
             }
         };
 
+        Blockly.Blocks['condicionalIf_n2'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .appendField("si")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["True", "True"],
+                        ["False", "False"]
+                    ]), "ESTADO_IF")
+                    .appendField(" ");
+                this.appendStatementInput("condicional")
+                    .setCheck(null);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour('#DF7A0D');
+                this.setTooltip("Cambiar el sonido");
+                this.setHelpUrl("");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+        Blockly.Blocks['condicionalIfElse_n2'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .appendField("si")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["Verdadero", "True"],
+                        ["Falso", "False"]
+                    ]), "ESTADO_IF")
+                    .appendField(" ");
+                this.appendStatementInput("condicional")
+                    .setCheck(null);
+                this.appendDummyInput()
+                    .appendField("si no ");
+                this.appendStatementInput("condicionalelse")
+                    .setCheck(null);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour('#DF7A0D');
+                this.setTooltip("if else");
+                this.setHelpUrl("");
+                //para contraer el bloque inicialmente
+                this.setCollapsed(true);
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        //Se descontrae
+                        this.setCollapsed(false);
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+
         //  Bloques Nivel 3
 
         Blockly.Blocks['play_n3'] = {
@@ -3991,6 +4483,122 @@ toXml();
                 }
             }
         };
+
+        Blockly.Blocks['condicionalIf_n3'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .appendField("if(")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["True", "True"],
+                        ["False", "False"]
+                    ]), "ESTADO_IF")
+                    .appendField("):");
+                this.appendStatementInput("condicional")
+                    .setCheck(null);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour('#DF7A0D');
+                this.setTooltip("Cambiar el sonido");
+                this.setHelpUrl("");
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+        Blockly.Blocks['condicionalIfElse_n3'] = {
+            init: function () {
+                var block = this;
+                this.appendDummyInput()
+                    .appendField("if(")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["True", "True"],
+                        ["False", "False"]
+                    ]), "ESTADO_IF")
+                    .appendField("):");
+                this.appendStatementInput("condicional")
+                    .setCheck(null);
+                this.appendDummyInput()
+                    .appendField("else:");
+                this.appendStatementInput("condicionalelse")
+                    .setCheck(null);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setEnabled(true); // Activar inicialmente
+                this.setColour('#DF7A0D');
+                this.setTooltip("if else");
+                this.setHelpUrl("");
+                //para contraer el bloque inicialmente
+                this.setCollapsed(true);
+
+                // Agregar onchange handler para el bloque
+                this.setOnChange(function (changeEvent) {
+                    block.checkConnection();
+                });
+            },
+            checkConnection: function () {
+                // Verifica si el bloque está en el espacio de trabajo
+                var inWorkspace = this.workspace && !this.isInFlyout;
+
+                if (inWorkspace) {
+
+                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
+                    if (!this.previousConnection.isConnected()) {
+
+                        this.setEnabled(false);
+                        this.setWarningText("Este bloque debe estar dentro de un evento.");
+                    } else {
+                        //Se descontrae
+                        this.setCollapsed(false);
+                        // Si está conectado, verifica si el bloque al que está conectado está activo
+                        var connectedBlock = this.previousConnection.targetBlock();
+                        if (connectedBlock && connectedBlock.isEnabled()) {
+                            this.setEnabled(true);
+                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                        } else {
+                            // Si el bloque al que está conectado no está activo, desactiva el bloque
+                            this.setEnabled(false);
+                            this.setWarningText("Este bloque debe estar dentro de un evento.");
+                        }
+                    }
+                } else {
+                    this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
+                    this.setWarningText(null); // Limpiar el mensaje de advertencia
+                }
+            }
+        };
+
+
 
         Blockly.Blocks['foco_n3'] = {
             init: function () {
@@ -4293,22 +4901,29 @@ toXml();
         };
 
 
-
-
         var MusicMaker = {
+            // Crear una propiedad para almacenar la instancia de Audio.
+            audio: new Audio(),
+
             // Esta función añade el sonido a la cola para reproducir.
             queueSound: function (soundFile) {
-                // Aquí puedes implementar la lógica para reproducir el sonido.
-                // Puedes utilizar la etiqueta de audio de HTML para reproducir el sonido.
-                // A continuación, se proporciona un ejemplo básico utilizando la etiqueta de audio.
+                // Establecer la ruta del archivo de sonido.
+                this.audio.src = 'sounds/' + soundFile;
 
-                // Crear un elemento de audio.
-                var audio = new Audio('sounds/' + soundFile);
+                // Agregar un evento de carga para asegurarse de que el sonido se haya cargado antes de intentar reproducirlo.
+                this.audio.addEventListener('canplay', function () {
+                    // Reproducir el sonido después de que se haya cargado completamente.
+                    MusicMaker.audio.play();
+                });
 
-                // Reproducir el sonido.
-                audio.play();
+                // Intentar reproducir el sonido (en caso de que ya esté en caché).
+                this.audio.play();
             }
         };
+
+
+
+
 
 
     </script>
@@ -4319,7 +4934,7 @@ toXml();
         //  Bloques Nivel 1
 
         Blockly.JavaScript['play_n1'] = function (block) {
-            var code = '';
+            var code = '\n';
             code += 'inicio();\n';
             // Generar el código dentro del bloque 'cuerpo'
             code += Blockly.JavaScript.statementToCode(block, 'cuerpo');
@@ -4388,29 +5003,61 @@ toXml();
             return code;
         };
 
+
+        Blockly.JavaScript['condicionalIf_n1'] = function (block) {
+            var estadoIf = block.getFieldValue('ESTADO_IF');
+            var code = '';
+
+            if (estadoIf === 'True') {
+                // Si ESTADO_IF es True, generar código para ejecutar los bloques internos
+                code += Blockly.JavaScript.statementToCode(block, 'condicional');
+            }
+
+            return code;
+        };
+
+        Blockly.JavaScript['condicionalIfElse_n1'] = function (block) {
+            var estadoIf = block.getFieldValue('ESTADO_IF');
+            var code = '';
+
+            if (estadoIf === 'True') {
+                // Si ESTADO_IF es True, generar código para ejecutar los bloques en la rama "condicional"
+                code += Blockly.JavaScript.statementToCode(block, 'condicional');
+            } else {
+                // Si ESTADO_IF es False, generar código para ejecutar los bloques en la rama "condicionalelse"
+                code += Blockly.JavaScript.statementToCode(block, 'condicionalelse');
+            }
+
+            return code;
+        };
+
+
+
         //  Bloques Nivel 2
 
         Blockly.JavaScript['play_n2'] = function (block) {
-            // Generar el código para el bloque personalizado 'play_n3'
-            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
+            var code = '\n';
+            code += 'inicio();\n';
+            // Generar el código dentro del bloque 'cuerpo'
+            code += Blockly.JavaScript.statementToCode(block, 'cuerpo');
             return code;
         };
 
         Blockly.JavaScript['avanzar_n2'] = function (block) {
             const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
-            var code = 'movePlayer(' + customStepSize + ');';
+            var code = 'movePlayer(' + customStepSize + ');\n';
             return code;
         };
 
         Blockly.JavaScript['girar_derecha_n2'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO'));
-            var code = 'rotateRight(' + angle + ');';
+            var code = 'rotateRight(' + angle + ');\n';
             return code;
         };
 
         Blockly.JavaScript['girar_izquierda_n2'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
-            var code = 'rotateRight(' + angle + ');';
+            var code = 'rotateRight(' + angle + ');\n';
             return code;
         };
 
@@ -4421,7 +5068,7 @@ toXml();
             const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
 
             // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');\n';
 
             return code;
         };
@@ -4450,35 +5097,64 @@ toXml();
 
         Blockly.JavaScript['esperar_n2'] = function (block) {
             const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
-            var code = 'esperar(' + tiempoEspera + ');';
+            var code = 'esperar(' + tiempoEspera + ');\n';
             return code;
         };
 
+
+
+        Blockly.JavaScript['condicionalIf_n2'] = function (block) {
+            var estadoIf = block.getFieldValue('ESTADO_IF');
+            var code = '';
+
+            if (estadoIf === 'True') {
+                // Si ESTADO_IF es True, generar código para ejecutar los bloques internos
+                code += Blockly.JavaScript.statementToCode(block, 'condicional');
+            }
+
+            return code;
+        };
+        Blockly.JavaScript['condicionalIfElse_n2'] = function (block) {
+            var estadoIf = block.getFieldValue('ESTADO_IF');
+            var code = '';
+
+            if (estadoIf === 'True') {
+                // Si ESTADO_IF es True, generar código para ejecutar los bloques en la rama "condicional"
+                code += Blockly.JavaScript.statementToCode(block, 'condicional');
+            } else {
+                // Si ESTADO_IF es False, generar código para ejecutar los bloques en la rama "condicionalelse"
+                code += Blockly.JavaScript.statementToCode(block, 'condicionalelse');
+            }
+
+            return code;
+        };
 
 
         //  Bloques Nivel 3
 
         Blockly.JavaScript['play_n3'] = function (block) {
-            // Generar el código para el bloque personalizado 'play_n3'
-            var code = Blockly.JavaScript.statementToCode(block, 'cuerpo');
+            var code = '\n';
+            code += 'inicio();\n';
+            // Generar el código dentro del bloque 'cuerpo'
+            code += Blockly.JavaScript.statementToCode(block, 'cuerpo');
             return code;
         };
 
         Blockly.JavaScript['avanzar_n3'] = function (block) {
             const customStepSize = parseFloat(block.getFieldValue('DISTANCIA'));
-            var code = 'movePlayer(' + customStepSize + ');';
+            var code = 'movePlayer(' + customStepSize + ');\n';
             return code;
         };
 
         Blockly.JavaScript['girar_derecha_n3'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO'));
-            var code = 'rotateRight(' + angle + ');';
+            var code = 'rotateRight(' + angle + ');\n';
             return code;
         };
 
         Blockly.JavaScript['girar_izquierda_n3'] = function (block) {
             var angle = parseInt(block.getFieldValue('ANGULO')); // Cambié el nombre del campo
-            var code = 'rotateRight(' + angle + ');';
+            var code = 'rotateRight(' + angle + ');\n';
             return code;
         };
 
@@ -4489,7 +5165,7 @@ toXml();
             const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
 
             // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');';
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');\n';
 
             return code;
         };
@@ -4518,9 +5194,37 @@ toXml();
 
         Blockly.JavaScript['esperar_n3'] = function (block) {
             const tiempoEspera = parseFloat(block.getFieldValue('ESPERAR'));
-            var code = 'esperar(' + tiempoEspera + ');';
+            var code = 'esperar(' + tiempoEspera + ');\n';
             return code;
         };
+
+        Blockly.JavaScript['condicionalIf_n3'] = function (block) {
+            var estadoIf = block.getFieldValue('ESTADO_IF');
+            var code = '';
+
+            if (estadoIf === 'True') {
+                // Si ESTADO_IF es True, generar código para ejecutar los bloques internos
+                code += Blockly.JavaScript.statementToCode(block, 'condicional');
+            }
+
+            return code;
+        };
+
+        Blockly.JavaScript['condicionalIfElse_n3'] = function (block) {
+            var estadoIf = block.getFieldValue('ESTADO_IF');
+            var code = '';
+
+            if (estadoIf === 'True') {
+                // Si ESTADO_IF es True, generar código para ejecutar los bloques en la rama "condicional"
+                code += Blockly.JavaScript.statementToCode(block, 'condicional');
+            } else {
+                // Si ESTADO_IF es False, generar código para ejecutar los bloques en la rama "condicionalelse"
+                code += Blockly.JavaScript.statementToCode(block, 'condicionalelse');
+            }
+
+            return code;
+        };
+
 
 
     </script>
@@ -4939,6 +5643,11 @@ toXml();
                             setTimeout(function () {
                                 executeBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
                             }, tiempoEspera);
+                        } else if (codeBlocks[index].includes("MusicMaker")) {
+                            eval(codeBlocks[index]);
+                            setTimeout(function () {
+                                executeBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                            }, 2000);
                         } else {
                             eval(codeBlocks[index]);
                             setTimeout(function () {

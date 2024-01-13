@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -303,6 +304,21 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
 
+    // Método para llamar a la función JavaScript
+    private void bluetoothActivado() {
+        // La función que se va a llamar en JavaScript
+        String funcionJavascript = "bluetoothActivo();";
+        // Ejecutar la función JavaScript
+        wv1.evaluateJavascript(funcionJavascript, null);
+    }
+
+    private void bluetoothDesactivado() {
+        // La función que se va a llamar en JavaScript
+        String funcionJavascript = "bluetoothDesactivo();";
+        // Ejecutar la función JavaScript
+        wv1.evaluateJavascript(funcionJavascript, null);
+    }
+
 
 
     //Inicio de Codigo Bluethoo
@@ -419,9 +435,21 @@ public class MainActivity2 extends AppCompatActivity {
             btSocket.connect();
             MyConexionBT = new ConnectedThread(btSocket);
             MyConexionBT.start();
+
+            // Obtén una referencia al ImageView
+            ImageView imageView4 = findViewById(R.id.imageView4);
+            // Cambia la imagen programáticamente
+            imageView4.setImageResource(R.drawable.bluetooth_act);
+
+
             showToast("Conexión exitosa.");
+            bluetoothActivado();
         } catch (IOException e) {
+            ImageView imageView4 = findViewById(R.id.imageView4);
+            // Cambia la imagen programáticamente
+            imageView4.setImageResource(R.drawable.bluetooth_des);
             showToast("Error al conectar con el dispositivo.");
+            bluetoothDesactivado();
         }
     }
 
