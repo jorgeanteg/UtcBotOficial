@@ -312,12 +312,14 @@ public class MainActivity2 extends AppCompatActivity {
         wv1.evaluateJavascript(funcionJavascript, null);
     }
 
+
     private void bluetoothDesactivado() {
         // La función que se va a llamar en JavaScript
         String funcionJavascript = "bluetoothDesactivo();";
         // Ejecutar la función JavaScript
         wv1.evaluateJavascript(funcionJavascript, null);
     }
+
 
 
 
@@ -453,8 +455,12 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
+    // ...
+
     private class ConnectedThread extends Thread {
+        private final InputStream mmInStream;
         private final OutputStream mmOutStream;
+
         ConnectedThread(BluetoothSocket socket) {
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -466,8 +472,41 @@ public class MainActivity2 extends AppCompatActivity {
                 showToast("Error al crear el flujo de datos.");
             }
 
+            mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
+
+        public void run() {
+            byte[] buffer = new byte[1024]; // Tamaño del buffer, puedes ajustarlo según tus necesidades
+            int bytes;
+
+            while (true) {
+                try {
+                    bytes = mmInStream.read(buffer); // Esta línea bloqueará hasta que haya datos disponibles para leer
+
+                    // Procesar los datos recibidos, por ejemplo, convirtiéndolos a una cadena
+                    String receivedData = new String(buffer, 0, bytes);
+                    // Validar si receivedData es igual a "evento1" o "evento2" o "evento3"
+                    receivedData = receivedData.trim();
+
+                    if ("evento1".equals(receivedData)) {
+                        handleEvento1(receivedData);
+                    } else if ("evento2".equals(receivedData)) {
+                        handleEvento2(receivedData);
+                    } else if ("evento3".equals(receivedData)) {
+                        handleEvento3(receivedData);
+                    } else {
+                        showToast("Evento Desconocido");
+                    }
+
+                } catch (IOException e) {
+                    showToast("La conexión falló");
+                    finish();
+                    break;
+                }
+            }
+        }
+
         public void write(String message) {
             try {
                 mmOutStream.write(message.getBytes());
@@ -476,8 +515,56 @@ public class MainActivity2 extends AppCompatActivity {
                 finish();
             }
         }
-
     }
+
+// ...
+
+
+    private void handleEvento1(String data) {
+        // Procesar los datos recibidos aquí
+        // Por ejemplo, mostrarlos en un TextView o realizar alguna acción en base a los datos recibidos
+        showToast("Datos recibidos: " + data);
+
+        // Enviar datos al WebView
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                    // Ejecuta la función receiveData en la página web
+                    wv1.evaluateJavascript("playActivarSimuladorEvento1()", null);
+
+            }
+        });
+    }
+
+    private void handleEvento2(String data) {
+        showToast("Datos recibidos: " + data);
+        // Enviar datos al WebView
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Ejecuta la función receiveData en la página web
+                wv1.evaluateJavascript("runCodeEvento2()", null);
+            }
+        });
+    }
+
+    private void handleEvento3(String data) {
+        showToast("Datos recibidos: " + data);
+        // Enviar datos al WebView
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Ejecuta la función receiveData en la página web
+                wv1.evaluateJavascript("runCodeEvento3()", null);
+            }
+        });
+    }
+
+
+
+
+
     private void showToast(final String message) {
         runOnUiThread(new Runnable() {
             @Override
