@@ -179,6 +179,34 @@
             height: auto;
         }
 
+        .floating-stop {
+            position: fixed;
+            bottom: 130px;
+            left: 10px;
+            background-color: transparent;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 42px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 60px;
+            text-decoration: none;
+            cursor: pointer;
+            border: 5px solid #383838;
+            z-index: 999;
+
+            /* Añadí estilos de flexbox para centrar la imagen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .floating-stop img {
+            width: 20px;
+            height: auto;
+        }
+
 
         .floating-guardar {
             position: fixed;
@@ -208,9 +236,21 @@
             height: 99%;
         }
 
+        /* Para cerrar modales */
+        #fondoTransparente {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Color negro con transparencia */
+            z-index: 999;
+            /* Para asegurarse de que esté encima de todo */
+        }
 
 
-        /* Teclaco numerico */
 
         .modal {
             display: none;
@@ -226,6 +266,7 @@
             border-color: transparent;
             box-shadow: 0px 10px 22px 5px rgba(0, 0, 0, 0.1);
         }
+
 
         input {
             border: none;
@@ -478,17 +519,7 @@
             position: relative;
         }
 
-        #rep-slider-value {
-            margin-top: -2px;
-            position: absolute;
-            width: 100%;
-            top: 50%;
-            left: 42%;
-            transform: translate(-50%, -50%);
-            font-size: 20px;
-            font-weight: 600;
-            z-index: 1;
-        }
+
 
         #rep-slider-image {
             max-width: 100%;
@@ -514,32 +545,19 @@
         }
 
         #esp-image-container {
-            position: relative;
             margin-bottom: 5px;
         }
 
-        #esp-slider-value-span {
-            margin-top: -2px;
-            position: absolute;
-            width: 22px;
-            top: 50%;
-            left: 42%;
-            transform: translate(10%, -30%);
-            font-size: 20px;
-            font-weight: 600;
-            z-index: 1;
+        #esp-image-container img {
+            width: 60px;
         }
 
         .esp-slider-value p {
-            margin-top: -2px;
-            position: absolute;
-            width: 15px;
-            top: 50%;
-            left: 42%;
-            transform: translate(20%, 50%);
-            font-size: 17px;
-            z-index: 1;
-        }
+        display: inline-block;
+        margin: 0;
+        margin-left: 3px;
+    }
+
 
         #esp-slider-image {
             max-width: 100%;
@@ -631,6 +649,15 @@
             background-color: white;
         }
 
+
+        .container_sliderFoco {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
         /* Fin teclado prender luz */
 
 
@@ -684,6 +711,29 @@
 
 
         /* Inicio teclado Audio */
+        .container_audio {
+            text-align: center;
+        }
+
+        .image-containerAudio {
+            padding: 4px;
+            display: inline-block;
+            margin: 10px 2px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            /* Agregamos una transición suave */
+        }
+
+        .image-containerAudio.selectedAudio {
+            border: 2px solid #00bcd4;
+            /* Color celeste */
+            border-radius: 5px;
+            transform: scale(1.1);
+            /* Aumentar el tamaño al seleccionar */
+        }
+
+
+
         .image-container {
             text-align: center;
         }
@@ -928,7 +978,7 @@
         function applyZoom() {
             // Limita el valor mínimo y máximo de escala
             const minScale = 0.1;
-            const maxScale = 3.0;
+            const maxScale = 1.5;
             lastScale = Math.max(minScale, Math.min(maxScale, lastScale));
 
             // Aplica el zoom al canvas
@@ -958,9 +1008,14 @@
 
     </script>
 
-<button class="floating-play" onclick="playActivarSimulador()">
-    <img src="img/play.png" alt="">
+<button id="play_button" class="floating-play" onclick="playActivarSimulador()">
+    <img id="play_button_img" src="img/playDesactivo.png" alt="">
 </button>
+
+<button  class="floating-stop" onclick="detenerEjecucion()">
+    <img src="img/stopPlay.png" alt="">
+</button>
+
 
 <div class="floating-container">
     <a href="javascript:abrirModalGuardar()">
@@ -993,17 +1048,16 @@
 
 
 
+
 <a href="#" class="floating-button" id="toggle-button">Botón</a>
 
 <div id="tecladoNumerico" class="modal">
     <div class="fila">
-        <input class="pantalla_teclado" type="number" id="inputNuevo" readonly>
+        <input class="pantalla_teclado" type="number" id="inputNuevo">
     </div>
     <div class="fila">
-        <button class="borrar-todo btn-borrar-todo btn-borrar"><img src="img/actualizar.png" alt="">
-            <p>Borrar</p>
-        </button>
-        <button class="borrar btn-borrar"><img src="img/borrar.png" alt=""></button>
+        <button class="borrar-todo btn-borrar-todo btn-borrar">Borrar</button>
+        <button class="borrar btn-borrar"> <- </button>
     </div>
     <div class="fila">
         <button class="numero">7</button>
@@ -1034,10 +1088,10 @@
 <div id="tecladoSlider" class="modal">
     <div class="modal_slider">
         <div class="slider-container">
-            <div id="slider-value"><input class="numero_slider" type="number" id="slider-value-span" value="20"
-                                          readonly><span>
+            <div id="slider-value"><input class="numero_slider" type="number" id="slider-value-span"
+                                          value="20"><span>
                         cm</span></div>
-            <input type="range" id="custom-slider" min="-20" max="20" value="20" step="1" readonly />
+            <input type="range" id="custom-slider" min="-20" max="20" value="20" step="1" />
             <div id="image-container">
                 <img src="" alt="Imagen" id="slider-image">
             </div>
@@ -1052,7 +1106,21 @@
     </div>
 </div>
 
+
 <script>
+
+        let currentModal = null;
+
+        function openModal(modalId) {
+            if (currentModal) {
+                document.getElementById(currentModal).style.display = 'none';
+            }
+
+            document.getElementById(modalId).style.display = 'block';
+            currentModal = modalId;
+        }
+
+
         const slider = document.getElementById('custom-slider');
         const sliderValueSpan = document.getElementById('slider-value-span');
         document.addEventListener('DOMContentLoaded', function () {
@@ -1182,10 +1250,6 @@
                     console.log("Error")
                 }
             }
-
-
-
-
         }
 
         function getImageForSliderValue(value) {
@@ -1217,15 +1281,16 @@
         <div class="rep-slider-container">
             <div id="rep-image-container">
                 <img src="img/repetir.png" alt="Imagen" id="rep-slider-image">
-                <div id="rep-slider-value">
-                    <input class="numero_slider" type="number" id="rep-slider-value-span" value="20">
-                </div>
+            </div>
+            <div id="rep-slider-value">
+                <input class="numero_slider" type="number" id="rep-slider-value-span" value="20" readonly>
             </div>
             <input type="range" id="rep-custom-slider" min="0" max="10" value="10" step="1" />
             <br>
             <br>
         </div>
     </div>
+    <br>
     <div class="contenedor_cerrar">
         <button id="cerrarModal4">x</button>
     </div>
@@ -1271,16 +1336,17 @@ Fin teclado Repetir -->
         <div class="esp-slider-container">
             <div id="esp-image-container">
                 <img src="img/esperar.png" alt="Imagen" id="esp-slider-image">
-                <div class="esp-slider-value" id="esp-slider-value">
-                    <input class="numero_slider" type="number" id="esp-slider-value-span" value="10">
-                    <p>s</p>
-                </div>
+
             </div>
-            <input type="range" id="esp-custom-slider" min="0" max="10" value="10" step="1" />
-            <br>
-            <br>
+            <div class="esp-slider-value" id="esp-slider-value">
+                <input class="numero_slider" type="number" id="esp-slider-value-span" value="10" readonly>
+                <p>seg</p>
+            </div>
+            <input type="range" id="esp-custom-slider" min="0" max="10" value="10" step="1"/>
+
         </div>
     </div>
+    <br>
     <div class="contenedor_cerrar">
         <button id="cerrarModal7">x</button>
     </div>
@@ -1336,6 +1402,15 @@ Fin teclado Repetir -->
         </div>
     </div>
 
+    <div class="container_sliderFoco" id="id_sliderFoco">
+        <div>
+            <input class="numero_slider" type="number" id="slider-value-foco" value="5" readonly>
+        </div>
+        <div>
+            <input type="range" id="custom-slider-foco" min="1" max="5" value="1" step="1" />
+        </div>
+    </div>
+
 
 
     <div class="row">
@@ -1350,8 +1425,6 @@ Fin teclado Repetir -->
         <div class="color-box purple" onclick="selectColor('purple')"></div>
         <div class="color-box white" onclick="selectColor('white')"></div>
     </div>
-
-
     <div>
         <input type="text" id="colorInput" onchange="selectColorFromInput()" hidden readonly>
         <input type="text" id="colorRojo" onchange="selectColorFromInput()" hidden readonly>
@@ -1366,6 +1439,26 @@ Fin teclado Repetir -->
 
 <script>
 
+        const sliderFoco = document.getElementById('custom-slider-foco');
+        const sliderValueFoco = document.getElementById('slider-value-foco');
+
+        sliderFoco.addEventListener('input', function () {
+
+            sliderValueFoco.value = sliderFoco.value;
+            if (selectedBlock && selectedBlockFieldName6) {
+                const newValue11 = parseFloat(sliderValueFoco.value);
+                if (!isNaN(newValue11)) {
+                    selectedBlock.setFieldValue(newValue11, selectedBlockFieldName6);
+                } else {
+                    console.log("Error")
+                }
+            }
+        });
+
+
+
+
+
         var selectedFocoEs = null;
 
         function selectImage(estadoFco) {
@@ -1375,6 +1468,7 @@ Fin teclado Repetir -->
             selectedFocoEs = estadoFco;
             updateFocoEsInput(estadoFco); // Nueva línea para actualizar el input
             // Puedes realizar otras acciones aquí con el estadoFco seleccionado
+            sliderParpadeo();
 
             if (selectedBlock && selectedBlockFieldName5) {
                 const newValue10 = selectedFocoEs;
@@ -1414,6 +1508,7 @@ Fin teclado Repetir -->
             }
 
             updateFocoEsInput(inputFocoEs); // Nueva línea para actualizar el input
+
         }
 
         function resetFocoEsBoxes() {
@@ -1430,6 +1525,7 @@ Fin teclado Repetir -->
         // Agregar un evento de entrada al input para actualizar la selección
         document.getElementById('estadoF').addEventListener('input', function () {
             selectFocoEsFromInput();
+
         });
 
 
@@ -1602,12 +1698,29 @@ Fin teclado Repetir -->
         // Agregar un evento de entrada al input para actualizar la selección
         document.getElementById('colorInput').addEventListener('input', function () {
             selectColorFromInput();
+            sliderParpadeo();
         });
 
         document.querySelector("#cerrarModal5").addEventListener("click", () => {
             tecladoFoco.style.display = "none";
 
         });
+
+
+        const container_sliderFoco = document.getElementById('id_sliderFoco');
+
+        function sliderParpadeo() {
+            valorEstadoFoco = inputColor5.value;
+            console.log('Valor de inputColor5:', valorEstadoFoco);
+
+            if (valorEstadoFoco === "parpadeando") {
+                container_sliderFoco.style.display = "flex";
+            } else {
+                container_sliderFoco.style.display = "none";
+            }
+        }
+
+
     </script>
 
 <!-- Fin teclado prender_luz -->
@@ -1825,9 +1938,25 @@ Fin teclado Repetir -->
 <!-- Inicio teclado audio -->
 
 <div id="tecladoAudio" class="modal">
-    <div class="image-container">
-        <img src="img/nota-musical.png" alt="Imagen" width="55" height="55">
+
+    <div class="container_audio">
+        <div class="image-containerAudio blanca" onclick="selectImageA('blanca')">
+            <img src="img/blanca.png" alt="blanca" width="45" height="50">
+        </div>
+
+        <div class="image-containerAudio negra" onclick="selectImageA('negra')">
+            <img src="img/negra.png" alt="negra" width="45" height="50">
+        </div>
+
+        <div class="image-containerAudio corchea" onclick="selectImageA('corchea')">
+            <img src="img/corchea.png" alt="corchea" width="45" height="50">
+        </div>
+
+        <div class="image-containerAudio semicorchea" onclick="selectImageA('semicorchea')">
+            <img src="img/semicorchea.png" alt="semicorchea" width="45" height="50">
+        </div>
     </div>
+
     <div class="row_audio">
         <div class="audio-container">
             <div class="audio-box C" onclick="selectAudio('C')"><span class="letter">C</span></div>
@@ -1859,6 +1988,7 @@ Fin teclado Repetir -->
 
     <div>
         <input type="text" id="audioInput" onchange="selectAudioFromInput()" hidden readonly>
+        <input type="text" id="estadoA" onchange="selectAudioEsFromInput()" hidden readonly>
     </div>
     <div class="contenedor_cerrar">
         <button id="cerrarModal6">x</button>
@@ -1866,6 +1996,78 @@ Fin teclado Repetir -->
 </div>
 
 <script>
+        var selectedAudioEs = null;
+
+        function selectImageA(estadoAdio) {
+            console.log('Hola seleccionado:', estadoAdio);
+            resetAudioEsBoxes(); // Deseleccionar todos los cuadros
+            document.querySelector('.image-containerAudio.' + estadoAdio).classList.add('selectedAudio');
+            selectedAudioEs = estadoAdio;
+            updateAudioEsInput(estadoAdio); // Nueva línea para actualizar el input
+            // Puedes realizar otras acciones aquí con el estadoAdio seleccionado
+
+            if (selectedBlock && selectedBlockFieldName5) {
+                const newValue10 = selectedAudioEs;
+
+                if (newValue10) {
+                    selectedBlock.setFieldValue(newValue10, selectedBlockFieldName5);
+                } else {
+                    console.log("Error")
+                }
+            }
+        }
+
+
+        function selectAudioEsFromInput() {
+
+            var inputAudioEs = document.getElementById('estadoA').value.toLowerCase();
+            var validAudioEs = ['blanca', 'negra', 'corchea', 'semicorchea'];
+
+            if (validAudioEs.includes(inputAudioEs)) {
+                console.log('estado jo seleccionado:', inputAudioEs);
+                resetAudioEsBoxes(); // Deseleccionar todos los cuadros
+                document.querySelector('.image-containerAudio.' + inputAudioEs).classList.add('selectedAudio');
+                selectedAudioEs = inputAudioEs;
+                // Puedes realizar otras acciones aquí con el sonido seleccionado
+            } else {
+                console.log('estado no válido. Por favor, ingrese un estado válido.');
+            }
+
+            if (selectedBlock && selectedBlockFieldName5) {
+                const newValue10 = selectedAudioEs;
+
+                if (newValue10) {
+                    selectedBlock.setFieldValue(newValue10, selectedBlockFieldName5);
+                } else {
+                    console.log("Error")
+                }
+            }
+
+            updateAudioEsInput(inputAudioEs); // Nueva línea para actualizar el input
+        }
+
+        function resetAudioEsBoxes() {
+            var audioEsBoxes = document.querySelectorAll('.image-containerAudio');
+            audioEsBoxes.forEach(function (box) {
+                box.classList.remove('selectedAudio');
+            });
+        }
+
+        function updateAudioEsInput(estadoAdio) {
+            document.getElementById('estadoA').value = estadoAdio;
+        }
+
+        // Agregar un evento de entrada al input para actualizar la selección
+        document.getElementById('estadoA').addEventListener('input', function () {
+            selectAudioEsFromInput();
+        });
+
+
+
+
+
+
+
         var selectedAudio = null;
 
         const tecladoAudio = document.getElementById('tecladoAudio');
@@ -1893,6 +2095,7 @@ Fin teclado Repetir -->
 
 
         const inputAudio1 = document.getElementById('audioInput');
+        const inputAudio5 = document.getElementById('estadoA');
 
         function selectAudioFromInput() {
 
@@ -2316,6 +2519,42 @@ Fin teclado Repetir -->
 
         }
 
+        //Funcion para activar el simulador y ejecutar el codigo
+        function playActivarSimuladorEvento2() {
+            var miDiv = document.querySelector('.container');
+
+            // Verifica si el div tiene la clase "active"
+            if (miDiv.classList.contains('active')) {
+                runCodeEvento2();
+                console.log('El div tiene la clase "active"');
+            } else {
+                activarSimulador();
+                setTimeout(function () {
+                    runCodeEvento2();
+                    console.log('El div NO tiene la clase "active"');
+                }, 1500);
+            }
+
+        }
+
+        //Funcion para activar el simulador y ejecutar el codigo
+        function playActivarSimuladorEvento3() {
+            var miDiv = document.querySelector('.container');
+
+            // Verifica si el div tiene la clase "active"
+            if (miDiv.classList.contains('active')) {
+                runCodeEvento3();
+                console.log('El div tiene la clase "active"');
+            } else {
+                activarSimulador();
+                setTimeout(function () {
+                    runCodeEvento3();
+                    console.log('El div NO tiene la clase "active"');
+                }, 1500);
+            }
+
+        }
+
 
     </script>
 
@@ -2535,7 +2774,7 @@ toXml();
         //         selectedBlockFieldName = "DISTANCIA";
 
         //         // Muestra el modal (teclado numerico personalizado)
-        //         tecladoNumerico.style.display = "block";
+        //         openModal('tecladoNumerico');
 
         //         // Establece el valor del FieldNumber en el teclado numérico
         //         inputNuevo.value = this.getFieldValue("DISTANCIA");
@@ -2608,7 +2847,9 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "DISTANCIA";
-                tecladoSlider.style.display = "block";
+
+                openModal('tecladoSlider');
+
                 slider.value = this.getFieldValue("DISTANCIA");
                 sliderValueSpan.value = this.getFieldValue("DISTANCIA");
 
@@ -2692,7 +2933,7 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ANGULO";
-                tecladoAngulo.style.display = "block";
+                openModal('tecladoAngulo');
                 slider_angulo.value = this.getFieldValue("ANGULO");
                 output_angulo.value = this.getFieldValue("ANGULO");
 
@@ -2777,7 +3018,7 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ANGULO";
-                tecladoAngulo.style.display = "block";
+                openModal('tecladoAngulo');
                 slider_angulo.value = this.getFieldValue("ANGULO");
                 output_angulo.value = this.getFieldValue("ANGULO");
 
@@ -2841,6 +3082,7 @@ toXml();
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldTextInput("yellow", this.handleTextInputChange.bind(this)), "COLOR")
                     .appendField(new Blockly.FieldTextInput("encendidas", this.handleTextInputChange2.bind(this)), "ESTADO_FOCO")
+                    .appendField(new Blockly.FieldNumber(5, 1, 5, 1), "VELOCIDAD")
                     .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
                     .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "VERDE")
                     .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "AZUL")
@@ -2853,6 +3095,8 @@ toXml();
                 this.setHelpUrl("");
                 this.customFieldName = "COLOR";
                 this.customFieldValue = "yellow";
+                this.customFieldName6 = "VELOCIDAD";
+                this.customFieldValue6 = 5;
                 this.customFieldName2 = "ESTADO_FOCO";
                 this.customFieldValue2 = "encendidas";
 
@@ -2870,11 +3114,14 @@ toXml();
                 selectedBlock = this;
                 selectedBlockFieldName = "COLOR";
                 selectedBlockFieldName5 = "ESTADO_FOCO";
+                selectedBlockFieldName6 = "VELOCIDAD";
                 selectedBlockFieldName2 = "ROJO";
                 selectedBlockFieldName3 = "VERDE";
                 selectedBlockFieldName4 = "AZUL";
-                tecladoFoco.style.display = "block";
+                openModal('tecladoFoco');
                 slider.value = this.getFieldValue("COLOR");
+                sliderFoco.value = this.getFieldValue("VELOCIDAD");
+                sliderValueFoco.value = this.getFieldValue("VELOCIDAD");
                 inputColor1.value = this.getFieldValue("COLOR");
                 inputColor5.value = this.getFieldValue("ESTADO_FOCO");
                 inputColor2.value = this.getFieldValue("ROJO");
@@ -2981,6 +3228,7 @@ toXml();
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField(new Blockly.FieldTextInput("Fsos", this.handleTextInputChange.bind(this)), "AUDIO")
+                    .appendField(new Blockly.FieldTextInput("blanca", this.handleTextInputChange2.bind(this)), "ESTADO_AUDIO")
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -2990,9 +3238,10 @@ toXml();
                 this.setHelpUrl("");
                 this.customFieldName = "AUDIO";
                 this.customFieldValue = "Fsos";
+                this.customFieldName2 = "ESTADO_AUDIO";
 
                 // Configuramos el estado inicial de la imagen del bloque
-                this.updateImageState("Fsos");
+                this.updateImageState("Fsos", "blanca");
 
                 // Agregar onchange handler para el bloque
                 this.setOnChange(function (changeEvent) {
@@ -3003,10 +3252,13 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "AUDIO";
-                tecladoAudio.style.display = "block";
+                selectedBlockFieldName5 = "ESTADO_AUDIO";
+                openModal('tecladoAudio');
                 slider.value = this.getFieldValue("AUDIO");
                 inputAudio1.value = this.getFieldValue("AUDIO");
+                inputAudio5.value = this.getFieldValue("ESTADO_AUDIO");
                 inputAudio1.dispatchEvent(new Event('input'));
+                inputAudio5.dispatchEvent(new Event('input'));
 
                 // Actualizamos la imagen del bloque según el nuevo valor
                 this.updateImageState(inputAudio1.value);
@@ -3016,38 +3268,130 @@ toXml();
                 console.log("Cambio en el campo de texto: " + newValue);
 
                 // Actualizamos la imagen del bloque según el nuevo valor
-                this.updateImageState(newValue);
+                this.updateImageState(newValue, this.getFieldValue("ESTADO_AUDIO"));
             },
-            updateImageState: function (value) {
+
+            handleTextInputChange2: function (newValue10) {
+                // Manejar el cambio en el campo de texto si es necesario
+                console.log("Cambio de estado: " + newValue10);
+
+                // Actualizamos la imagen del bloque según el nuevo valor
+                this.updateImageState(this.getFieldValue("AUDIO"), newValue10);
+            },
+            updateImageState: function (value, estadoFocoValue) {
 
                 // Actualizamos la imagen del bloque según el valor
                 const estadoImagen = this.getField("ESTADO_IMAGEN");
-                if (value === "Csos") {
-                    estadoImagen.setValue("img/Csos.png");
-                } else if (value === "Dsos") {
-                    estadoImagen.setValue("img/Dsos.png");
-                } else if (value === "Fsos") {
-                    estadoImagen.setValue("img/Fsos.png");
-                } else if (value === "Gsos") {
-                    estadoImagen.setValue("img/Gsos.png");
-                } else if (value === "Asos") {
-                    estadoImagen.setValue("img/Asos.png");
-                } else if (value === "C") {
-                    estadoImagen.setValue("img/C.png");
-                } else if (value === "D") {
-                    estadoImagen.setValue("img/D.png");
-                } else if (value === "E") {
-                    estadoImagen.setValue("img/E.png");
-                } else if (value === "F") {
-                    estadoImagen.setValue("img/F.png");
-                } else if (value === "G") {
-                    estadoImagen.setValue("img/Gn.png");
-                } else if (value === "A") {
-                    estadoImagen.setValue("img/A.png");
+
+                if (value === "Csos" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaCsos.png");
+                } else if (value === "Dsos" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaDsos.png");
+                } else if (value === "Fsos" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaFsos.png");
+                } else if (value === "Gsos" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaGsos.png");
+                } else if (value === "Asos" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaAsos.png");
+                } else if (value === "C" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaC.png");
+                } else if (value === "D" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaD.png");
+                } else if (value === "E" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaE.png");
+                } else if (value === "F" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaF.png");
+                } else if (value === "G" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaG.png");
+                } else if (value === "A" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaA.png");
+                } else if (value === "B" && estadoFocoValue == "blanca") {
+                    estadoImagen.setValue("img/blancaB.png");
                 }
-                else {
-                    estadoImagen.setValue("img/B.png");
+
+
+                else if (value === "Csos" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraDsos.png");
                 }
+                else if (value === "Dsos" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraDsos.png");
+                } else if (value === "Fsos" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraFsos.png");
+                } else if (value === "Gsos" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraGsos.png");
+                } else if (value === "Asos" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraAsos.png");
+                } else if (value === "C" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraC.png");
+                } else if (value === "D" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraD.png");
+                } else if (value === "E" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraE.png");
+                } else if (value === "F" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraF.png");
+                } else if (value === "G" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraG.png");
+                } else if (value === "A" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraA.png");
+                } else if (value === "B" && estadoFocoValue == "negra") {
+                    estadoImagen.setValue("img/negraB.png");
+                }
+
+
+                else if (value === "Csos" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaDsos.png");
+                }
+                else if (value === "Dsos" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaDsos.png");
+                } else if (value === "Fsos" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaFsos.png");
+                } else if (value === "Gsos" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaGsos.png");
+                } else if (value === "Asos" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaAsos.png");
+                } else if (value === "C" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaC.png");
+                } else if (value === "D" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaD.png");
+                } else if (value === "E" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaE.png");
+                } else if (value === "F" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaF.png");
+                } else if (value === "G" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaG.png");
+                } else if (value === "A" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaA.png");
+                } else if (value === "B" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaB.png");
+                }
+
+                else if (value === "Csos" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiDsos.png");
+                }
+                else if (value === "Dsos" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiDsos.png");
+                } else if (value === "Fsos" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiFsos.png");
+                } else if (value === "Gsos" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiGsos.png");
+                } else if (value === "Asos" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiAsos.png");
+                } else if (value === "C" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiC.png");
+                } else if (value === "D" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiD.png");
+                } else if (value === "E" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiE.png");
+                } else if (value === "F" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiF.png");
+                } else if (value === "G" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiG.png");
+                } else if (value === "A" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiA.png");
+                } else if (value === "B" && estadoFocoValue == "semicorchea") {
+                    estadoImagen.setValue("img/SemiB.png");
+                }
+
             },
             checkConnection: function () {
                 // Verifica si el bloque está en el espacio de trabajo
@@ -3109,7 +3453,7 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ESTADO_IF";
-                tecladoIfelse.style.display = "block";
+                openModal('tecladoIfelse');
                 slider.value = this.getFieldValue("ESTADO_IF");
                 inputIfelse1.value = this.getFieldValue("ESTADO_IF");
                 inputIfelse1.dispatchEvent(new Event('input'));
@@ -3198,7 +3542,7 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ESTADO_IF";
-                tecladoIfelse.style.display = "block";
+                openModal('tecladoIfelse');
                 slider.value = this.getFieldValue("ESTADO_IF");
                 inputIfelse1.value = this.getFieldValue("ESTADO_IF");
                 inputIfelse1.dispatchEvent(new Event('input'));
@@ -3293,7 +3637,7 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "VECES";
-                tecladoRepetir.style.display = "block";
+                openModal('tecladoRepetir');
                 repSlider.value = this.getFieldValue("VECES");
                 repSliderValueSpan.value = this.getFieldValue("VECES");
 
@@ -3401,7 +3745,7 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ESTADO_ROTU";
-                tecladoRotulador.style.display = "block";
+                openModal('tecladoRotulador');
                 slider.value = this.getFieldValue("ESTADO_ROTU");
                 inputRotulador1.value = this.getFieldValue("ESTADO_ROTU");
                 inputRotulador1.dispatchEvent(new Event('input'));
@@ -3486,7 +3830,7 @@ toXml();
                 console.log("Clic capturado");
                 selectedBlock = this;
                 selectedBlockFieldName = "ESPERAR";
-                tecladoEsperar.style.display = "block";
+                openModal('tecladoEsperar');
                 espSlider.value = this.getFieldValue("ESPERAR");
                 espSliderValueSpan.value = this.getFieldValue("ESPERAR");
 
@@ -3598,8 +3942,7 @@ toXml();
                 selectedBlockFieldName = "DISTANCIA";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
-
+                openModal('tecladoNumerico');
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("DISTANCIA");
                 console.log("El valor es: " + inputNuevo.value);
@@ -3664,7 +4007,7 @@ toXml();
                 selectedBlockFieldName = "ESPERAR";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ESPERAR");
@@ -3708,16 +4051,16 @@ toXml();
                         ["apagadas", "apagadas"],
                         ["encendidas", "encendidas"],
                         ["parpadeando", "parpadeando"]
-                    ]), "ESTADO_FOCO")
-
-                    .appendField("en color:")
-                    .appendField("rojo")
+                    ], function (value) {
+                        block.updateVisibility(value);
+                    }), "ESTADO_FOCO")
+                    .appendField(new Blockly.FieldNumber(5, 1, 5, 1), "VELOCIDAD")
+                    .appendField("color: rojo")
                     .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
                     .appendField("  verde")
                     .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "VERDE")
                     .appendField("  azul")
                     .appendField(new Blockly.FieldNumber(0, 0, 255, 1), "AZUL");
-
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setEnabled(true); // Activar inicialmente
@@ -3729,6 +4072,8 @@ toXml();
                 this.customFieldValue = 50;
                 this.customFieldName = "AZUL";
                 this.customFieldValue = 50;
+                this.customFieldName = "VELOCIDAD";
+                this.customFieldValue = 5;
 
                 this.getField("ROJO").onMouseDown_ = function (e) {
                     block.handleInputClick();
@@ -3744,6 +4089,10 @@ toXml();
                     block.handleInputClick3();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
+                this.getField("VELOCIDAD").onMouseDown_ = function (e) {
+                    block.handleInputClick4();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
 
                 // Agregar onchange handler para el bloque
                 this.setOnChange(function (changeEvent) {
@@ -3757,7 +4106,7 @@ toXml();
                 selectedBlockFieldName = "ROJO";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ROJO");
@@ -3769,7 +4118,7 @@ toXml();
                 selectedBlockFieldName = "VERDE";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("VERDE");
@@ -3781,11 +4130,23 @@ toXml();
                 selectedBlockFieldName = "AZUL";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("AZUL");
                 console.log("El valor azul es: " + inputNuevo.value);
+            },
+            handleInputClick4: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VELOCIDAD";
+
+                // Muestra el modal (teclado numerico personalizado)
+                openModal('tecladoNumerico');
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("VELOCIDAD");
+                console.log("El valor VELOCIDAD es: " + inputNuevo.value);
             },
             checkConnection: function () {
                 // Verifica si el bloque está en el espacio de trabajo
@@ -3812,7 +4173,16 @@ toXml();
                     this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
                     this.setWarningText(null); // Limpiar el mensaje de advertencia
                 }
-            }
+            },
+            updateVisibility: function (estadoFocoValue) {
+                // Dependiendo del valor de ESTADO_FOCO, muestra u oculta el campo VELOCIDAD
+                var velocidadField = this.getField("VELOCIDAD");
+                if (estadoFocoValue === "parpadeando") {
+                    velocidadField.setVisible(true);
+                } else {
+                    velocidadField.setVisible(false);
+                }
+            },
 
         };
 
@@ -3847,7 +4217,7 @@ toXml();
                 selectedBlockFieldName = "ANGULO";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
@@ -3913,7 +4283,7 @@ toXml();
                 selectedBlockFieldName = "ANGULO";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
@@ -3983,7 +4353,7 @@ toXml();
                 selectedBlockFieldName = "VECES";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("VECES");
@@ -4048,6 +4418,12 @@ toXml();
                 this.appendDummyInput()
                     .appendField("reproducir tono")
                     .appendField(new Blockly.FieldDropdown([
+                        ["blanca", "blanca"],
+                        ["negra", "negra"],
+                        ["corchea", "corchea"],
+                        ["semicorchea", "semicorchea"]
+                    ]), "ESTADO_AUDIO")
+                    .appendField(new Blockly.FieldDropdown([
                         ["C", "C"],
                         ["D", "D"],
                         ["E", "E"],
@@ -4061,6 +4437,7 @@ toXml();
                         ["G#", "Gsos"],
                         ["A#", "Asos"]
                     ]), "AUDIO");
+
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setEnabled(true); // Activar inicialmente
@@ -4324,7 +4701,7 @@ toXml();
                 selectedBlockFieldName = "DISTANCIA";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("DISTANCIA");
@@ -4393,7 +4770,7 @@ toXml();
                 selectedBlockFieldName = "ANGULO";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
@@ -4462,7 +4839,7 @@ toXml();
                 selectedBlockFieldName = "ANGULO";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ANGULO");
@@ -4533,7 +4910,7 @@ toXml();
                 selectedBlockFieldName = "VECES";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("VECES");
@@ -4697,8 +5074,10 @@ toXml();
                         ["apagadas", "apagadas"],
                         ["encendidas", "encendidas"],
                         ["parpadeando", "parpadeando"]
-                    ]), "ESTADO_FOCO")
-
+                    ], function (value) {
+                        block.updateVisibility(value);
+                    }), "ESTADO_FOCO")
+                    .appendField(new Blockly.FieldNumber(5, 1, 5, 1), "VELOCIDAD")
                     .appendField(",")
                     .appendField("(")
                     .appendField(new Blockly.FieldNumber(255, 0, 255, 1), "ROJO")
@@ -4719,6 +5098,8 @@ toXml();
                 this.customFieldValue = 50;
                 this.customFieldName = "AZUL";
                 this.customFieldValue = 50;
+                this.customFieldValue = 50;
+                this.customFieldName = "VELOCIDAD";
 
                 // Utiliza onMouseDown para manejar el clic en el FieldNumber
                 this.getField("ROJO").onMouseDown_ = function (e) {
@@ -4731,6 +5112,10 @@ toXml();
                 };
                 this.getField("AZUL").onMouseDown_ = function (e) {
                     block.handleInputClick3();
+                    Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
+                };
+                this.getField("VELOCIDAD").onMouseDown_ = function (e) {
+                    block.handleInputClick4();
                     Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
                 };
 
@@ -4746,7 +5131,7 @@ toXml();
                 selectedBlockFieldName = "ROJO";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ROJO");
@@ -4758,7 +5143,7 @@ toXml();
                 selectedBlockFieldName = "VERDE";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("VERDE");
@@ -4770,11 +5155,23 @@ toXml();
                 selectedBlockFieldName = "AZUL";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("AZUL");
                 console.log("El valor es: " + inputNuevo.value);
+            },
+            handleInputClick4: function () {
+                console.log("Clic capturado");
+                selectedBlock = this;
+                selectedBlockFieldName = "VELOCIDAD";
+
+                // Muestra el modal (teclado numerico personalizado)
+                openModal('tecladoNumerico');
+
+                // Establece el valor del FieldNumber en el teclado numérico
+                inputNuevo.value = this.getFieldValue("VELOCIDAD");
+                console.log("El valor VELOCIDAD es: " + inputNuevo.value);
             },
             checkConnection: function () {
                 // Verifica si el bloque está en el espacio de trabajo
@@ -4801,7 +5198,16 @@ toXml();
                     this.setEnabled(true); // Mantén activo si no está en el espacio de trabajo
                     this.setWarningText(null); // Limpiar el mensaje de advertencia
                 }
-            }
+            },
+            updateVisibility: function (estadoFocoValue) {
+                // Dependiendo del valor de ESTADO_FOCO, muestra u oculta el campo VELOCIDAD
+                var velocidadField = this.getField("VELOCIDAD");
+                if (estadoFocoValue === "parpadeando") {
+                    velocidadField.setVisible(true);
+                } else {
+                    velocidadField.setVisible(false);
+                }
+            },
 
         };
 
@@ -4810,6 +5216,13 @@ toXml();
                 var block = this;
                 this.appendDummyInput()
                     .appendField("tono(")
+                    .appendField(new Blockly.FieldDropdown([
+                        ["blanca", "blanca"],
+                        ["negra", "negra"],
+                        ["corchea", "corchea"],
+                        ["semicorchea", "semicorchea"]
+                    ]), "ESTADO_AUDIO")
+                    .appendField(",")
                     .appendField(new Blockly.FieldDropdown([
                         ["C", "C"],
                         ["D", "D"],
@@ -4948,7 +5361,7 @@ toXml();
                 selectedBlockFieldName = "ESPERAR";
 
                 // Muestra el modal (teclado numerico personalizado)
-                tecladoNumerico.style.display = "block";
+                openModal('tecladoNumerico');
 
                 // Establece el valor del FieldNumber en el teclado numérico
                 inputNuevo.value = this.getFieldValue("ESPERAR");
@@ -4989,9 +5402,9 @@ toXml();
             audio: new Audio(),
 
             // Esta función añade el sonido a la cola para reproducir.
-            queueSound: function (soundFile) {
+            queueSound: function (soundFile, carpeta) {
                 // Establecer la ruta del archivo de sonido.
-                this.audio.src = 'sounds/' + soundFile;
+                this.audio.src = 'sounds/' + carpeta + "/" + soundFile;
 
                 // Agregar un evento de carga para asegurarse de que el sonido se haya cargado antes de intentar reproducirlo.
                 this.audio.addEventListener('canplay', function () {
@@ -5059,9 +5472,9 @@ toXml();
             const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
             const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
             const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
+            const velocidad_parpadeo = parseFloat(block.getFieldValue('VELOCIDAD'));
 
-            // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');\n';
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\', ' + velocidad_parpadeo + ');\n';
 
             return code;
         };
@@ -5077,7 +5490,11 @@ toXml();
 
         Blockly.JavaScript['audio_n1'] = function (block) {
             var soundFile = block.getFieldValue('AUDIO');
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            const estado_audio_n2 = block.getFieldValue('ESTADO_AUDIO');
+            //var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a", "' + estado_audio_n2 + '");\n';
+
             return code;
         };
 
@@ -5159,14 +5576,15 @@ toXml();
             return code;
         };
 
+
         Blockly.JavaScript['foco_n2'] = function (block) {
             const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
             const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
             const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
             const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
+            const velocidad_parpadeo = parseFloat(block.getFieldValue('VELOCIDAD'));
 
-            // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');\n';
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\', ' + velocidad_parpadeo + ');\n';
 
             return code;
         };
@@ -5182,7 +5600,11 @@ toXml();
 
         Blockly.JavaScript['audio_n2'] = function (block) {
             var soundFile = block.getFieldValue('AUDIO');
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            const estado_audio_n2 = block.getFieldValue('ESTADO_AUDIO');
+            //var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a", "' + estado_audio_n2 + '");\n';
+
             return code;
         };
 
@@ -5263,14 +5685,15 @@ toXml();
             return code;
         };
 
+
         Blockly.JavaScript['foco_n3'] = function (block) {
             const rojo_n2 = parseFloat(block.getFieldValue('ROJO'));
             const verde_n2 = parseFloat(block.getFieldValue('VERDE'));
             const azul_n2 = parseFloat(block.getFieldValue('AZUL'));
             const estado_foco_n2 = block.getFieldValue('ESTADO_FOCO');
+            const velocidad_parpadeo = parseFloat(block.getFieldValue('VELOCIDAD'));
 
-            // Llamar a la función encenderLuzRGB con los tres parámetros
-            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\');\n';
+            var code = 'encenderLuzRGB(' + rojo_n2 + ', ' + verde_n2 + ', ' + azul_n2 + ', \'' + estado_foco_n2 + '\', ' + velocidad_parpadeo + ');\n';
 
             return code;
         };
@@ -5286,7 +5709,11 @@ toXml();
 
         Blockly.JavaScript['audio_n3'] = function (block) {
             var soundFile = block.getFieldValue('AUDIO');
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            const estado_audio_n2 = block.getFieldValue('ESTADO_AUDIO');
+            //var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+
+            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a", "' + estado_audio_n2 + '");\n';
+
             return code;
         };
 
@@ -5509,7 +5936,7 @@ toXml();
             drawPlayer();
         }
 
-        function encenderLuzRGB(red, green, blue, estado) {
+        function encenderLuzRGB(red, green, blue, estado, velocidadParpadeo) {
             // Validar que los valores estén en el rango correcto (0-255)
             red = Math.max(0, Math.min(255, red));
             green = Math.max(0, Math.min(255, green));
@@ -5525,7 +5952,7 @@ toXml();
                     drawPlayer();
                     break;
                 case 'parpadeando':
-                    parpadear(color);
+                    parpadear(color, velocidadParpadeo);
                     break;
                 case 'apagadas':
                     apagarParpadeo();
@@ -5539,8 +5966,21 @@ toXml();
 
         /*Funcion para parpadear luz*/
         let parpadeoInterval;
-        function parpadear(color) {
+        let parpadeoTiempo;
+        function parpadear(color, parpadeoTiempo) {
             clearInterval(parpadeoInterval); // Limpiar cualquier intervalo existente
+
+            if (parpadeoTiempo === 1) {
+                parpadeoTiempo = 1000;
+            } else if (parpadeoTiempo === 2) {
+                parpadeoTiempo = 500;
+            } else if (parpadeoTiempo === 3) {
+                parpadeoTiempo = 250;
+            } else if (parpadeoTiempo === 4) {
+                parpadeoTiempo = 125;
+            } else {
+                parpadeoTiempo = 60;
+            }
 
             // Iniciar el parpadeo con un intervalo de 500 milisegundos (ajusta según sea necesario)
             parpadeoInterval = setInterval(function () {
@@ -5551,7 +5991,7 @@ toXml();
                 }
 
                 drawPlayer();
-            }, 50); // Intervalo de parpadeo (en milisegundos)
+            }, parpadeoTiempo); // Intervalo de parpadeo (en milisegundos)
         }
 
         /*Funcion para apagar luz*/
@@ -5573,6 +6013,10 @@ toXml();
             ctx.save();
             ctx.translate(player.x, player.y);
             ctx.rotate(player.rotation);
+
+            // Habilitar suavizado
+            ctx.imageSmoothingEnabled = true;
+
 
             // Dibuja la imagen del jugador
             const playerImage = document.getElementById('playerImage');
@@ -5649,7 +6093,7 @@ toXml();
 
                 // Limita el valor mínimo y máximo de escala
                 const minScale = 0.1;
-                const maxScale = 3.0;
+                const maxScale = 1.5;
                 lastScale = Math.max(minScale, Math.min(maxScale, newScale));
 
                 // Aplica el zoom al canvas
@@ -5773,7 +6217,21 @@ toXml();
 
 <script>
 
+        var ejecucionDetenida = false; // Variable de control para la ejecución
+        function detenerEjecucion() {
+            ejecucionDetenida = true; // Establece la variable de control en true para detener la ejecución
+            document.getElementById('play_button').disabled = false;
+            document.getElementById('play_button_img').src = 'img/playDesactivo.png';
+        }
+
+
         function runCodePlay() {
+            // Desactiva el botón al inicio de la ejecución
+            document.getElementById('play_button').disabled = true;
+            document.getElementById('play_button_img').src = 'img/playActivo.png';
+
+            ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+
             // Especifica los nombres de los bloques a buscar
             var nombresBloques = ['play_n1', 'play_n2', 'play_n3'];
 
@@ -5796,56 +6254,80 @@ toXml();
                 // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
                 function executePlayNBlock(index) {
                     if (index < playNCodeBlocks.length) {
-                        // Ejecuta el bloque dentro del bloque encontrado
+                        if (!ejecucionDetenida) {
 
+                            //PPara sacr las funciones del bloque
+                            var bloquesBluethoo = playNCodeBlocks[index];
+                            console.log('Código del bloque ' + (index + 1) + ':', bloquesBluethoo);
 
-                        try {
-                            if (playNCodeBlocks[index].includes("rotateRight")) {
-                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
-                                if (angle > 140 && angle <= 240) {
-                                    tiempoEsperaAntes = 1000;
-                                } else if (angle > 240) {
-                                    tiempoEsperaAntes = 1000;
+                            function enviarDatosBlue() {
+                                try {
+                                    Android.enviarDatosBlue(bloquesBluethoo);
+                                } catch (error) {
+                                    console.error("Error al enviar datos por Bluetooth:", error);
                                 }
+                            }
+                            enviarDatosBlue();
 
-                                // Establece el tiempo de espera antes de ejecutar el bloque
-                                setTimeout(function () {
-                                    eval(playNCodeBlocks[index]);
-                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                            // Ejecuta el bloque dentro del bloque encontrado
+                            try {
+                                if (playNCodeBlocks[index].includes("rotateRight")) {
+                                    var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                    var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                    if (angle > 140 && angle <= 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    } else if (angle > 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    }
+
+                                    // Establece el tiempo de espera antes de ejecutar el bloque
+                                    setTimeout(function () {
+                                        eval(playNCodeBlocks[index]);
+                                        // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                        var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                        setTimeout(function () {
+                                            executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                        }, tiempoEsperaDespues);
+                                    }, tiempoEsperaAntes);
+                                } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                    // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                    var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
                                     setTimeout(function () {
                                         executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                    }, tiempoEsperaDespues);
-                                }, tiempoEsperaAntes);
-                            } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
-                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
-                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, tiempoEspera);
-                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, 2000);
-                            } else {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                    }, tiempoEspera);
+                                } else if (playNCodeBlocks[index].includes("MusicMaker")) {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, 2000);
+                                } else {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                    }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                }
+
+                            } catch (e) {
+                                alert(e);
                             }
-                        } catch (e) {
-                            alert(e);
+
+
                         }
 
+                    } else {
+                        document.getElementById('play_button').disabled = false;
+                        document.getElementById('play_button_img').src  = 'img/playDesactivo.png';
+
                     }
+
                 }
 
                 // Inicia la ejecución con el primer bloque dentro del bloque encontrado
                 executePlayNBlock(0);
+
+
             }
         }
     </script>

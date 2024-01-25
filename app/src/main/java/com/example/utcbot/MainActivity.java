@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -193,8 +196,22 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
         } else {
             // Manejar el caso en que el cursor esté vacío
-            // Puedes agregar un mensaje de registro o mostrar un Toast
             Toast.makeText(this, "Error: Cursor vacío", Toast.LENGTH_SHORT).show();
+
+            TextView noProjectsTextView = new TextView(this);
+            noProjectsTextView.setText("No existe ningún proyecto");
+            // Configurar el diseño del TextView para centrar el texto
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+            );
+            noProjectsTextView.setLayoutParams(layoutParams);
+            noProjectsTextView.setGravity(Gravity.CENTER);
+
+            // Puedes personalizar la apariencia del TextView según tus necesidades
+            noProjectsTextView.setTextColor(Color.BLACK);
+            noProjectsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            cardsContainer.addView(noProjectsTextView);
         }
 
         db.close();
