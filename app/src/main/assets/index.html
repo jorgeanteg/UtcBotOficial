@@ -16,8 +16,7 @@
     <script src="javascript_compressed.js"></script>
     <script src="es.js"></script>
     <script src="javascript.js"></script>
-
-
+    <script src="Tone.js"></script>
 
     <style>
         @font-face {
@@ -35,8 +34,34 @@
             height: 100%;
             margin: 0;
             padding: 0;
-
         }
+
+        /* Modificacion de la libreria,(Categoria) */
+        .blocklyTreeLabel {
+            font-size: 18px !important;
+        }
+
+        /*
+        .blocklyToolboxContents {
+            background-color: red;
+        } */
+        .blocklyToolboxCategory {
+            /* background-color: #289B38; */
+            /* padding: 2px; */
+        }
+
+        .blocklyTreeRow {
+            /* background-color: #289B38; */
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            padding-bottom: 30px !important;
+            padding-top: 10px !important;
+            border: solid 2px #fff;
+            border-radius: 5px;
+        }
+
+
+        /* Fin Modificacion de la libreria,(Categoria) */
 
         body {
             background-color: #DCDCDC;
@@ -553,10 +578,10 @@
         }
 
         .esp-slider-value p {
-        display: inline-block;
-        margin: 0;
-        margin-left: 3px;
-    }
+            display: inline-block;
+            margin: 0;
+            margin-left: 3px;
+        }
 
 
         #esp-slider-image {
@@ -780,11 +805,11 @@
             z-index: 1;
         }
 
-        .Csos,
-        .Dsos,
-        .Fsos,
-        .Gsos,
-        .Asos {
+        .Cs,
+        .Ds,
+        .Fs,
+        .Gs,
+        .As {
             margin-left: 22px;
         }
 
@@ -960,28 +985,29 @@
 
 </div>
 
+<div id="blocklyDiv" style="position: absolute"></div>
+
 <script>
-        // ... Tu código JavaScript existente ...
 
         function zoomIn() {
-            const scaleFactor = 1.1; // Ajusta este valor para el aumento de zoom deseado
+            const scaleFactor = 1.1; // Valor para el aumento de zoom
             lastScale *= scaleFactor;
             applyZoom();
         }
 
         function zoomOut() {
-            const scaleFactor = 0.9; // Ajusta este valor para la disminución de zoom deseada
+            const scaleFactor = 0.9; // Valor para la disminución de zoom
             lastScale *= scaleFactor;
             applyZoom();
         }
 
         function applyZoom() {
-            // Limita el valor mínimo y máximo de escala
+            // Valor mínimo y máximo de escala
             const minScale = 0.1;
             const maxScale = 1.5;
             lastScale = Math.max(minScale, Math.min(maxScale, lastScale));
 
-            // Aplica el zoom al canvas
+            // Aplicamos el zoom al canvas
             canvas.style.transform = `scale(${lastScale})`;
         }
 
@@ -1008,15 +1034,19 @@
 
     </script>
 
+<!-- Botones de play, detener y Simulador -->
 <button id="play_button" class="floating-play" onclick="playActivarSimulador()">
     <img id="play_button_img" src="img/playDesactivo.png" alt="">
 </button>
 
-<button  class="floating-stop" onclick="detenerEjecucion()">
+<button class="floating-stop" onclick="detenerEjecucion()">
     <img src="img/stopPlay.png" alt="">
 </button>
 
+<a href="#" class="floating-button" id="toggle-button">Botón</a>
 
+
+<!-- Botones de Guadar y Nombre del Proyecto -->
 <div class="floating-container">
     <a href="javascript:abrirModalGuardar()">
         <img src="img/atras.png" alt="atras">
@@ -1026,9 +1056,7 @@
     <a href="javascript:activarBluethoo()">
         <img id="bluetoothImage" src="img/bluetooth_des.png" alt="Otro" width="32" height="32">
     </a>
-
 </div>
-
 
 <!-- Contenido del modal -->
 <div id="modal-overlay">
@@ -1041,16 +1069,13 @@
         <div>
             <button id="guardar-btn" onclick="guardarDatos()">GUARDAR</button>
             <button id="editar-btn" onclick="editarDatos()">GUARDAR</button>
-            <button id="cancelar-btn" onclick="cancelarModal()">CANCELAR</button>
+            <button id="cancelar-btn" onclick="cancelarModal()">DESCARTAR</button>
         </div>
     </div>
 </div>
 
 
-
-
-<a href="#" class="floating-button" id="toggle-button">Botón</a>
-
+<!---------------------------------------- Teclados personalizados de la aplicacion ------------------------------------------------->
 <div id="tecladoNumerico" class="modal">
     <div class="fila">
         <input class="pantalla_teclado" type="number" id="inputNuevo">
@@ -1083,6 +1108,54 @@
         <button id="cerrarModal">x</button>
     </div>
 </div>
+
+<script>
+
+        //  escript para la funcionalidad teclado
+        const inputNuevo = document.getElementById("inputNuevo");
+        const tecladoNumerico = document.getElementById("tecladoNumerico");
+
+        document.querySelector(".borrar-todo").addEventListener("click", () => {
+            inputNuevo.value = "";
+        });
+
+        document.querySelector(".borrar").addEventListener("click", () => {
+            const currentValue = inputNuevo.value;
+            inputNuevo.value = currentValue.slice(0, -1);
+        });
+
+        document.querySelectorAll(".numero").forEach((button) => {
+            button.addEventListener("click", () => {
+                if (button.textContent === "+/-") {
+                    inputNuevo.value = cambiarSigno(inputNuevo.value);
+                } else {
+                    inputNuevo.value += button.textContent;
+                }
+
+                // Actualiza el valor del campo correspondiente del bloque seleccionado
+                if (selectedBlock && selectedBlockFieldName) {
+                    const newValue = parseFloat(inputNuevo.value);
+                    if (!isNaN(newValue)) {
+                        selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
+                    }
+                }
+            });
+        });
+
+        document.querySelector("#cerrarModal").addEventListener("click", () => {
+            tecladoNumerico.style.display = "none";
+            inputNuevo.value = "";
+        });
+
+        function cambiarSigno(valor) {
+            if (valor.startsWith("-")) {
+                return valor.substring(1);
+            } else {
+                return "-" + valor;
+            }
+        }
+
+    </script>
 
 <!-- Teclado slider -->
 <div id="tecladoSlider" class="modal">
@@ -1342,7 +1415,7 @@ Fin teclado Repetir -->
                 <input class="numero_slider" type="number" id="esp-slider-value-span" value="10" readonly>
                 <p>seg</p>
             </div>
-            <input type="range" id="esp-custom-slider" min="0" max="10" value="10" step="1"/>
+            <input type="range" id="esp-custom-slider" min="0" max="10" value="10" step="1" />
 
         </div>
     </div>
@@ -1960,26 +2033,26 @@ Fin teclado Repetir -->
     <div class="row_audio">
         <div class="audio-container">
             <div class="audio-box C" onclick="selectAudio('C')"><span class="letter">C</span></div>
-            <div class="audio-box Csos sostenido" onclick="selectAudio('Csos')"><span class="letter">C#</span></div>
+            <div class="audio-box Cs sostenido" onclick="selectAudio('Cs')"><span class="letter">C#</span></div>
         </div>
         <div class="audio-container">
             <div class="audio-box D" onclick="selectAudio('D')"><span class="letter">D</span></div>
-            <div class="audio-box Dsos sostenido" onclick="selectAudio('Dsos')"><span class="letter">D#</span></div>
+            <div class="audio-box Ds sostenido" onclick="selectAudio('Ds')"><span class="letter">D#</span></div>
         </div>
         <div class="audio-container">
             <div class="audio-box E" onclick="selectAudio('E')"><span class="letter">E</span></div>
         </div>
         <div class="audio-container">
             <div class="audio-box F" onclick="selectAudio('F')"><span class="letter">F</span></div>
-            <div class="audio-box Fsos sostenido" onclick="selectAudio('Fsos')"><span class="letter">F#</span></div>
+            <div class="audio-box Fs sostenido" onclick="selectAudio('Fs')"><span class="letter">F#</span></div>
         </div>
         <div class="audio-container">
             <div class="audio-box G" onclick="selectAudio('G')"><span class="letter">G</span></div>
-            <div class="audio-box Gsos sostenido" onclick="selectAudio('Gsos')"><span class="letter">G#</span></div>
+            <div class="audio-box Gs sostenido" onclick="selectAudio('Gs')"><span class="letter">G#</span></div>
         </div>
         <div class="audio-container">
             <div class="audio-box A" onclick="selectAudio('A')"><span class="letter">A</span></div>
-            <div class="audio-box Asos sostenido" onclick="selectAudio('Asos')"><span class="letter">A#</span></div>
+            <div class="audio-box As sostenido" onclick="selectAudio('As')"><span class="letter">A#</span></div>
         </div>
         <div class="audio-container">
             <div class="audio-box B" onclick="selectAudio('B')"><span class="letter">B</span></div>
@@ -2101,7 +2174,7 @@ Fin teclado Repetir -->
 
             var inputAudio = document.getElementById('audioInput').value;
 
-            var validAudios = ['Csos', 'Dsos', 'Fsos', 'Gsos', 'Asos', 'C', 'D', 'E', 'F', 'G', 'A', 'B'];
+            var validAudios = ['Cs', 'Ds', 'Fs', 'Gs', 'As', 'C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
             if (validAudios.includes(inputAudio)) {
                 console.log('sonido seleccionado:', inputAudio);
@@ -2147,13 +2220,12 @@ Fin teclado Repetir -->
 
         });
     </script>
-
-
-
 <!-- Fin teclado audio -->
 
-<div id="blocklyDiv" style="position: absolute"></div>
+<!---------------------------------------- Fin Teclados personalizados de la aplicacion ------------------------------------------------->
 
+
+<!---------------------------------------- Insertar los bloques en la cja de herramientas por Nivel ------------------------------------------------->
 
 <xml id="toolbox" style="display: none">
     <category name="Nivel 1">
@@ -2212,10 +2284,12 @@ Fin teclado Repetir -->
 
 </xml>
 
+<!---------------------------------------- Fin Insertar los bloques en la cja de herramientas por Nivel ------------------------------------------------->
+
+
+<!---------------------------------------- Codigo para la comunicacion con Activity2 de android y webwiew, CRUD de los proyectos ------------------------------------------------->
+
 <script>
-
-
-
         var idProyecto;
         var nombre;
         var verificarGuardarEditar;
@@ -2302,18 +2376,6 @@ Fin teclado Repetir -->
             document.getElementById('myElement').innerHTML = data;
         }
 
-
-        // function regresarAPantallaInicial2() {
-        //     verificarGuardarEditar = document.getElementById('miInput').value;
-
-        //     if (verificarGuardarEditar === "Editar") {
-        //         editarDatos();
-        //     } else {
-        //         guardarDatos();
-        //     }
-        // }
-
-
         function abrirModalGuardar() {
             document.getElementById('nombre_nuevo_proyecto').value = document.getElementById('nombre_proyecto').value;
             document.getElementById('modal-overlay').style.display = 'flex';
@@ -2357,9 +2419,12 @@ Fin teclado Repetir -->
             cancelarModal();
             regresarAPantallaInicial();
         }
-
     </script>
 
+<!---------------------------------------- Fin Codigo para la comunicacion con Activity2 de android y webwiew, CRUD de los proyectos ------------------------------------------------->
+
+
+<!---------------------------------------- Codigo Para cambiar de Niveles los bloque del espacio de trabajo de blockly ------------------------------------------------->
 <script>
         var categoriaActual = 'Niveln1'; // Variable para almacenar la categoría actual
 
@@ -2402,7 +2467,34 @@ Fin teclado Repetir -->
         }
 
 
+        //Codigo para capturar clic de las categorias
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtener todas las categorías en el área de herramientas
+            var categoryElements = document.querySelectorAll('.blocklyTreeRow');
+
+            // Añadir manejadores de clic para las categorías
+            categoryElements.forEach(function (categoryElement) {
+                categoryElement.addEventListener('click', function () {
+                    // Obtener el nombre de la categoría
+                    var categoryName = categoryElement.querySelector('.blocklyTreeLabel').textContent.trim();
+                    console.log('Clic en la categoría: ' + categoryName);
+                    if (categoryName === "Nivel 1") {
+                        cambiarCategoria('Niveln1');
+                    } else if (categoryName === "Nivel 2") {
+                        cambiarCategoria('Niveln2');
+                    } else {
+                        cambiarCategoria('Niveln3');
+                    }
+                });
+            });
+        });
+
     </script>
+
+<!---------------------------------------- Fin Codigo Para cambiar de Niveles los bloque del espacio de trabajo de blockly ------------------------------------------------->
+
+
+<!---------------------------------------- Codigo Para que los bloques no se pierdan al ocurrir girar o apagar la pantalla del celular ------------------------------------------------->
 
 <script>
         // Función para cambiar la orientación a horizontal
@@ -2462,9 +2554,13 @@ Fin teclado Repetir -->
         });
     </script>
 
+<!---------------------------------------- Codigo Para que los bloques no se pierdan al ocurrir girar o apagar la pantalla del celular ------------------------------------------------->
+
+
+
+<!---------------------------------------- Codigo Para para la activacion del simulador y llamada a las funciones de ejecucion de los bloques (Desde java tambien se utiliza)------------------------------------------------->
 
 <script>
-
 
         // Definir la función activarSimulador
         function activarSimulador() {
@@ -2554,89 +2650,25 @@ Fin teclado Repetir -->
             }
 
         }
-
-
     </script>
 
+<!---------------------------------------- Codigo Para para la activacion del simulador y llamada a las funciones de ejecucion de los bloques (Desde java tambien se utiliza)------------------------------------------------->
+
+
+<!---------------------------------------- Funcion que llama a la funcion que  carga los datos, se ejecuta al cargar el webview------------------------------------------------->
+
 <script>
-        // function adjustCanvasSize() {
-        //     // Obtén una referencia al contenedor del canvas
-        //     const canvasContainer = document.getElementById('canvasContainer');
-        //     const canvas2 = document.getElementById('gameCanvas');
-
-        //     // Calcula el ancho y alto del contenedor
-        //     const containerWidth = canvasContainer.clientWidth;
-        //     const containerHeight = canvasContainer.clientHeight;
-
-        //     // Asigna los valores calculados al canvas
-        //     canvas2.width = containerWidth;
-        //     canvas2.height = containerHeight;
-
-        //     // Asegúrate de volver a dibujar el jugador en las nuevas dimensiones
-        //     drawPlayer();
-        // }
-
         function onPageLoad() {
             // adjustCanvasSize();
             cargarDatos();
-            // Agrega llamadas a otras funciones según sea necesario
         }
-
         // Llama a la nueva función para ajustar el tamaño del canvas y otras funciones
         window.onload = onPageLoad;
-
-
-        // // Llama a la función para ajustar el tamaño del canvas cuando se redimensiona la ventana
-        // window.addEventListener('resize', adjustCanvasSize);
     </script>
-<script>
+<!---------------------------------------- Fin Funcion que llama a la funcion que  carga los datos, se ejecuta al cargar el webview------------------------------------------------->
 
-        //  escript para la funcionalidad teclado
-        const inputNuevo = document.getElementById("inputNuevo");
-        const tecladoNumerico = document.getElementById("tecladoNumerico");
 
-        document.querySelector(".borrar-todo").addEventListener("click", () => {
-            inputNuevo.value = "";
-        });
-
-        document.querySelector(".borrar").addEventListener("click", () => {
-            const currentValue = inputNuevo.value;
-            inputNuevo.value = currentValue.slice(0, -1);
-        });
-
-        document.querySelectorAll(".numero").forEach((button) => {
-            button.addEventListener("click", () => {
-                if (button.textContent === "+/-") {
-                    inputNuevo.value = cambiarSigno(inputNuevo.value);
-                } else {
-                    inputNuevo.value += button.textContent;
-                }
-
-                // Actualiza el valor del campo correspondiente del bloque seleccionado
-                if (selectedBlock && selectedBlockFieldName) {
-                    const newValue = parseFloat(inputNuevo.value);
-                    if (!isNaN(newValue)) {
-                        selectedBlock.setFieldValue(newValue, selectedBlockFieldName);
-                    }
-                }
-            });
-        });
-
-        document.querySelector("#cerrarModal").addEventListener("click", () => {
-            tecladoNumerico.style.display = "none";
-            inputNuevo.value = "";
-        });
-
-        function cambiarSigno(valor) {
-            if (valor.startsWith("-")) {
-                return valor.substring(1);
-            } else {
-                return "-" + valor;
-            }
-        }
-
-    </script>
-
+<!---------------------------------------- Configuracion de Blockly (Espacio de trabajo y Caja de herramientas)------------------------------------------------->
 <script>
 
         var toolbox = document.getElementById("toolbox");
@@ -2661,7 +2693,7 @@ Fin teclado Repetir -->
                 wheel: true,
                 startScale: 1,
                 maxScale: 3,
-                minScale: 0.9,
+                minScale: 0.5,
                 scaleSpeed: 1.2
             }
         };
@@ -2694,94 +2726,13 @@ Fin teclado Repetir -->
 
     </script>
 
-<!-- Codigo para capturar clic de las categorias  -->
+
+<!---------------------------------------- Fin Configuracion de Blockly (Espacio de trabajo y Caja de herramientas)------------------------------------------------->
+
+
+
+<!---------------------------------------- Bloques personalizados Nivel 1, Nivel 2 y Nivel 3------------------------------------------------->
 <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Obtener todas las categorías en el área de herramientas
-            var categoryElements = document.querySelectorAll('.blocklyTreeRow');
-
-            // Añadir manejadores de clic para las categorías
-            categoryElements.forEach(function (categoryElement) {
-                categoryElement.addEventListener('click', function () {
-                    // Obtener el nombre de la categoría
-                    var categoryName = categoryElement.querySelector('.blocklyTreeLabel').textContent.trim();
-                    console.log('Clic en la categoría: ' + categoryName);
-                    if (categoryName === "Nivel 1") {
-                        cambiarCategoria('Niveln1');
-                    } else if (categoryName === "Nivel 2") {
-                        cambiarCategoria('Niveln2');
-                    } else {
-                        cambiarCategoria('Niveln3');
-                    }
-
-
-
-                });
-            });
-        });
-    </script>
-
-<!-- <script>
-function toXml() {
-var xml = Blockly.Xml.workspaceToDom(workspace);
-var xmlText = Blockly.Xml.domToPrettyText(xml);
-localStorage.setItem('savedBlocks', xmlText);
-}
-
-// Cargar los bloques desde localStorage al cargar la página
-window.onload = function () {
-var savedWorkspace = localStorage.getItem('savedBlocks');
-if (savedWorkspace) {
-var xml = Blockly.utils.xml.textToDom(savedWorkspace);
-Blockly.Xml.domToWorkspace(xml, workspace);
-workspace.scrollCenter();
-}
-
-workspace.addChangeListener(function (event) {
-toXml();
-});
-};
-
-</script> -->
-
-
-<script>
-
-
-        // Blockly.Blocks['avanzar_n2'] = {
-        //     init: function () {
-        //         var block = this;
-        //         this.appendDummyInput()
-        //             .setAlign(Blockly.ALIGN_CENTRE)
-        //             .appendField("avanzar")
-        //             .appendField(new Blockly.FieldNumber(50, -10, 100, 1), "DISTANCIA")
-        //             .appendField("cm");
-        //         this.setPreviousStatement(true, null);
-        //         this.setNextStatement(true, null);
-        //         this.setColour(230);
-        //         this.setTooltip("");
-        //         this.customFieldName = "DISTANCIA";
-        //         this.customFieldValue = 50;
-
-        //         this.getField("DISTANCIA").onMouseDown_ = function (e) {
-        //             block.handleInputClick();
-        //             Blockly.FieldTextInput.prototype.onMouseDown_.call(this, e);
-        //         };
-        //     },
-        //     handleInputClick: function () {
-        //         console.log("Clic capturado");
-        //         selectedBlock = this;
-        //         selectedBlockFieldName = "DISTANCIA";
-
-        //         // Muestra el modal (teclado numerico personalizado)
-        //         openModal('tecladoNumerico');
-
-        //         // Establece el valor del FieldNumber en el teclado numérico
-        //         inputNuevo.value = this.getFieldValue("DISTANCIA");
-        //         console.log("El valor es: " + inputNuevo.value);
-        //     }
-        // };
-
 
         //  Bloques Nivel 1
         Blockly.Blocks['play_n1'] = {
@@ -3227,7 +3178,7 @@ toXml();
                     .appendField(new Blockly.FieldImage("", 35, 35, "*", this.handleImageClick.bind(this)), "ESTADO_IMAGEN");
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
-                    .appendField(new Blockly.FieldTextInput("Fsos", this.handleTextInputChange.bind(this)), "AUDIO")
+                    .appendField(new Blockly.FieldTextInput("Fs", this.handleTextInputChange.bind(this)), "AUDIO")
                     .appendField(new Blockly.FieldTextInput("blanca", this.handleTextInputChange2.bind(this)), "ESTADO_AUDIO")
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
@@ -3237,11 +3188,11 @@ toXml();
                 this.setTooltip("");
                 this.setHelpUrl("");
                 this.customFieldName = "AUDIO";
-                this.customFieldValue = "Fsos";
+                this.customFieldValue = "Fs";
                 this.customFieldName2 = "ESTADO_AUDIO";
 
                 // Configuramos el estado inicial de la imagen del bloque
-                this.updateImageState("Fsos", "blanca");
+                this.updateImageState("Fs", "blanca");
 
                 // Agregar onchange handler para el bloque
                 this.setOnChange(function (changeEvent) {
@@ -3283,15 +3234,15 @@ toXml();
                 // Actualizamos la imagen del bloque según el valor
                 const estadoImagen = this.getField("ESTADO_IMAGEN");
 
-                if (value === "Csos" && estadoFocoValue == "blanca") {
+                if (value === "Cs" && estadoFocoValue == "blanca") {
                     estadoImagen.setValue("img/blancaCsos.png");
-                } else if (value === "Dsos" && estadoFocoValue == "blanca") {
+                } else if (value === "Ds" && estadoFocoValue == "blanca") {
                     estadoImagen.setValue("img/blancaDsos.png");
-                } else if (value === "Fsos" && estadoFocoValue == "blanca") {
+                } else if (value === "Fs" && estadoFocoValue == "blanca") {
                     estadoImagen.setValue("img/blancaFsos.png");
-                } else if (value === "Gsos" && estadoFocoValue == "blanca") {
+                } else if (value === "Gs" && estadoFocoValue == "blanca") {
                     estadoImagen.setValue("img/blancaGsos.png");
-                } else if (value === "Asos" && estadoFocoValue == "blanca") {
+                } else if (value === "As" && estadoFocoValue == "blanca") {
                     estadoImagen.setValue("img/blancaAsos.png");
                 } else if (value === "C" && estadoFocoValue == "blanca") {
                     estadoImagen.setValue("img/blancaC.png");
@@ -3310,16 +3261,16 @@ toXml();
                 }
 
 
-                else if (value === "Csos" && estadoFocoValue == "negra") {
+                else if (value === "Cs" && estadoFocoValue == "negra") {
                     estadoImagen.setValue("img/negraDsos.png");
                 }
-                else if (value === "Dsos" && estadoFocoValue == "negra") {
+                else if (value === "Ds" && estadoFocoValue == "negra") {
                     estadoImagen.setValue("img/negraDsos.png");
-                } else if (value === "Fsos" && estadoFocoValue == "negra") {
+                } else if (value === "Fs" && estadoFocoValue == "negra") {
                     estadoImagen.setValue("img/negraFsos.png");
-                } else if (value === "Gsos" && estadoFocoValue == "negra") {
+                } else if (value === "Gs" && estadoFocoValue == "negra") {
                     estadoImagen.setValue("img/negraGsos.png");
-                } else if (value === "Asos" && estadoFocoValue == "negra") {
+                } else if (value === "As" && estadoFocoValue == "negra") {
                     estadoImagen.setValue("img/negraAsos.png");
                 } else if (value === "C" && estadoFocoValue == "negra") {
                     estadoImagen.setValue("img/negraC.png");
@@ -3338,16 +3289,16 @@ toXml();
                 }
 
 
-                else if (value === "Csos" && estadoFocoValue == "corchea") {
-                    estadoImagen.setValue("img/corcheaDsos.png");
+                else if (value === "Cs" && estadoFocoValue == "corchea") {
+                    estadoImagen.setValue("img/corcheaCsos.png");
                 }
-                else if (value === "Dsos" && estadoFocoValue == "corchea") {
+                else if (value === "Ds" && estadoFocoValue == "corchea") {
                     estadoImagen.setValue("img/corcheaDsos.png");
-                } else if (value === "Fsos" && estadoFocoValue == "corchea") {
+                } else if (value === "Fs" && estadoFocoValue == "corchea") {
                     estadoImagen.setValue("img/corcheaFsos.png");
-                } else if (value === "Gsos" && estadoFocoValue == "corchea") {
+                } else if (value === "Gs" && estadoFocoValue == "corchea") {
                     estadoImagen.setValue("img/corcheaGsos.png");
-                } else if (value === "Asos" && estadoFocoValue == "corchea") {
+                } else if (value === "As" && estadoFocoValue == "corchea") {
                     estadoImagen.setValue("img/corcheaAsos.png");
                 } else if (value === "C" && estadoFocoValue == "corchea") {
                     estadoImagen.setValue("img/corcheaC.png");
@@ -3365,16 +3316,16 @@ toXml();
                     estadoImagen.setValue("img/corcheaB.png");
                 }
 
-                else if (value === "Csos" && estadoFocoValue == "semicorchea") {
+                else if (value === "Cs" && estadoFocoValue == "semicorchea") {
                     estadoImagen.setValue("img/SemiDsos.png");
                 }
-                else if (value === "Dsos" && estadoFocoValue == "semicorchea") {
+                else if (value === "Ds" && estadoFocoValue == "semicorchea") {
                     estadoImagen.setValue("img/SemiDsos.png");
-                } else if (value === "Fsos" && estadoFocoValue == "semicorchea") {
+                } else if (value === "Fs" && estadoFocoValue == "semicorchea") {
                     estadoImagen.setValue("img/SemiFsos.png");
-                } else if (value === "Gsos" && estadoFocoValue == "semicorchea") {
+                } else if (value === "Gs" && estadoFocoValue == "semicorchea") {
                     estadoImagen.setValue("img/SemiGsos.png");
-                } else if (value === "Asos" && estadoFocoValue == "semicorchea") {
+                } else if (value === "As" && estadoFocoValue == "semicorchea") {
                     estadoImagen.setValue("img/SemiAsos.png");
                 } else if (value === "C" && estadoFocoValue == "semicorchea") {
                     estadoImagen.setValue("img/SemiC.png");
@@ -4431,11 +4382,11 @@ toXml();
                         ["G", "G"],
                         ["A", "A"],
                         ["B", "B"],
-                        ["C#", "Csos"],
-                        ["D#", "Dsos"],
-                        ["F#", "Fsos"],
-                        ["G#", "Gsos"],
-                        ["A#", "Asos"]
+                        ["C#", "Cs"],
+                        ["D#", "Ds"],
+                        ["F#", "Fs"],
+                        ["G#", "Gs"],
+                        ["A#", "As"]
                     ]), "AUDIO");
 
                 this.setPreviousStatement(true, null);
@@ -5231,11 +5182,11 @@ toXml();
                         ["G", "G"],
                         ["A", "A"],
                         ["B", "B"],
-                        ["C#", "Csos"],
-                        ["D#", "Dsos"],
-                        ["F#", "Fsos"],
-                        ["G#", "Gsos"],
-                        ["A#", "Asos"]
+                        ["C#", "Cs"],
+                        ["D#", "Ds"],
+                        ["F#", "Fs"],
+                        ["G#", "Gs"],
+                        ["A#", "As"]
                     ]), "AUDIO")
                     .appendField(")");
                 this.setPreviousStatement(true, null);
@@ -5395,36 +5346,14 @@ toXml();
             }
 
         };
-
-
-        var MusicMaker = {
-            // Crear una propiedad para almacenar la instancia de Audio.
-            audio: new Audio(),
-
-            // Esta función añade el sonido a la cola para reproducir.
-            queueSound: function (soundFile, carpeta) {
-                // Establecer la ruta del archivo de sonido.
-                this.audio.src = 'sounds/' + carpeta + "/" + soundFile;
-
-                // Agregar un evento de carga para asegurarse de que el sonido se haya cargado antes de intentar reproducirlo.
-                this.audio.addEventListener('canplay', function () {
-                    // Reproducir el sonido después de que se haya cargado completamente.
-                    MusicMaker.audio.play();
-                });
-
-                // Intentar reproducir el sonido (en caso de que ya esté en caché).
-                this.audio.play();
-            }
-        };
-
-
-
-
-
-
     </script>
 
+<!---------------------------------------- Fin Bloques personalizados Nivel 1, Nivel 2 y Nivel 3------------------------------------------------->
+
+<!---------------------------------------- Generador de codigo javascript de Bloques personalizados Nivel 1, Nivel 2 y Nivel 3------------------------------------------------->
+
 <script>
+
 
         // Generador de codigo
         //  Bloques Nivel 1
@@ -5490,10 +5419,20 @@ toXml();
 
         Blockly.JavaScript['audio_n1'] = function (block) {
             var soundFile = block.getFieldValue('AUDIO');
-            const estado_audio_n2 = block.getFieldValue('ESTADO_AUDIO');
-            //var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            const estado_original = block.getFieldValue('ESTADO_AUDIO');
+            let estado_audio_n2 = null;
 
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a", "' + estado_audio_n2 + '");\n';
+            if (estado_original == "blanca") {
+                estado_audio_n2 = 1;
+            } else if (estado_original == "negra") {
+                estado_audio_n2 = 0.50;
+            } else if (estado_original == "corchea") {
+                estado_audio_n2 = 0.25;
+            } else {
+                estado_audio_n2 = 0.12;
+            }
+
+            var code = 'playNoteWithDuration("' + soundFile + '4", ' + estado_audio_n2 + ');\n';
 
             return code;
         };
@@ -5600,10 +5539,20 @@ toXml();
 
         Blockly.JavaScript['audio_n2'] = function (block) {
             var soundFile = block.getFieldValue('AUDIO');
-            const estado_audio_n2 = block.getFieldValue('ESTADO_AUDIO');
-            //var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            const estado_original = block.getFieldValue('ESTADO_AUDIO');
+            let estado_audio_n2 = null;
 
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a", "' + estado_audio_n2 + '");\n';
+            if (estado_original == "blanca") {
+                estado_audio_n2 = 1;
+            } else if (estado_original == "negra") {
+                estado_audio_n2 = 0.50;
+            } else if (estado_original == "corchea") {
+                estado_audio_n2 = 0.25;
+            } else {
+                estado_audio_n2 = 0.12;
+            }
+
+            var code = 'playNoteWithDuration("' + soundFile + '4", ' + estado_audio_n2 + ');\n';
 
             return code;
         };
@@ -5709,10 +5658,20 @@ toXml();
 
         Blockly.JavaScript['audio_n3'] = function (block) {
             var soundFile = block.getFieldValue('AUDIO');
-            const estado_audio_n2 = block.getFieldValue('ESTADO_AUDIO');
-            //var code = 'MusicMaker.queueSound("' + soundFile + '.m4a");\n';
+            const estado_original = block.getFieldValue('ESTADO_AUDIO');
+            let estado_audio_n2 = null;
 
-            var code = 'MusicMaker.queueSound("' + soundFile + '.m4a", "' + estado_audio_n2 + '");\n';
+            if (estado_original == "blanca") {
+                estado_audio_n2 = 1;
+            } else if (estado_original == "negra") {
+                estado_audio_n2 = 0.50;
+            } else if (estado_original == "corchea") {
+                estado_audio_n2 = 0.25;
+            } else {
+                estado_audio_n2 = 0.12;
+            }
+
+            var code = 'playNoteWithDuration("' + soundFile + '4", ' + estado_audio_n2 + ');\n';
 
             return code;
         };
@@ -5760,7 +5719,42 @@ toXml();
 
 
     </script>
+<!---------------------------------------- Generador de codigo javascript de Bloques personalizados Nivel 1, Nivel 2 y Nivel 3------------------------------------------------->
 
+
+
+<!---------------------------------------- Codigo para reproducir sonido utilizando la libreria Tone.js------------------------------------------------->
+
+<script>
+        // Inicializa Tone.js
+        Tone.start();
+
+        // Crea un objeto de instrumento de piano
+        var piano = new Tone.Synth({
+            oscillator: {
+                type: 'sine' // Puedes probar con 'sine', 'square', 'sawtooth' o 'triangle'
+            },
+            envelope: {
+                attack: 0.1,
+                decay: 0.2,
+                sustain: 0.5,
+                release: 1
+            }
+        }).toDestination();
+
+        // Función para reproducir una nota específica con duración personalizada (Blanca = 1, Negra = 0.5, Corchea = 0.25, y SemiCorchea = 0.12)
+        // Estas validaciones estan en el bloque de Audio
+        function playNoteWithDuration(note, duration) {
+            // Reemplaza "s" por "#" en la nota antes de reproducirla
+            note = note.replace('s', '#');
+            piano.triggerAttackRelease(note, duration);
+        }
+
+    </script>
+<!---------------------------------------- Fin Codigo para reproducir sonido utilizando la libreria Tone.js------------------------------------------------->
+
+
+<!---------------------------------------- Codigo para la simulacion del carrito robot------------------------------------------------->
 
 <!-- Dibujo de el objeto  -->
 <script>
@@ -6038,6 +6032,10 @@ toXml();
 
     </script>
 
+<!---------------------------------------- Fin Codigo para la simulacion del carrito robot------------------------------------------------->
+
+
+<!---------------------------------------- Codigo para manejar la parte tactil de la simulacion------------------------------------------------->
 <script>
         let isDragging = false;
         let offsetX, offsetY;
@@ -6126,10 +6124,9 @@ toXml();
 
     </script>
 
-<!-- Reajustando las dimenciones de canvas -->
+<!---------------------------------------- Fin Codigo para manejar la parte tactil de la simulacion------------------------------------------------->
 
-<!-- Ejecutar el codigo generado -->
-
+<!---------------------------------------- Codigo para ejecutar los bloques (Ejecuta todo en general) ------------------------------------------------->
 <script>
 
         var bloquesBluethoo;
@@ -6214,6 +6211,11 @@ toXml();
         }
 
     </script>
+
+<!---------------------------------------- fin Codigo para ejecutar los bloques (Ejecuta todo en general) ------------------------------------------------->
+
+
+<!---------------------------------------- Codigo para ejecutar los bloques con el boton Play ------------------------------------------------->
 
 <script>
 
@@ -6318,7 +6320,7 @@ toXml();
 
                     } else {
                         document.getElementById('play_button').disabled = false;
-                        document.getElementById('play_button_img').src  = 'img/playDesactivo.png';
+                        document.getElementById('play_button_img').src = 'img/playDesactivo.png';
 
                     }
 
@@ -6332,10 +6334,21 @@ toXml();
         }
     </script>
 
+<!---------------------------------------- Fin Codigo para ejecutar los bloques con el boton Play ------------------------------------------------->
+
+
+<!---------------------------------------- Codigo para ejecutar los bloques cuando reciba la orden por Blurtooth ------------------------------------------------->
 
 <script>
 
         function runCodeEvento1() {
+            // Desactiva el botón al inicio de la ejecución
+            document.getElementById('play_button').disabled = true;
+            document.getElementById('play_button_img').src = 'img/playActivo.png';
+
+            ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+
+
             // Especifica los nombres de los bloques a buscar
             var nombresBloques = ['evento1_n1', 'evento1_n2', 'evento1_n3'];
 
@@ -6358,50 +6371,54 @@ toXml();
                 // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
                 function executePlayNBlock(index) {
                     if (index < playNCodeBlocks.length) {
-                        // Ejecuta el bloque dentro del bloque encontrado
+                        if (!ejecucionDetenida) {
+                            // Ejecuta el bloque dentro del bloque encontrado
+                            try {
+                                if (playNCodeBlocks[index].includes("rotateRight")) {
+                                    var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                    var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                    if (angle > 140 && angle <= 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    } else if (angle > 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    }
 
-
-                        try {
-                            if (playNCodeBlocks[index].includes("rotateRight")) {
-                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
-                                if (angle > 140 && angle <= 240) {
-                                    tiempoEsperaAntes = 1000;
-                                } else if (angle > 240) {
-                                    tiempoEsperaAntes = 1000;
-                                }
-
-                                // Establece el tiempo de espera antes de ejecutar el bloque
-                                setTimeout(function () {
-                                    eval(playNCodeBlocks[index]);
-                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                    // Establece el tiempo de espera antes de ejecutar el bloque
+                                    setTimeout(function () {
+                                        eval(playNCodeBlocks[index]);
+                                        // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                        var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                        setTimeout(function () {
+                                            executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                        }, tiempoEsperaDespues);
+                                    }, tiempoEsperaAntes);
+                                } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                    // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                    var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
                                     setTimeout(function () {
                                         executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                    }, tiempoEsperaDespues);
-                                }, tiempoEsperaAntes);
-                            } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
-                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
-                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, tiempoEspera);
-                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, 2000);
-                            } else {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                    }, tiempoEspera);
+                                } else if (playNCodeBlocks[index].includes("MusicMaker")) {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, 2000);
+                                } else {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                    }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                }
+                            } catch (e) {
+                                alert(e);
                             }
-                        } catch (e) {
-                            alert(e);
+
                         }
+                    }else {
+                        document.getElementById('play_button').disabled = false;
+                        document.getElementById('play_button_img').src = 'img/playDesactivo.png';
 
                     }
                 }
@@ -6411,6 +6428,9 @@ toXml();
             }
         }
     </script>
+
+<!---------------------------------------- Fin Codigo para ejecutar los bloques cuando reciba la orden por Blurtooth ------------------------------------------------->
+
 
 <script>
 

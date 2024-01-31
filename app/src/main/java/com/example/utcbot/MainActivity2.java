@@ -170,10 +170,18 @@ public class MainActivity2 extends AppCompatActivity {
         IdBtnConectar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // CODIGO A EJECUTAR DE ESTE EVENTO PARA ESTE BOTON
-                ConectarDispBT();
+                // Verifica si ya está conectado antes de intentar conectarse nuevamente
+                if (!isConnected) {
+                    // CODIGO A EJECUTAR DE ESTE EVENTO PARA ESTE BOTON
+                    ConectarDispBT();
+                } else {
+                    // Si ya está conectado, desconéctalo
+                    DesconectarDispBT();
+                }
             }
         });
+
+
 
 
 
@@ -423,6 +431,9 @@ public class MainActivity2 extends AppCompatActivity {
         }
         return null;
     }
+
+    private boolean isConnected = false;
+
     private void ConectarDispBT() {
         if (DispositivoSeleccionado == null) {
             showToast("Selecciona un dispositivo Bluetooth.");
@@ -443,17 +454,48 @@ public class MainActivity2 extends AppCompatActivity {
             // Cambia la imagen programáticamente
             imageView4.setImageResource(R.drawable.bluetooth_act);
 
-
             showToast("Conexión exitosa.");
             bluetoothActivado();
+
+            // Actualiza el estado de la conexión
+            isConnected = true;
+            // Cambia el texto del botón
+            IdBtnConectar.setText("Desconectar");
         } catch (IOException e) {
             ImageView imageView4 = findViewById(R.id.imageView4);
             // Cambia la imagen programáticamente
             imageView4.setImageResource(R.drawable.bluetooth_des);
             showToast("Error al conectar con el dispositivo.");
             bluetoothDesactivado();
+
+            // Llama a la función de desconexión en caso de error
+            DesconectarDispBT();
         }
     }
+
+    private void DesconectarDispBT() {
+        try {
+            if (btSocket != null) {
+                btSocket.close();
+                showToast("Desconexión exitosa.");
+                // Actualiza el estado de la conexión
+                isConnected = false;
+
+                // Obtén una referencia al ImageView
+                ImageView imageView4 = findViewById(R.id.imageView4);
+                imageView4.setImageResource(R.drawable.bluetooth_des);
+
+                // Cambia el texto del botón
+                IdBtnConectar.setText("Conectar");
+                bluetoothDesactivado();
+
+            }
+        } catch (IOException e) {
+            showToast("Error al desconectar.");
+        }
+    }
+
+
 
     // ...
 
@@ -501,7 +543,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                 } catch (IOException e) {
                     showToast("La conexión falló");
-                    finish();
+
                     break;
                 }
             }
@@ -512,7 +554,15 @@ public class MainActivity2 extends AppCompatActivity {
                 mmOutStream.write(message.getBytes());
             } catch (IOException e) {
                 showToast("La conexión falló");
-                finish();
+                // Actualiza el estado de la conexión
+                isConnected = false;
+
+                // Obtén una referencia al ImageView
+                ImageView imageView4 = findViewById(R.id.imageView4);
+                imageView4.setImageResource(R.drawable.bluetooth_des);
+                // Cambia el texto del botón
+                IdBtnConectar.setText("Conectar");
+                bluetoothDesactivado();
             }
         }
     }

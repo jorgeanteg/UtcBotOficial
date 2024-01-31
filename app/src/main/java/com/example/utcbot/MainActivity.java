@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -208,9 +210,15 @@ public class MainActivity extends AppCompatActivity {
             noProjectsTextView.setLayoutParams(layoutParams);
             noProjectsTextView.setGravity(Gravity.CENTER);
 
-            // Puedes personalizar la apariencia del TextView según tus necesidades
-            noProjectsTextView.setTextColor(Color.BLACK);
-            noProjectsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            // Personalizar la apariencia del TextView
+            int colorHex = Color.parseColor("#35434C"); // Reemplaza "RRGGBB" con tu código hexadecimal de color
+            noProjectsTextView.setTextColor(colorHex);
+            noProjectsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);// Cargar la fuente personalizada desde res/font
+            Typeface typeface = ResourcesCompat.getFont(this, R.font.archivo_black);
+
+            // Establecer la fuente en el TextView
+            noProjectsTextView.setTypeface(typeface);
+
             cardsContainer.addView(noProjectsTextView);
         }
 
