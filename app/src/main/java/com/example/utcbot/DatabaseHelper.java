@@ -43,7 +43,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_FORMULARIO);
         db.execSQL(CREATE_TABLE_PROYECTO);
-
         // Insertar datos iniciales en la tabla de proyectos al instalar la aplicación
         insertarDatosIniciales(db);
     }

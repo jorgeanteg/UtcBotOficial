@@ -96,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Método para cargar tarjetas desde la base de datos
     private void mostrarTarjetasDesdeDB(LinearLayout cardsContainer) {
-        cardsContainer.removeAllViews(); // Limpiar las tarjetas existentes
 
+
+        cardsContainer.removeAllViews(); // Limpiar las tarjetas existentes
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] projection = {DatabaseHelper.COLUMN_ID, DatabaseHelper.COLUMN_NOMBRE, DatabaseHelper.COLUMN_CONTENIDO};
         Cursor cursor = db.query(DatabaseHelper.TABLE_NAME, projection, null, null, null, null, null);
@@ -227,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void mostrarTarjetasDesdeDBEjemplo(LinearLayout cardsContainer2) {
+
+
         cardsContainer2.removeAllViews(); // Limpiar las tarjetas existentes
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();

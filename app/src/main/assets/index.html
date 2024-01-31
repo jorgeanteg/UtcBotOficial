@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,29 +12,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Document</title>
 
-    <script src="blockly_compressed.js"></script>
-    <script src="blocks_compressed.js"></script>
-    <script src="javascript_compressed.js"></script>
-    <script src="es.js"></script>
-    <script src="javascript.js"></script>
-    <script src="Tone.js"></script>
+    <script src="blockly/blockly_compressed.js"></script>
+    <script src="blockly/blocks_compressed.js"></script>
+    <script src="blockly/javascript_compressed.js"></script>
+    <script src="blockly/msg/es.js"></script>
+    <script src="blockly/javascript.js"></script>
+    <script src="tone/Tone.js"></script>
+
 
     <style>
-        @font-face {
-            font-family: 'MadrasRegular';
-            src: url('fuente/MadrasRegular.ttf');
-        }
-
-        @font-face {
-            font-family: 'MadrasBold';
-            src: url('fuente/MadrasBold.ttf');
-        }
 
         html,
         body {
             height: 100%;
             margin: 0;
             padding: 0;
+
         }
 
         /* Modificacion de la libreria,(Categoria) */
@@ -2225,63 +2219,51 @@ Fin teclado Repetir -->
 <!---------------------------------------- Fin Teclados personalizados de la aplicacion ------------------------------------------------->
 
 
-<!---------------------------------------- Insertar los bloques en la cja de herramientas por Nivel ------------------------------------------------->
+<!---------------------------------------- Insertar los bloques en la caja de herramientas por Nivel ------------------------------------------------->
 
 <xml id="toolbox" style="display: none">
     <category name="Nivel 1">
-
         <block type="play_n1"></block>
         <block type="evento1_n1"></block>
         <block type="avanzar_n1"></block>
         <block type="girar_derecha_n1"></block>
         <block type="girar_izquierda_n1"></block>
-
         <block type="foco_n1"></block>
         <block type="audio_n1"></block>
         <block type="rotulador_n1"></block>
-
         <block type="repetir_n1"></block>
         <block type="esperar_n1"></block>
         <block type="condicionalIf_n1"></block>
         <block type="condicionalIfElse_n1"></block>
-
     </category>
     <category name="Nivel 2">
-
         <block type="play_n2"></block>
         <block type="evento1_n2"></block>
         <block type="avanzar_n2"></block>
         <block type="girar_derecha_n2"></block>
         <block type="girar_izquierda_n2"></block>
-
         <block type="foco_n2"></block>
         <block type="audio_n2"></block>
         <block type="rotulador_n2"></block>
-
         <block type="repetir_n2"></block>
         <block type="esperar_n2"></block>
         <block type="condicionalIf_n2"></block>
         <block type="condicionalIfElse_n2"></block>
     </category>
-
     <category name="Nivel 3">
-
         <block type="play_n3"></block>
         <block type="evento1_n3"></block>
         <block type="avanzar_n3"></block>
         <block type="girar_izquierda_n3"></block>
         <block type="girar_derecha_n3"></block>
-
         <block type="foco_n3"></block>
         <block type="audio_n3"></block>
         <block type="rotulador_n3"></block>
-
         <block type="repetir_n3"></block>
         <block type="esperar_n3"></block>
         <block type="condicionalIf_n3"></block>
         <block type="condicionalIfElse_n3"></block>
     </category>
-
 </xml>
 
 <!---------------------------------------- Fin Insertar los bloques en la cja de herramientas por Nivel ------------------------------------------------->
@@ -2670,9 +2652,7 @@ Fin teclado Repetir -->
 
 <!---------------------------------------- Configuracion de Blockly (Espacio de trabajo y Caja de herramientas)------------------------------------------------->
 <script>
-
         var toolbox = document.getElementById("toolbox");
-
         var options = {
             toolbox: toolbox,
             collapse: true,
@@ -2694,8 +2674,7 @@ Fin teclado Repetir -->
                 startScale: 1,
                 maxScale: 3,
                 minScale: 0.5,
-                scaleSpeed: 1.2
-            }
+                scaleSpeed: 1.2 }
         };
 
 
