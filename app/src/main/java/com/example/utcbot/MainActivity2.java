@@ -537,6 +537,8 @@ public class MainActivity2 extends AppCompatActivity {
                         handleEvento2(receivedData);
                     } else if ("evento3".equals(receivedData)) {
                         handleEvento3(receivedData);
+                    } else if ("evento4".equals(receivedData)) {
+                        handleEvento4(receivedData);
                     } else {
                         showToast("Evento Desconocido");
                     }
@@ -594,7 +596,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void run() {
                 // Ejecuta la función receiveData en la página web
-                wv1.evaluateJavascript("runCodeEvento2()", null);
+                wv1.evaluateJavascript("playActivarSimuladorEvento2()", null);
             }
         });
     }
@@ -606,7 +608,19 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void run() {
                 // Ejecuta la función receiveData en la página web
-                wv1.evaluateJavascript("runCodeEvento3()", null);
+                wv1.evaluateJavascript("playActivarSimuladorEvento3()", null);
+            }
+        });
+    }
+
+    private void handleEvento4(String data) {
+        showToast("Datos recibidos: " + data);
+        // Enviar datos al WebView
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Ejecuta la función receiveData en la página web
+                wv1.evaluateJavascript("playActivarSimuladorEvento4()", null);
             }
         });
     }

@@ -148,7 +148,7 @@
                 android:layout_marginTop="12dp"
                 android:textColor="#35434C"
                 android:fontFamily="@font/archivo_black"
-                android:text="Ejemplos de Movimientos Basicos y Dibujo"
+                android:text="Muestra de proyectos"
                 android:textSize="20dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="30dp"

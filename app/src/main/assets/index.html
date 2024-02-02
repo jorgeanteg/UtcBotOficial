@@ -21,7 +21,6 @@
 
 
     <style>
-
         html,
         body {
             height: 100%;
@@ -150,10 +149,10 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #007BFF;
+            background-color: #7a9dc4;
             color: #fff;
             border: none;
-            border-radius: 50%;
+            border-radius: 10px;
             width: 50px;
             height: 50px;
             text-align: center;
@@ -165,8 +164,14 @@
             /* Asegura que el botón esté encima de todo */
         }
 
+        .floating-button img {
+            margin-top: 5px;
+            width: 40px;
+            height: 40px;
+        }
+
         .floating-button:hover {
-            background-color: #0056b3;
+            background-color: #289B38;
         }
 
 
@@ -1037,7 +1042,9 @@
     <img src="img/stopPlay.png" alt="">
 </button>
 
-<a href="#" class="floating-button" id="toggle-button">Botón</a>
+<a href="#" class="floating-button" id="toggle-button">
+    <img src="irobot.png" alt="hsja">
+</a>
 
 
 <!-- Botones de Guadar y Nombre del Proyecto -->
@@ -2219,51 +2226,72 @@ Fin teclado Repetir -->
 <!---------------------------------------- Fin Teclados personalizados de la aplicacion ------------------------------------------------->
 
 
-<!---------------------------------------- Insertar los bloques en la caja de herramientas por Nivel ------------------------------------------------->
+<!---------------------------------------- Insertar los bloques en la cja de herramientas por Nivel ------------------------------------------------->
 
 <xml id="toolbox" style="display: none">
     <category name="Nivel 1">
+
         <block type="play_n1"></block>
         <block type="evento1_n1"></block>
+        <block type="evento2_n1"></block>
+        <block type="evento3_n1"></block>
+        <block type="evento4_n1"></block>
         <block type="avanzar_n1"></block>
         <block type="girar_derecha_n1"></block>
         <block type="girar_izquierda_n1"></block>
+
         <block type="foco_n1"></block>
         <block type="audio_n1"></block>
         <block type="rotulador_n1"></block>
+
         <block type="repetir_n1"></block>
         <block type="esperar_n1"></block>
         <block type="condicionalIf_n1"></block>
         <block type="condicionalIfElse_n1"></block>
+
     </category>
     <category name="Nivel 2">
+
         <block type="play_n2"></block>
         <block type="evento1_n2"></block>
+        <block type="evento2_n2"></block>
+        <block type="evento3_n2"></block>
+        <block type="evento4_n2"></block>
         <block type="avanzar_n2"></block>
         <block type="girar_derecha_n2"></block>
         <block type="girar_izquierda_n2"></block>
+
         <block type="foco_n2"></block>
         <block type="audio_n2"></block>
         <block type="rotulador_n2"></block>
+
         <block type="repetir_n2"></block>
         <block type="esperar_n2"></block>
         <block type="condicionalIf_n2"></block>
         <block type="condicionalIfElse_n2"></block>
     </category>
+
     <category name="Nivel 3">
+
         <block type="play_n3"></block>
         <block type="evento1_n3"></block>
+        <block type="evento2_n3"></block>
+        <block type="evento3_n3"></block>
+        <block type="evento4_n3"></block>
         <block type="avanzar_n3"></block>
         <block type="girar_izquierda_n3"></block>
         <block type="girar_derecha_n3"></block>
+
         <block type="foco_n3"></block>
         <block type="audio_n3"></block>
         <block type="rotulador_n3"></block>
+
         <block type="repetir_n3"></block>
         <block type="esperar_n3"></block>
         <block type="condicionalIf_n3"></block>
         <block type="condicionalIfElse_n3"></block>
     </category>
+
 </xml>
 
 <!---------------------------------------- Fin Insertar los bloques en la cja de herramientas por Nivel ------------------------------------------------->
@@ -2652,7 +2680,9 @@ Fin teclado Repetir -->
 
 <!---------------------------------------- Configuracion de Blockly (Espacio de trabajo y Caja de herramientas)------------------------------------------------->
 <script>
+
         var toolbox = document.getElementById("toolbox");
+
         var options = {
             toolbox: toolbox,
             collapse: true,
@@ -2674,10 +2704,9 @@ Fin teclado Repetir -->
                 startScale: 1,
                 maxScale: 3,
                 minScale: 0.5,
-                scaleSpeed: 1.2 }
+                scaleSpeed: 1.2
+            }
         };
-
-
 
         var blocklyArea = document.getElementById('blocklyArea');
         var blocklyDiv = document.getElementById('blocklyDiv');
@@ -2713,7 +2742,8 @@ Fin teclado Repetir -->
 <!---------------------------------------- Bloques personalizados Nivel 1, Nivel 2 y Nivel 3------------------------------------------------->
 <script>
 
-        //  Bloques Nivel 1
+
+
         Blockly.Blocks['play_n1'] = {
             init: function () {
                 this.appendDummyInput()
@@ -2727,6 +2757,29 @@ Fin teclado Repetir -->
                 this.setColour('#312783');
                 this.setTooltip("");
                 this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'play_n1';
+                    });
+
+                    // Habilitar todos los bloques play_n1
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques play_n1 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento Play ya existe.");
+                        }
+                    }
+                }
             }
         };
 
@@ -2735,14 +2788,154 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("  ")
-                    .appendField(new Blockly.FieldImage("img/eventoPlay.png", 35, 35, "*"))
+                    .appendField(new Blockly.FieldImage("img/evento1.png", 35, 35, "*"))
                 this.appendStatementInput("cuerpo")
                     .setCheck(null);
                 this.setPreviousStatement(false, null);
                 this.setNextStatement(false, null);
-                this.setColour('#812583');
+                this.setColour('#312783');
                 this.setTooltip("");
                 this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento1_n1';
+                    });
+
+                    // Habilitar todos los bloques evento1_n1
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento1_n1 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 1 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento2_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("  ")
+                    .appendField(new Blockly.FieldImage("img/evento2.png", 35, 35, "*"))
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setPreviousStatement(false, null);
+                this.setNextStatement(false, null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento2_n1';
+                    });
+
+                    // Habilitar todos los bloques evento2_n1
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento2_n1 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 2 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento3_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("  ")
+                    .appendField(new Blockly.FieldImage("img/evento3.png", 35, 35, "*"))
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setPreviousStatement(false, null);
+                this.setNextStatement(false, null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento3_n1';
+                    });
+
+                    // Habilitar todos los bloques evento3_n1
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento3_n1 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 3 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento4_n1'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .setAlign(Blockly.ALIGN_CENTRE)
+                    .appendField("  ")
+                    .appendField(new Blockly.FieldImage("img/evento4.png", 35, 35, "*"))
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setPreviousStatement(false, null);
+                this.setNextStatement(false, null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento4_n1';
+                    });
+
+                    // Habilitar todos los bloques evento4_n1
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento4_n1 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 4 ya existe.");
+                        }
+                    }
+                }
             }
         };
 
@@ -2758,17 +2951,13 @@ Fin teclado Repetir -->
                     .setVisible(false);
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
-                this.setEnabled(true); // Activar inicialmente
+                this.setEnabled(true);
                 this.setColour('#289B38');
                 this.setTooltip("");
                 this.setHelpUrl("");
                 this.customFieldName = "DISTANCIA";
                 this.customFieldValue = 20;
-
-                // Configuramos el estado inicial de la imagen del bloque
                 this.updateImageState(20);
-
-                // Agregar onchange handler para el bloque
                 this.setOnChange(function (changeEvent) {
                     block.checkConnection();
                 });
@@ -2782,19 +2971,13 @@ Fin teclado Repetir -->
 
                 slider.value = this.getFieldValue("DISTANCIA");
                 sliderValueSpan.value = this.getFieldValue("DISTANCIA");
-
-                // Actualizamos la imagen del bloque según el nuevo valor
                 this.updateImageState(parseFloat(sliderValueSpan.value));
             },
             handleTextInputChange: function (newValue) {
-                // Manejar el cambio en el campo de texto si es necesario
                 console.log("Cambio en el campo de texto: " + newValue);
-
-                // Actualizamos la imagen del bloque según el nuevo valor
                 this.updateImageState(parseFloat(newValue));
             },
             updateImageState: function (value) {
-                // Actualizamos la imagen del bloque según el valor
                 const estadoImagen = this.getField("ESTADO_IMAGEN");
                 if (value < 0) {
                     estadoImagen.setValue("img/avanzar_atras.png");
@@ -2805,22 +2988,17 @@ Fin teclado Repetir -->
                 }
             },
             checkConnection: function () {
-                // Verifica si el bloque está en el espacio de trabajo
                 var inWorkspace = this.workspace && !this.isInFlyout;
-
                 if (inWorkspace) {
-                    // Si está en el espacio de trabajo y no está conectado, desactiva el bloque
                     if (!this.previousConnection.isConnected()) {
                         this.setEnabled(false);
                         this.setWarningText("Este bloque debe estar dentro un evento.");
                     } else {
-                        // Si está conectado, verifica si el bloque al que está conectado está activo
                         var connectedBlock = this.previousConnection.targetBlock();
                         if (connectedBlock && connectedBlock.isEnabled()) {
                             this.setEnabled(true);
-                            this.setWarningText(null); // Limpiar el mensaje de advertencia
+                            this.setWarningText(null);
                         } else {
-                            // Si el bloque al que está conectado no está activo, desactiva el bloque
                             this.setEnabled(false);
                             this.setWarningText("Este bloque debe estar dentro un evento.");
                         }
@@ -4327,6 +4505,29 @@ Fin teclado Repetir -->
                 this.setColour('#312783');
                 this.setTooltip("");
                 this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'play_n2';
+                    });
+
+                    // Habilitar todos los bloques play_n2
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques play_n2 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento Play ya existe.");
+                        }
+                    }
+                }
             }
         };
 
@@ -4339,6 +4540,134 @@ Fin teclado Repetir -->
                 this.setColour('#312783');
                 this.setTooltip("");
                 this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento1_n2';
+                    });
+
+                    // Habilitar todos los bloques evento1_n2
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento1_n2 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 1 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento2_n2'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("al presionar evento2")
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento2_n2';
+                    });
+
+                    // Habilitar todos los bloques evento2_n2
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento2_n2 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 2 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento3_n2'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("al presionar evento3")
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento3_n2';
+                    });
+
+                    // Habilitar todos los bloques evento3_n2
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento3_n2 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 3 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento4_n2'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("al presionar evento4")
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento4_n2';
+                    });
+
+                    // Habilitar todos los bloques evento4_n2
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento4_n2 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 4 ya existe.");
+                        }
+                    }
+                }
             }
         };
 
@@ -4582,8 +4911,32 @@ Fin teclado Repetir -->
                 this.setColour('#312783');
                 this.setTooltip("");
                 this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'play_n3';
+                    });
+
+                    // Habilitar todos los bloques play_n3
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques play_n3 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento Play ya existe.");
+                        }
+                    }
+                }
             }
         };
+
         Blockly.Blocks['evento1_n3'] = {
             init: function () {
                 this.appendDummyInput()
@@ -4593,6 +4946,134 @@ Fin teclado Repetir -->
                 this.setColour('#312783');
                 this.setTooltip("");
                 this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento1_n3';
+                    });
+
+                    // Habilitar todos los bloques evento1_n3
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento1_n3 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 1 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento2_n3'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("def al_presionar_evento2( ):")
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento2_n3';
+                    });
+
+                    // Habilitar todos los bloques evento2_n3
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento2_n3 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 2 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento3_n3'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("def al_presionar_evento3( ):")
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento3_n3';
+                    });
+
+                    // Habilitar todos los bloques evento3_n3
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento3_n3 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 3 ya existe.");
+                        }
+                    }
+                }
+            }
+        };
+
+        Blockly.Blocks['evento4_n3'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("def al_presionar_evento4( ):")
+                this.appendStatementInput("cuerpo")
+                    .setCheck(null);
+                this.setColour('#312783');
+                this.setTooltip("");
+                this.setHelpUrl("");
+            },
+            onchange: function (event) {
+                if (event.type == Blockly.Events.BLOCK_CREATE || event.type == Blockly.Events.BLOCK_DELETE) {
+                    var workspace = this.workspace;
+                    var allBlocks = workspace.getAllBlocks();
+                    var playN1Blocks = allBlocks.filter(function (block) {
+                        return block.type === 'evento4_n3';
+                    });
+
+                    // Habilitar todos los bloques evento4_n3
+                    playN1Blocks.forEach(function (block) {
+                        block.setEnabled(true);
+                        block.setWarningText(null);
+                    });
+
+                    // Desactivar todos los bloques evento4_n3 excepto el primero
+                    if (playN1Blocks.length > 1) {
+                        for (var i = 1; i < playN1Blocks.length; i++) {
+                            playN1Blocks[i].setEnabled(false);
+                            playN1Blocks[i].setWarningText("El evento 4 ya existe.");
+                        }
+                    }
+                }
             }
         };
 
@@ -5999,7 +6480,7 @@ Fin teclado Repetir -->
             // Dibuja un círculo cuyo color depende del estado de la luz
             ctx.fillStyle = luzPrendida;
             ctx.beginPath();
-            ctx.arc(9, 0, 5, 0, Math.PI * 2);
+            ctx.arc(1, 0, 6, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.restore();
@@ -6207,7 +6688,7 @@ Fin teclado Repetir -->
 
 
         function runCodePlay() {
-            // Desactiva el botón al inicio de la ejecución
+
             document.getElementById('play_button').disabled = true;
             document.getElementById('play_button_img').src = 'img/playActivo.png';
 
@@ -6233,14 +6714,11 @@ Fin teclado Repetir -->
                 var playNCodeBlocks = playNCode.split(';').filter(Boolean);
 
                 // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
+
                 function executePlayNBlock(index) {
                     if (index < playNCodeBlocks.length) {
                         if (!ejecucionDetenida) {
-
-                            //PPara sacr las funciones del bloque
                             var bloquesBluethoo = playNCodeBlocks[index];
-                            console.log('Código del bloque ' + (index + 1) + ':', bloquesBluethoo);
-
                             function enviarDatosBlue() {
                                 try {
                                     Android.enviarDatosBlue(bloquesBluethoo);
@@ -6249,68 +6727,55 @@ Fin teclado Repetir -->
                                 }
                             }
                             enviarDatosBlue();
-
-                            // Ejecuta el bloque dentro del bloque encontrado
                             try {
                                 if (playNCodeBlocks[index].includes("rotateRight")) {
                                     var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                    // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                    var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                    var tiempoEsperaAntes = 1000;
                                     if (angle > 140 && angle <= 240) {
                                         tiempoEsperaAntes = 1000;
                                     } else if (angle > 240) {
                                         tiempoEsperaAntes = 1000;
                                     }
-
-                                    // Establece el tiempo de espera antes de ejecutar el bloque
                                     setTimeout(function () {
                                         eval(playNCodeBlocks[index]);
-                                        // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                        var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                        var tiempoEsperaDespues = angle * 10;
                                         setTimeout(function () {
-                                            executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                            executePlayNBlock(index + 1);
                                         }, tiempoEsperaDespues);
                                     }, tiempoEsperaAntes);
                                 } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                    // Si el bloque es un bloque de espera, ajusta el tiempo de espera
                                     var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
                                     tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
                                     setTimeout(function () {
-                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                        executePlayNBlock(index + 1);
                                     }, tiempoEspera);
                                 } else if (playNCodeBlocks[index].includes("MusicMaker")) {
                                     eval(playNCodeBlocks[index]);
                                     setTimeout(function () {
-                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                        executePlayNBlock(index + 1);
                                     }, 2000);
                                 } else {
                                     eval(playNCodeBlocks[index]);
                                     setTimeout(function () {
-                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                    }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                        executePlayNBlock(index + 1);
+                                    }, 1000);
                                 }
-
                             } catch (e) {
                                 alert(e);
                             }
-
-
                         }
 
                     } else {
                         document.getElementById('play_button').disabled = false;
                         document.getElementById('play_button_img').src = 'img/playDesactivo.png';
-
                     }
 
                 }
-
-                // Inicia la ejecución con el primer bloque dentro del bloque encontrado
                 executePlayNBlock(0);
-
-
             }
         }
+
+
     </script>
 
 <!---------------------------------------- Fin Codigo para ejecutar los bloques con el boton Play ------------------------------------------------->
@@ -6395,7 +6860,7 @@ Fin teclado Repetir -->
                             }
 
                         }
-                    }else {
+                    } else {
                         document.getElementById('play_button').disabled = false;
                         document.getElementById('play_button_img').src = 'img/playDesactivo.png';
 
@@ -6408,166 +6873,282 @@ Fin teclado Repetir -->
         }
     </script>
 
+<script>
+
+    function runCodeEvento2() {
+        // Desactiva el botón al inicio de la ejecución
+        document.getElementById('play_button').disabled = true;
+        document.getElementById('play_button_img').src = 'img/playActivo.png';
+
+        ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+
+
+        // Especifica los nombres de los bloques a buscar
+        var nombresBloques = ['evento2_n1', 'evento2_n2', 'evento2_n3'];
+
+        // Obtiene todos los bloques en el espacio de trabajo
+        var allBlocks = workspace.getAllBlocks();
+
+        // Busca el primer bloque entre los nombres especificados
+        var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
+
+        if (playNBlock) {
+            // Obtiene todos los bloques dentro del bloque encontrado
+            var playNBlocks = playNBlock.getChildren();
+
+            // Captura el código generado por los bloques dentro del bloque encontrado
+            var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
+
+            // Divide el código dentro del bloque encontrado en bloques individuales
+            var playNCodeBlocks = playNCode.split(';').filter(Boolean);
+
+            // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
+            function executePlayNBlock(index) {
+                if (index < playNCodeBlocks.length) {
+                    if (!ejecucionDetenida) {
+                        // Ejecuta el bloque dentro del bloque encontrado
+                        try {
+                            if (playNCodeBlocks[index].includes("rotateRight")) {
+                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                if (angle > 140 && angle <= 240) {
+                                    tiempoEsperaAntes = 1000;
+                                } else if (angle > 240) {
+                                    tiempoEsperaAntes = 1000;
+                                }
+
+                                // Establece el tiempo de espera antes de ejecutar el bloque
+                                setTimeout(function () {
+                                    eval(playNCodeBlocks[index]);
+                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, tiempoEsperaDespues);
+                                }, tiempoEsperaAntes);
+                            } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                }, tiempoEspera);
+                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
+                                eval(playNCodeBlocks[index]);
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                }, 2000);
+                            } else {
+                                eval(playNCodeBlocks[index]);
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                            }
+                        } catch (e) {
+                            alert(e);
+                        }
+
+                    }
+                } else {
+                    document.getElementById('play_button').disabled = false;
+                    document.getElementById('play_button_img').src = 'img/playDesactivo.png';
+
+                }
+            }
+
+            // Inicia la ejecución con el primer bloque dentro del bloque encontrado
+            executePlayNBlock(0);
+        }
+    }
+</script>
+
+<script>
+
+    function runCodeEvento3() {
+        // Desactiva el botón al inicio de la ejecución
+        document.getElementById('play_button').disabled = true;
+        document.getElementById('play_button_img').src = 'img/playActivo.png';
+
+        ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+
+
+        // Especifica los nombres de los bloques a buscar
+        var nombresBloques = ['evento3_n1', 'evento3_n2', 'evento3_n3'];
+
+        // Obtiene todos los bloques en el espacio de trabajo
+        var allBlocks = workspace.getAllBlocks();
+
+        // Busca el primer bloque entre los nombres especificados
+        var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
+
+        if (playNBlock) {
+            // Obtiene todos los bloques dentro del bloque encontrado
+            var playNBlocks = playNBlock.getChildren();
+
+            // Captura el código generado por los bloques dentro del bloque encontrado
+            var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
+
+            // Divide el código dentro del bloque encontrado en bloques individuales
+            var playNCodeBlocks = playNCode.split(';').filter(Boolean);
+
+            // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
+            function executePlayNBlock(index) {
+                if (index < playNCodeBlocks.length) {
+                    if (!ejecucionDetenida) {
+                        // Ejecuta el bloque dentro del bloque encontrado
+                        try {
+                            if (playNCodeBlocks[index].includes("rotateRight")) {
+                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                if (angle > 140 && angle <= 240) {
+                                    tiempoEsperaAntes = 1000;
+                                } else if (angle > 240) {
+                                    tiempoEsperaAntes = 1000;
+                                }
+
+                                // Establece el tiempo de espera antes de ejecutar el bloque
+                                setTimeout(function () {
+                                    eval(playNCodeBlocks[index]);
+                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, tiempoEsperaDespues);
+                                }, tiempoEsperaAntes);
+                            } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                }, tiempoEspera);
+                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
+                                eval(playNCodeBlocks[index]);
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                }, 2000);
+                            } else {
+                                eval(playNCodeBlocks[index]);
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                            }
+                        } catch (e) {
+                            alert(e);
+                        }
+
+                    }
+                } else {
+                    document.getElementById('play_button').disabled = false;
+                    document.getElementById('play_button_img').src = 'img/playDesactivo.png';
+
+                }
+            }
+
+            // Inicia la ejecución con el primer bloque dentro del bloque encontrado
+            executePlayNBlock(0);
+        }
+    }
+</script>
+
+
+<script>
+
+    function runCodeEvento4() {
+        // Desactiva el botón al inicio de la ejecución
+        document.getElementById('play_button').disabled = true;
+        document.getElementById('play_button_img').src = 'img/playActivo.png';
+
+        ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+
+
+        // Especifica los nombres de los bloques a buscar
+        var nombresBloques = ['evento4_n1', 'evento4_n2', 'evento4_n3'];
+
+        // Obtiene todos los bloques en el espacio de trabajo
+        var allBlocks = workspace.getAllBlocks();
+
+        // Busca el primer bloque entre los nombres especificados
+        var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
+
+        if (playNBlock) {
+            // Obtiene todos los bloques dentro del bloque encontrado
+            var playNBlocks = playNBlock.getChildren();
+
+            // Captura el código generado por los bloques dentro del bloque encontrado
+            var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
+
+            // Divide el código dentro del bloque encontrado en bloques individuales
+            var playNCodeBlocks = playNCode.split(';').filter(Boolean);
+
+            // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
+            function executePlayNBlock(index) {
+                if (index < playNCodeBlocks.length) {
+                    if (!ejecucionDetenida) {
+                        // Ejecuta el bloque dentro del bloque encontrado
+                        try {
+                            if (playNCodeBlocks[index].includes("rotateRight")) {
+                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                if (angle > 140 && angle <= 240) {
+                                    tiempoEsperaAntes = 1000;
+                                } else if (angle > 240) {
+                                    tiempoEsperaAntes = 1000;
+                                }
+
+                                // Establece el tiempo de espera antes de ejecutar el bloque
+                                setTimeout(function () {
+                                    eval(playNCodeBlocks[index]);
+                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, tiempoEsperaDespues);
+                                }, tiempoEsperaAntes);
+                            } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                }, tiempoEspera);
+                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
+                                eval(playNCodeBlocks[index]);
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                }, 2000);
+                            } else {
+                                eval(playNCodeBlocks[index]);
+                                setTimeout(function () {
+                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                            }
+                        } catch (e) {
+                            alert(e);
+                        }
+
+                    }
+                } else {
+                    document.getElementById('play_button').disabled = false;
+                    document.getElementById('play_button_img').src = 'img/playDesactivo.png';
+
+                }
+            }
+
+            // Inicia la ejecución con el primer bloque dentro del bloque encontrado
+            executePlayNBlock(0);
+        }
+    }
+</script>
 <!---------------------------------------- Fin Codigo para ejecutar los bloques cuando reciba la orden por Blurtooth ------------------------------------------------->
 
 
-<script>
-
-        function runCodeEvento2() {
-            // Especifica los nombres de los bloques a buscar
-            var nombresBloques = ['evento2_n1', 'evento2_n2', 'evento2_n3'];
-
-            // Obtiene todos los bloques en el espacio de trabajo
-            var allBlocks = workspace.getAllBlocks();
-
-            // Busca el primer bloque entre los nombres especificados
-            var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
-
-            if (playNBlock) {
-                // Obtiene todos los bloques dentro del bloque encontrado
-                var playNBlocks = playNBlock.getChildren();
-
-                // Captura el código generado por los bloques dentro del bloque encontrado
-                var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
-
-                // Divide el código dentro del bloque encontrado en bloques individuales
-                var playNCodeBlocks = playNCode.split(';').filter(Boolean);
-
-                // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
-                function executePlayNBlock(index) {
-                    if (index < playNCodeBlocks.length) {
-                        // Ejecuta el bloque dentro del bloque encontrado
 
 
-                        try {
-                            if (playNCodeBlocks[index].includes("rotateRight")) {
-                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
-                                if (angle > 140 && angle <= 240) {
-                                    tiempoEsperaAntes = 1000;
-                                } else if (angle > 240) {
-                                    tiempoEsperaAntes = 1000;
-                                }
 
-                                // Establece el tiempo de espera antes de ejecutar el bloque
-                                setTimeout(function () {
-                                    eval(playNCodeBlocks[index]);
-                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
-                                    setTimeout(function () {
-                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                    }, tiempoEsperaDespues);
-                                }, tiempoEsperaAntes);
-                            } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
-                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
-                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, tiempoEspera);
-                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, 2000);
-                            } else {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
-                            }
-                        } catch (e) {
-                            alert(e);
-                        }
-
-                    }
-                }
-
-                // Inicia la ejecución con el primer bloque dentro del bloque encontrado
-                executePlayNBlock(0);
-            }
-        }
-    </script>
-
-<script>
-
-        function runCodeEvento3() {
-            // Especifica los nombres de los bloques a buscar
-            var nombresBloques = ['evento3_n1', 'evento3_n2', 'evento3_n3'];
-
-            // Obtiene todos los bloques en el espacio de trabajo
-            var allBlocks = workspace.getAllBlocks();
-
-            // Busca el primer bloque entre los nombres especificados
-            var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
-
-            if (playNBlock) {
-                // Obtiene todos los bloques dentro del bloque encontrado
-                var playNBlocks = playNBlock.getChildren();
-
-                // Captura el código generado por los bloques dentro del bloque encontrado
-                var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
-
-                // Divide el código dentro del bloque encontrado en bloques individuales
-                var playNCodeBlocks = playNCode.split(';').filter(Boolean);
-
-                // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
-                function executePlayNBlock(index) {
-                    if (index < playNCodeBlocks.length) {
-                        // Ejecuta el bloque dentro del bloque encontrado
-
-
-                        try {
-                            if (playNCodeBlocks[index].includes("rotateRight")) {
-                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
-                                if (angle > 140 && angle <= 240) {
-                                    tiempoEsperaAntes = 1000;
-                                } else if (angle > 240) {
-                                    tiempoEsperaAntes = 1000;
-                                }
-
-                                // Establece el tiempo de espera antes de ejecutar el bloque
-                                setTimeout(function () {
-                                    eval(playNCodeBlocks[index]);
-                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
-                                    setTimeout(function () {
-                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                    }, tiempoEsperaDespues);
-                                }, tiempoEsperaAntes);
-                            } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
-                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
-                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, tiempoEspera);
-                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, 2000);
-                            } else {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
-                            }
-                        } catch (e) {
-                            alert(e);
-                        }
-
-                    }
-                }
-
-                // Inicia la ejecución con el primer bloque dentro del bloque encontrado
-                executePlayNBlock(0);
-            }
-        }
-    </script>
 
 </body>
 
