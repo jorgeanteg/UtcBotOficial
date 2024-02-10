@@ -187,7 +187,7 @@ public class ListadoProyectos extends AppCompatActivity {
         } else {
             // Manejar el caso en que el cursor esté vacío
             // Puedes agregar un mensaje de registro o mostrar un Toast
-            Toast.makeText(this, "Error: Cursor vacío", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Error: Cursor vacío", Toast.LENGTH_SHORT).show();
         }
 
         db.close();

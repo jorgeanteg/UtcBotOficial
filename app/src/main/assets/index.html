@@ -12,952 +12,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Document</title>
 
+    <link rel="stylesheet" href="css/style.css">
+    <script src="hopscotch.js"></script>
+    <link rel="stylesheet" href="hopscotch.css">
     <script src="blockly/blockly_compressed.js"></script>
     <script src="blockly/blocks_compressed.js"></script>
     <script src="blockly/javascript_compressed.js"></script>
-    <script src="blockly/msg/es.js"></script>
+    <script src="blockly/es.js"></script>
     <script src="blockly/javascript.js"></script>
     <script src="tone/Tone.js"></script>
 
-
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-
-        }
-
-        /* Modificacion de la libreria,(Categoria) */
-        .blocklyTreeLabel {
-            font-size: 18px !important;
-        }
-
-        /*
-        .blocklyToolboxContents {
-            background-color: red;
-        } */
-        .blocklyToolboxCategory {
-            /* background-color: #289B38; */
-            /* padding: 2px; */
-        }
-
-        .blocklyTreeRow {
-            /* background-color: #289B38; */
-            padding-left: 20px !important;
-            padding-right: 20px !important;
-            padding-bottom: 30px !important;
-            padding-top: 10px !important;
-            border: solid 2px #fff;
-            border-radius: 5px;
-        }
-
-
-        /* Fin Modificacion de la libreria,(Categoria) */
-
-        body {
-            background-color: #DCDCDC;
-            font-family: sans-serif;
-            overflow: hidden;
-        }
-
-        .container {
-            display: flex;
-            height: 100%;
-            transition: all 0.5s;
-        }
-
-        .container.active {
-            justify-content: flex-end;
-        }
-
-        .container>div {
-            height: 100%;
-        }
-
-        .container .first-div {
-            width: 100%;
-            background-color: #DCDCDC;
-            transition: width 0.5s;
-        }
-
-        .container.active .first-div {
-            width: 55%;
-        }
-
-        .container .second-div {
-            position: relative;
-            width: 0;
-            background-color: #289B38;
-            transition: width 0.5s;
-            overflow: hidden;
-        }
-
-
-        .zoom {
-            position: absolute;
-            bottom: 10px;
-            /* Ajusta el margen inferior según sea necesario */
-            left: 10px;
-            /* Ajusta el margen izquierdo según sea necesario */
-            z-index: 1;
-            border: 2px solid #adadad;
-            /* Borde gris */
-            border-radius: 10px;
-            /* Esquinas redondeadas */
-            overflow: hidden;
-            /* Asegura que el contenido no sobresalga de las esquinas redondeadas */
-        }
-
-        .zoom button {
-            padding: 5px;
-            /* Ajusta el relleno de los botones según sea necesario */
-            font-size: 14px;
-            /* Ajusta el tamaño de la fuente según sea necesario */
-            border: none;
-            /* Elimina el borde del botón si lo deseas */
-            background: none;
-            /* Elimina el fondo del botón si lo deseas */
-            cursor: pointer;
-            /* Cambia el cursor a una mano al pasar sobre el botón */
-        }
-
-        .zoom button img {
-            width: 25px;
-            height: 25px;
-        }
-
-        .container.active .second-div {
-            width: 45%;
-            height: 93% !important;
-            margin: 10px;
-        }
-
-
-        canvas {
-            border: 1px solid black;
-            padding: 0;
-            margin: 0;
-            background-color: #E4F4FC;
-        }
-
-
-        /* Boton flotante */
-
-        .floating-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #7a9dc4;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 18px;
-            line-height: 50px;
-            text-decoration: none;
-            cursor: pointer;
-            z-index: 999;
-            /* Asegura que el botón esté encima de todo */
-        }
-
-        .floating-button img {
-            margin-top: 5px;
-            width: 40px;
-            height: 40px;
-        }
-
-        .floating-button:hover {
-            background-color: #289B38;
-        }
-
-
-        .floating-play {
-            position: fixed;
-            bottom: 200px;
-            left: 10px;
-            background-color: transparent;
-            border: none;
-            border-radius: 20px 20px 20px 20px;
-            width: 35px;
-            height: 60px;
-            text-align: center;
-            font-size: 18px;
-            line-height: 60px;
-            text-decoration: none;
-            cursor: pointer;
-            border: 5px solid #383838;
-            z-index: 999;
-
-            /* Añadí estilos de flexbox para centrar la imagen */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .floating-play img {
-            width: 25px;
-            height: auto;
-        }
-
-        .floating-stop {
-            position: fixed;
-            bottom: 130px;
-            left: 10px;
-            background-color: transparent;
-            border: none;
-            border-radius: 50%;
-            width: 35px;
-            height: 42px;
-            text-align: center;
-            font-size: 18px;
-            line-height: 60px;
-            text-decoration: none;
-            cursor: pointer;
-            border: 5px solid #383838;
-            z-index: 999;
-
-            /* Añadí estilos de flexbox para centrar la imagen */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .floating-stop img {
-            width: 20px;
-            height: auto;
-        }
-
-
-        .floating-guardar {
-            position: fixed;
-            bottom: 100px;
-            left: 20px;
-            background-color: #007BFF;
-            color: #f10e0e;
-            border: none;
-            border-radius: 30%;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 18px;
-            line-height: 50px;
-            text-decoration: none;
-            cursor: pointer;
-            z-index: 999;
-        }
-
-
-        table {
-            height: 100%;
-            width: 100%;
-        }
-
-        #blocklyArea {
-            height: 99%;
-        }
-
-        /* Para cerrar modales */
-        #fondoTransparente {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            /* Color negro con transparencia */
-            z-index: 999;
-            /* Para asegurarse de que esté encima de todo */
-        }
-
-
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 10px;
-            border: 1px solid #ccc;
-            z-index: 9999;
-            border-radius: 1rem;
-            border-color: transparent;
-            box-shadow: 0px 10px 22px 5px rgba(0, 0, 0, 0.1);
-        }
-
-
-        input {
-            border: none;
-            padding: 0;
-            margin: 0;
-            background: none;
-            outline: none;
-        }
-
-        .pantalla_teclado {
-            border-radius: 7px;
-            border: 2px solid #808080;
-            padding: 5px;
-
-
-        }
-
-        .fila {
-            display: flex;
-            justify-content: space-between;
-            margin: 5px;
-
-        }
-
-        .fila .numero {
-            flex: 1;
-            padding: 5px 16px;
-            margin-left: 2.5px;
-            margin-right: 2.5px;
-        }
-
-        .btn-borrar {
-            margin-left: 2.5px;
-            margin-right: 2.5px;
-            padding: 0px 16px !important;
-        }
-
-        .btn-borrar-todo {
-            flex: 1;
-            background-color: red;
-            padding: 0px 16px !important;
-            display: flex;
-            align-items: center;
-            /* Centra verticalmente */
-            justify-content: center;
-            /* Centra horizontalmente */
-            text-align: center;
-
-        }
-
-
-        .borrar-todo img {
-            max-width: 100%;
-            /* Ajusta el tamaño máximo de la imagen */
-            margin-right: 10px;
-            /* Ajusta el espacio entre la imagen y el texto */
-        }
-
-        .borrar-todo p {
-            margin: 0;
-            font-family: 'MadrasRegular';
-        }
-
-        button {
-            background-color: #0074d9;
-            /* Color de fondo */
-            color: #fff;
-            /* Color del texto */
-            border: none;
-            /* Quitar el borde */
-            padding: 5px 16px;
-            /* Espaciado interno */
-            border-radius: 7px;
-            /* Bordes redondeados */
-            cursor: pointer;
-            /* Cambiar el cursor al pasar sobre el botón */
-            font-size: 16px;
-            /* Tamaño de fuente */
-            font-weight: bold;
-        }
-
-        .contenedor_cerrar {
-            text-align: center;
-        }
-
-        #cerrarModal,
-        #cerrarModal2,
-        #cerrarModal3,
-        #cerrarModal4,
-        #cerrarModal5,
-        #cerrarModal6,
-        #cerrarModal7,
-        #cerrarModal8,
-        #cerrarModal9 {
-            border-radius: 50%;
-            padding: 5px 10px;
-            box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.3);
-            background-color: #fff;
-            color: #000;
-        }
-
-
-
-        * {
-            box-sizing: border-box;
-        }
-
-        canvas {
-            border: 1px solid black;
-            padding: 0;
-            margin: 0;
-        }
-
-
-        /*Teclado Slider*/
-        .modal_slider {
-            display: flex;
-            justify-content: center;
-            height: 100x;
-            margin: 0;
-        }
-
-        .slider-container {
-            text-align: center;
-            position: relative;
-        }
-
-        #image-container {
-            margin-top: 5px;
-            overflow: hidden;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        #slider-image {
-            max-width: 100%;
-            height: auto;
-        }
-
-        #slider-value {
-            margin-top: 5px;
-            font-size: 18px;
-        }
-
-        .numero_slider {
-            -moz-appearance: textfield;
-            /* Firefox */
-        }
-
-        .numero_slider::-webkit-inner-spin-button,
-        .numero_slider::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .numero_slider {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .numero_slider {
-            font-size: 18px;
-            width: 25px;
-        }
-
-        /* fin teclado slider */
-
-        /* Inicio de teclado Angulo*/
-
-        #container_angulo {
-            position: relative;
-            width: 100px;
-            margin: 0 auto;
-        }
-
-        #circle_angulo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 0;
-            padding-left: 100%;
-            padding-bottom: 100%;
-            border-radius: 50%;
-            border: 8px solid #333333;
-            z-index: -1;
-        }
-
-        #centerImage_angulo {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            /* Ajusta el tamaño según sea necesario */
-            height: 40px;
-            background-image: url('irobot.png');
-            /* Ruta de la imagen en el centro */
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 3;
-        }
-
-        #slider_angulo {
-            width: 100%;
-            margin-top: 30px;
-            z-index: 1;
-        }
-
-        #sliderHandle_angulo {
-            position: absolute;
-            transform-origin: 0% 100%;
-            transform: translate(75px, -90px) rotate(0deg);
-            /* Ajuste de la posición hacia arriba */
-            width: 40px;
-            height: 30px;
-            background-repeat: no-repeat;
-            background-size: contain;
-            z-index: 2;
-        }
-
-        #output_angulo {
-
-            font-size: 18px;
-        }
-
-        .contenedor_slider_angulo {
-            width: 200px;
-
-        }
-
-        /*Fin de teclado angulo*/
-
-        /* Teclado repetir */
-        .rep-modal_slider {
-            display: flex;
-            justify-content: center;
-            height: 100px;
-            margin: 0;
-        }
-
-        .rep-slider-container {
-            text-align: center;
-            position: relative;
-        }
-
-        #rep-image-container {
-            position: relative;
-        }
-
-
-
-        #rep-slider-image {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* Fin teclado repetir */
-
-
-        /* Teclado esperar */
-        .esp-modal_slider {
-            display: flex;
-            justify-content: center;
-            height: 100px;
-            margin: 0;
-        }
-
-        .esp-slider-container {
-            text-align: center;
-            position: relative;
-        }
-
-        #esp-image-container {
-            margin-bottom: 5px;
-        }
-
-        #esp-image-container img {
-            width: 60px;
-        }
-
-        .esp-slider-value p {
-            display: inline-block;
-            margin: 0;
-            margin-left: 3px;
-        }
-
-
-        #esp-slider-image {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* Fin teclado esperar */
-
-        /* Inicio teclado prender luz */
-        .container_foco {
-            text-align: center;
-        }
-
-        .image-containerFoco {
-            display: inline-block;
-            margin: 10px 2px;
-            cursor: pointer;
-            transition: transform 0.3s;
-            /* Agregamos una transición suave */
-        }
-
-        .image-containerFoco.selectedFoco {
-            border: 2px solid #00bcd4;
-            /* Color celeste */
-            border-radius: 5px;
-            transform: scale(1.1);
-            /* Aumentar el tamaño al seleccionar */
-        }
-
-        #estado {
-            display: block;
-            margin-top: 10px;
-        }
-
-        .color-box {
-            width: 30px;
-            height: 30px;
-            margin: 5px;
-            border: 2px solid #ccc;
-            display: inline-block;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
-        }
-
-        .color-box.selected {
-            transform: scale(1.2);
-            border-color: #00bcd4;
-            /* Cambiar el color del borde cuando está seleccionado */
-        }
-
-        .row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .color-box.red {
-            background-color: red;
-        }
-
-        .color-box.orange {
-            background-color: orange;
-        }
-
-        .color-box.yellow {
-            background-color: yellow;
-        }
-
-        .color-box.green {
-            background-color: green;
-        }
-
-        .color-box.lightblue {
-            background-color: lightblue;
-        }
-
-        .color-box.blue {
-            background-color: blue;
-        }
-
-        .color-box.purple {
-            background-color: purple;
-        }
-
-        .color-box.white {
-            background-color: white;
-        }
-
-
-        .container_sliderFoco {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        /* Fin teclado prender luz */
-
-
-        /* Inicio teclado Rotulador */
-        .container_rotulador {
-            text-align: center;
-        }
-
-        .image-containerRotulador {
-            display: inline-block;
-            margin: 10px 2px;
-            cursor: pointer;
-            transition: transform 0.3s;
-            /* Agregamos una transición suave */
-        }
-
-        .image-containerRotulador.selectedRotulador {
-            border: 2px solid #00bcd4;
-            border-radius: 5px;
-            /* Color celeste */
-            transform: scale(1.1);
-            /* Aumentar el tamaño al seleccionar */
-        }
-
-        /* Aumentar teclado Rotulador */
-
-
-        /* Inicio teclado Ifelse */
-        .container_ifelse {
-            text-align: center;
-        }
-
-        .image-containerIfelse {
-            padding: 5px;
-            display: inline-block;
-            margin: 10px 2px;
-            cursor: pointer;
-            transition: transform 0.3s;
-            /* Agregamos una transición suave */
-        }
-
-        .image-containerIfelse.selectedIfelse {
-            border: 2px solid #00bcd4;
-            border-radius: 5px;
-            /* Color celeste */
-            transform: scale(1.1);
-            /* Aumentar el tamaño al seleccionar */
-        }
-
-        /* Aumentar teclado Ifelse */
-
-
-        /* Inicio teclado Audio */
-        .container_audio {
-            text-align: center;
-        }
-
-        .image-containerAudio {
-            padding: 4px;
-            display: inline-block;
-            margin: 10px 2px;
-            cursor: pointer;
-            transition: transform 0.3s;
-            /* Agregamos una transición suave */
-        }
-
-        .image-containerAudio.selectedAudio {
-            border: 2px solid #00bcd4;
-            /* Color celeste */
-            border-radius: 5px;
-            transform: scale(1.1);
-            /* Aumentar el tamaño al seleccionar */
-        }
-
-
-
-        .image-container {
-            text-align: center;
-        }
-
-        .image-container img {
-            width: 40px;
-            height: 40px !important;
-        }
-
-        .audio-box.selected2 {
-            background-color: #67aef1 !important;
-            /* Cambiar el color del borde cuando está seleccionado */
-        }
-
-
-        .row_audio {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-
-        .audio-container {
-            display: flex;
-            position: relative;
-        }
-
-        .audio-box {
-            width: 36px;
-            height: 100px;
-            background-color: #eee;
-            border: 1px solid #ccc;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .audio-box.sostenido {
-            position: absolute;
-            width: 26px;
-            height: 50px;
-            background-color: #000;
-            color: #fff;
-            z-index: 1;
-        }
-
-        .Cs,
-        .Ds,
-        .Fs,
-        .Gs,
-        .As {
-            margin-left: 22px;
-        }
-
-        .letter {
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-
-        /* botones flotantes para ir atras, guardar y bloutoo*/
-        .floating-container {
-            position: fixed;
-            top: 1px;
-            /* Cambiado a la esquina superior */
-            left: 1px;
-            /* Cambiado a la esquina superior */
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 0px 8px 8px 0px;
-            padding: 2px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-        }
-
-        .floating-container a,
-        .floating-container input {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #007BFF;
-            font-weight: bold;
-        }
-
-        .floating-container a:last-child {
-            margin-right: 0;
-        }
-
-        /* Fin  botones flotantes para ir atras, guardar y bloutoo*/
-
-
-        /* Estilos para el modal */
-        #modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        #modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 2px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #modal-content label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        #modal-content input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        #modal-content div {
-            display: flex;
-            justify-content: center;
-        }
-
-        #modal-content p {
-            margin-top: 4px;
-            margin-bottom: 10px;
-            color: #818080;
-            font-weight: 500;
-
-        }
-
-        #modal-content button {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            font-weight: 400;
-            width: 110px;
-        }
-
-        #modal-content #guardar-btn {
-            background-color: #28a745;
-            color: #fff;
-        }
-
-        #modal-content #editar-btn {
-            background-color: #0fc5e6;
-            color: #fff;
-            display: none;
-        }
-
-        #modal-content #cancelar-btn {
-            background-color: #FFA500;
-            color: #fff;
-        }
-
-
-        #canvasContainer {
-            text-align: center;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        #gameCanvas {
-
-            transition: transform 0.5s ease;
-        }
-
-
-        #myElement {
-            position: absolute;
-            /* o puedes usar 'fixed' dependiendo de tus necesidades */
-            top: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            margin: 0;
-            margin-left: 50%;
-            padding: 10px;
-            z-index: 999;
-            /* Asegura que esté en la capa más alta */
-        }
-    </style>
 </head>
 
 
@@ -981,11 +45,167 @@
         </div>
     </div>
     <h2 id="myElement"></h2>
-
 </div>
 
 <div id="blocklyDiv" style="position: absolute"></div>
 
+
+<!-- Botones de play, detener y Simulador -->
+<button id="play_button" class="floating-play" onclick="playActivarSimulador()">
+    <img id="play_button_img" src="img/playDesactivo.png" alt="">
+</button>
+
+
+<button id="tutorial" class="tutorial" style="opacity: 0;">
+</button>
+<button id="tutorial_explicacion" class="tutorial_explicacion" style="opacity: 0;">
+</button>
+<button id="tutorial_explicacion" class="tutorial_explicacion" style="opacity: 0;">
+</button>
+<button id="tutorial_bloque_play" class="tutorial_bloque_play" style="opacity: 0;">
+</button>
+
+
+
+<button class="floating-stop" id="floating_stop" onclick="iniciarTour()">
+    <!-- detenerEjecucion() -->
+    <img src="img/stopPlay.png" alt="">
+</button>
+
+<a href="#" class="floating-button" id="toggle-button">
+    <img src="irobot.png" alt="hsja">
+</a>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var tour = {
+                id: "mi-tour",
+                steps: [
+
+                    {
+                        target: "tutorial",
+                        placement: "bottom", // Ubica el globo encima del título
+                        title: "¡Bienvenido a iRobotUTC!",
+                        content: "<img src='irobot.png' alt='imagen' class='centered-image' style='width: 100px; height: auto;'>",
+
+                        arrowOffset: "center" // Centra la flecha
+                    },
+                    {
+                        target: "tutorial",
+                        placement: "bottom", // Ubica el globo encima del título
+                        title: "IrobotUTC",
+                        content: "Esta aplicación te ofrece la oportunidad de controlar un robot simulado a través de bloques de programación, de una manera divertida y educativa.",
+                        arrowOffset: "center" // Centra la flecha
+                    },
+                    {
+                        target: "blockly-0",
+                        placement: "top",
+                        title: "Nivel 1",
+                        content: "¡En este nivel, encontrarás bloques con imágenes que te ayudarán a programar el comportamiento del robot simulado de una manera fácil y divertida."
+                    },
+                    {
+                        target: "blockly-0",
+                        placement: "top",
+                        title: "Teclados",
+                        content: "Cada bloque tiene su propio teclado, donde puedes ajustar los valores a tu gusto."
+                    },
+                    {
+                        target: "blockly-0",
+                        placement: "top",
+                        title: "¡Usa el Teclado!",
+                        content: "Presiona el icono del bloque para poder activar el teclado. <img src='img/teclado.png' alt='imagen' style='width: 200px; height: 100px;'>"
+                    },
+
+                    {
+                        target: "blockly-1",
+                        placement: "top",
+                        title: "Nivel 2",
+                        content: "¡En este nivel, tienes a tu disposición bloques con palabras simples que te ayudan a dar instrucciones al robot simulado de forma fácil y eficaz!"
+                    },
+                    {
+                        target: "blockly-2",
+                        placement: "top",
+                        title: "Nivel 3",
+                        content: "En este nivel, encontrarás bloques con código basado en lenguaje de programación Python, ¡que te ayudarán a dar órdenes al robot simulado!"
+                    },
+                    {
+                        target: "tutorial_bloque_play",
+                        placement: "right",
+                        title: "Bloque de evento Play",
+                        content: "¡Este es el bloque de inicio (Play)! Todos los bloques deben ser arrastrados y colocados dentro de un evento."
+                    },
+                    {
+                        target: "tutorial_bloque_play",
+                        placement: "right",
+                        title: "Arrastra y suelta",
+                        content: "¡Arrastra y suelta los bloques! <img src='img/arrastrar_bloques.gif' alt='imagen' class='centered-image' style='width: 100px; height: auto;'>"
+                    },
+                    {
+                        target: "play_button",
+                        placement: "right",
+                        title: "Play",
+                        content: "Presiona el botón Play para ejecutar los bloques."
+                    },
+                    {
+                        target: "floating_stop",
+                        placement: "right",
+                        title: "Detener",
+                        content: "Presiona este botón para detener la ejecución de los bloques."
+                    },
+                    {
+                        target: "toggle-button",
+                        placement: "left",
+                        title: "Simulador",
+                        content: "Presiona este boton para Activar y Desactivar el Simulador."
+                    },
+                    {
+                        target: "nombre_proyecto",
+                        placement: "bottom",
+                        title: "Nombre del proyecto",
+                        content: "¡Dale un nombre genial a tu proyecto!",
+                        xOffset: 0, // Ajusta la posición horizontal
+                        yOffset: -60,
+                    }
+
+                ]
+            };
+
+            hopscotch.startTour(tour);
+        });
+    </script>
+
+
+
+<!-- Botones de Guadar y Nombre del Proyecto -->
+<div class="floating-container" id="floating-container">
+    <a href="javascript:abrirModalGuardar()">
+        <img id="nombre_sa" src="img/atras.png" alt="atras">
+    </a>
+    <input type="text" value="Nuevo Proyecto" id="nombre_proyecto" onclick="abrirModalGuardar()" readonly>
+
+    <a href="javascript:activarBluethoo()">
+        <img id="bluetoothImage" src="img/bluetooth_des.png" alt="Otro" width="32" height="32">
+    </a>
+</div>
+
+<!-- Contenido del modal -->
+<div id="modal-overlay">
+    <div id="modal-content">
+        <label>Nombre del proyecto</label>
+        <input type="text" id="nombre_nuevo_proyecto" value="hola" oninput="actualizarNombreProyecto(this.value)">
+        <input type="text" name="miInput" id="miInput" hidden>
+        <p id="mensajeConfirmación"></p>
+
+        <div>
+            <button id="guardar-btn" onclick="guardarDatos()">GUARDAR</button>
+            <button id="editar-btn" onclick="editarDatos()">GUARDAR</button>
+            <button id="cancelar-btn" onclick="cancelarModal()">DESCARTAR</button>
+        </div>
+    </div>
+</div>
+
+
+<!---------------------------------------- Codigo para controlar el zoom de la aplicación ------------------------------------------------->
 <script>
 
         function zoomIn() {
@@ -1003,7 +223,7 @@
         function applyZoom() {
             // Valor mínimo y máximo de escala
             const minScale = 0.1;
-            const maxScale = 1.5;
+            const maxScale = 1.1;
             lastScale = Math.max(minScale, Math.min(maxScale, lastScale));
 
             // Aplicamos el zoom al canvas
@@ -1032,48 +252,8 @@
         }
 
     </script>
+<!---------------------------------------- Fin Codigo para controlar el zoom de la aplicación ------------------------------------------------->
 
-<!-- Botones de play, detener y Simulador -->
-<button id="play_button" class="floating-play" onclick="playActivarSimulador()">
-    <img id="play_button_img" src="img/playDesactivo.png" alt="">
-</button>
-
-<button class="floating-stop" onclick="detenerEjecucion()">
-    <img src="img/stopPlay.png" alt="">
-</button>
-
-<a href="#" class="floating-button" id="toggle-button">
-    <img src="irobot.png" alt="hsja">
-</a>
-
-
-<!-- Botones de Guadar y Nombre del Proyecto -->
-<div class="floating-container">
-    <a href="javascript:abrirModalGuardar()">
-        <img src="img/atras.png" alt="atras">
-    </a>
-    <input type="text" value="Nuevo Proyecto" id="nombre_proyecto" onclick="abrirModalGuardar()" readonly>
-
-    <a href="javascript:activarBluethoo()">
-        <img id="bluetoothImage" src="img/bluetooth_des.png" alt="Otro" width="32" height="32">
-    </a>
-</div>
-
-<!-- Contenido del modal -->
-<div id="modal-overlay">
-    <div id="modal-content">
-        <label>Nombre del proyecto</label>
-        <input type="text" id="nombre_nuevo_proyecto" value="hola" oninput="actualizarNombreProyecto(this.value)">
-        <input type="text" name="miInput" id="miInput" hidden>
-        <p id="mensajeConfirmación"></p>
-
-        <div>
-            <button id="guardar-btn" onclick="guardarDatos()">GUARDAR</button>
-            <button id="editar-btn" onclick="editarDatos()">GUARDAR</button>
-            <button id="cancelar-btn" onclick="cancelarModal()">DESCARTAR</button>
-        </div>
-    </div>
-</div>
 
 
 <!---------------------------------------- Teclados personalizados de la aplicacion ------------------------------------------------->
@@ -2233,9 +1413,9 @@ Fin teclado Repetir -->
 
         <block type="play_n1"></block>
         <block type="evento1_n1"></block>
-        <block type="evento2_n1"></block>
+        <!-- <block type="evento2_n1"></block> -->
         <block type="evento3_n1"></block>
-        <block type="evento4_n1"></block>
+        <!-- <block type="evento4_n1"></block> -->
         <block type="avanzar_n1"></block>
         <block type="girar_derecha_n1"></block>
         <block type="girar_izquierda_n1"></block>
@@ -2254,9 +1434,9 @@ Fin teclado Repetir -->
 
         <block type="play_n2"></block>
         <block type="evento1_n2"></block>
-        <block type="evento2_n2"></block>
+        <!-- <block type="evento2_n2"></block> -->
         <block type="evento3_n2"></block>
-        <block type="evento4_n2"></block>
+        <!-- <block type="evento4_n2"></block> -->
         <block type="avanzar_n2"></block>
         <block type="girar_derecha_n2"></block>
         <block type="girar_izquierda_n2"></block>
@@ -2275,9 +1455,9 @@ Fin teclado Repetir -->
 
         <block type="play_n3"></block>
         <block type="evento1_n3"></block>
-        <block type="evento2_n3"></block>
+        <!-- <block type="evento2_n3"></block> -->
         <block type="evento3_n3"></block>
-        <block type="evento4_n3"></block>
+        <!-- <block type="evento4_n3"></block> -->
         <block type="avanzar_n3"></block>
         <block type="girar_izquierda_n3"></block>
         <block type="girar_derecha_n3"></block>
@@ -2660,6 +1840,24 @@ Fin teclado Repetir -->
             }
 
         }
+
+        //Funcion para activar el simulador y ejecutar el codigo
+        function playActivarSimuladorEvento4() {
+            var miDiv = document.querySelector('.container');
+
+            // Verifica si el div tiene la clase "active"
+            if (miDiv.classList.contains('active')) {
+                runCodeEvento4();
+                console.log('El div tiene la clase "active"');
+            } else {
+                activarSimulador();
+                setTimeout(function () {
+                    runCodeEvento4();
+                    console.log('El div NO tiene la clase "active"');
+                }, 1500);
+            }
+
+        }
     </script>
 
 <!---------------------------------------- Codigo Para para la activacion del simulador y llamada a las funciones de ejecucion de los bloques (Desde java tambien se utiliza)------------------------------------------------->
@@ -2741,8 +1939,6 @@ Fin teclado Repetir -->
 
 <!---------------------------------------- Bloques personalizados Nivel 1, Nivel 2 y Nivel 3------------------------------------------------->
 <script>
-
-
 
         Blockly.Blocks['play_n1'] = {
             init: function () {
@@ -2827,7 +2023,7 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("  ")
-                    .appendField(new Blockly.FieldImage("img/evento2.png", 35, 35, "*"))
+                    .appendField(new Blockly.FieldImage("img/evento4.png", 35, 35, "*"))
                 this.appendStatementInput("cuerpo")
                     .setCheck(null);
                 this.setPreviousStatement(false, null);
@@ -2866,7 +2062,7 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("  ")
-                    .appendField(new Blockly.FieldImage("img/evento3.png", 35, 35, "*"))
+                    .appendField(new Blockly.FieldImage("img/sensor1.png", 35, 35, "*"))
                 this.appendStatementInput("cuerpo")
                     .setCheck(null);
                 this.setPreviousStatement(false, null);
@@ -2905,7 +2101,7 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("  ")
-                    .appendField(new Blockly.FieldImage("img/evento4.png", 35, 35, "*"))
+                    .appendField(new Blockly.FieldImage("img/sensor2.png", 35, 35, "*"))
                 this.appendStatementInput("cuerpo")
                     .setCheck(null);
                 this.setPreviousStatement(false, null);
@@ -6192,7 +5388,7 @@ Fin teclado Repetir -->
         // Crea un objeto de instrumento de piano
         var piano = new Tone.Synth({
             oscillator: {
-                type: 'sine' // Puedes probar con 'sine', 'square', 'sawtooth' o 'triangle'
+                type: 'square' // Puedes probar con 'sine', 'square', 'sawtooth' o 'triangle'
             },
             envelope: {
                 attack: 0.1,
@@ -6308,9 +5504,11 @@ Fin teclado Repetir -->
             ctx.stroke();
         }
 
+
         function rotateRight(angle) {
             const targetRotation = player.rotation + (angle * Math.PI) / 180; // Convierte grados a radianes
             rotateStep(targetRotation);
+
             // trajectoryPoints.push({ x: player.x, y: player.y });
         }
 
@@ -6679,6 +5877,7 @@ Fin teclado Repetir -->
 
 <script>
 
+
         var ejecucionDetenida = false; // Variable de control para la ejecución
         function detenerEjecucion() {
             ejecucionDetenida = true; // Establece la variable de control en true para detener la ejecución
@@ -6686,6 +5885,7 @@ Fin teclado Repetir -->
             document.getElementById('play_button_img').src = 'img/playDesactivo.png';
         }
 
+        var nose1;
 
         function runCodePlay() {
 
@@ -6707,11 +5907,14 @@ Fin teclado Repetir -->
                 // Obtiene todos los bloques dentro del bloque encontrado
                 var playNBlocks = playNBlock.getChildren();
 
+
                 // Captura el código generado por los bloques dentro del bloque encontrado
                 var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
 
                 // Divide el código dentro del bloque encontrado en bloques individuales
                 var playNCodeBlocks = playNCode.split(';').filter(Boolean);
+                console.log(playNCodeBlocks);
+                nose1 = playNCodeBlocks;
 
                 // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
 
@@ -6768,13 +5971,13 @@ Fin teclado Repetir -->
                     } else {
                         document.getElementById('play_button').disabled = false;
                         document.getElementById('play_button_img').src = 'img/playDesactivo.png';
+                        iniciarTour();
                     }
 
                 }
                 executePlayNBlock(0);
             }
         }
-
 
     </script>
 
@@ -6790,11 +5993,103 @@ Fin teclado Repetir -->
             document.getElementById('play_button').disabled = true;
             document.getElementById('play_button_img').src = 'img/playActivo.png';
 
-            ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+            ejecucionDetenida = false;
 
 
             // Especifica los nombres de los bloques a buscar
             var nombresBloques = ['evento1_n1', 'evento1_n2', 'evento1_n3'];
+
+            // Obtiene todos los bloques en el espacio de trabajo
+            var allBlocks = workspace.getAllBlocks();
+
+            // Busca el primer bloque entre los nombres especificados
+            var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
+
+            if (playNBlock) {
+                // Obtiene todos los bloques dentro del bloque encontrado
+                var playNBlocks = playNBlock.getChildren();
+
+                // Captura el código generado por los bloques dentro del bloque encontrado
+                var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
+
+                // Divide el código dentro del bloque encontrado en bloques individuales
+                var playNCodeBlocks = playNCode.split(';').filter(Boolean);
+
+                // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
+                function executePlayNBlock(index) {
+                    if (index < playNCodeBlocks.length) {
+                        if (!ejecucionDetenida) {
+                            // Ejecuta el bloque dentro del bloque encontrado
+                            try {
+                                if (playNCodeBlocks[index].includes("rotateRight")) {
+                                    var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                    var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                    if (angle > 140 && angle <= 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    } else if (angle > 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    }
+
+                                    // Establece el tiempo de espera antes de ejecutar el bloque
+                                    setTimeout(function () {
+                                        eval(playNCodeBlocks[index]);
+                                        // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                        var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                        setTimeout(function () {
+                                            executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                        }, tiempoEsperaDespues);
+                                    }, tiempoEsperaAntes);
+
+
+                                } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                    // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                    var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, tiempoEspera);
+                                } else if (playNCodeBlocks[index].includes("MusicMaker")) {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, 2000);
+                                } else {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                    }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                }
+                            } catch (e) {
+                                alert(e);
+                            }
+
+                        }
+                    } else {
+                        document.getElementById('play_button').disabled = false;
+                        document.getElementById('play_button_img').src = 'img/playDesactivo.png';
+
+                    }
+                }
+
+                // Inicia la ejecución con el primer bloque dentro del bloque encontrado
+                executePlayNBlock(0);
+            }
+        }
+    </script>
+
+<script>
+
+        function runCodeEvento2() {
+            // Desactiva el botón al inicio de la ejecución
+            document.getElementById('play_button').disabled = true;
+            document.getElementById('play_button_img').src = 'img/playActivo.png';
+
+            ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+
+
+            // Especifica los nombres de los bloques a buscar
+            var nombresBloques = ['evento2_n1', 'evento2_n2', 'evento2_n3'];
 
             // Obtiene todos los bloques en el espacio de trabajo
             var allBlocks = workspace.getAllBlocks();
@@ -6874,280 +6169,285 @@ Fin teclado Repetir -->
     </script>
 
 <script>
+        function runCodeEvento3() {
+            // Desactiva el botón al inicio de la ejecución
+            document.getElementById('play_button').disabled = true;
+            document.getElementById('play_button_img').src = 'img/playActivo.png';
 
-    function runCodeEvento2() {
-        // Desactiva el botón al inicio de la ejecución
-        document.getElementById('play_button').disabled = true;
-        document.getElementById('play_button_img').src = 'img/playActivo.png';
-
-        ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+            ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
 
 
-        // Especifica los nombres de los bloques a buscar
-        var nombresBloques = ['evento2_n1', 'evento2_n2', 'evento2_n3'];
+            // Especifica los nombres de los bloques a buscar
+            var nombresBloques = ['evento3_n1', 'evento3_n2', 'evento3_n3'];
 
-        // Obtiene todos los bloques en el espacio de trabajo
-        var allBlocks = workspace.getAllBlocks();
+            // Obtiene todos los bloques en el espacio de trabajo
+            var allBlocks = workspace.getAllBlocks();
 
-        // Busca el primer bloque entre los nombres especificados
-        var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
+            // Busca el primer bloque entre los nombres especificados
+            var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
 
-        if (playNBlock) {
-            // Obtiene todos los bloques dentro del bloque encontrado
-            var playNBlocks = playNBlock.getChildren();
+            if (playNBlock) {
+                // Obtiene todos los bloques dentro del bloque encontrado
+                var playNBlocks = playNBlock.getChildren();
 
-            // Captura el código generado por los bloques dentro del bloque encontrado
-            var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
+                // Captura el código generado por los bloques dentro del bloque encontrado
+                var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
 
-            // Divide el código dentro del bloque encontrado en bloques individuales
-            var playNCodeBlocks = playNCode.split(';').filter(Boolean);
+                // Divide el código dentro del bloque encontrado en bloques individuales
+                var playNCodeBlocks = playNCode.split(';').filter(Boolean);
 
-            // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
-            function executePlayNBlock(index) {
-                if (index < playNCodeBlocks.length) {
-                    if (!ejecucionDetenida) {
-                        // Ejecuta el bloque dentro del bloque encontrado
-                        try {
-                            if (playNCodeBlocks[index].includes("rotateRight")) {
-                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
-                                if (angle > 140 && angle <= 240) {
-                                    tiempoEsperaAntes = 1000;
-                                } else if (angle > 240) {
-                                    tiempoEsperaAntes = 1000;
-                                }
+                // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
+                function executePlayNBlock(index) {
+                    if (index < playNCodeBlocks.length) {
+                        if (!ejecucionDetenida) {
+                            // Ejecuta el bloque dentro del bloque encontrado
+                            try {
+                                if (playNCodeBlocks[index].includes("rotateRight")) {
+                                    var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                    var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                    if (angle > 140 && angle <= 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    } else if (angle > 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    }
 
-                                // Establece el tiempo de espera antes de ejecutar el bloque
-                                setTimeout(function () {
-                                    eval(playNCodeBlocks[index]);
-                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                    // Establece el tiempo de espera antes de ejecutar el bloque
+                                    setTimeout(function () {
+                                        eval(playNCodeBlocks[index]);
+                                        // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                        var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                        setTimeout(function () {
+                                            executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                        }, tiempoEsperaDespues);
+                                    }, tiempoEsperaAntes);
+                                } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                    // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                    var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
                                     setTimeout(function () {
                                         executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                    }, tiempoEsperaDespues);
-                                }, tiempoEsperaAntes);
-                            } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
-                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
-                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, tiempoEspera);
-                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, 2000);
-                            } else {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
-                            }
-                        } catch (e) {
-                            alert(e);
-                        }
-
-                    }
-                } else {
-                    document.getElementById('play_button').disabled = false;
-                    document.getElementById('play_button_img').src = 'img/playDesactivo.png';
-
-                }
-            }
-
-            // Inicia la ejecución con el primer bloque dentro del bloque encontrado
-            executePlayNBlock(0);
-        }
-    }
-</script>
-
-<script>
-
-    function runCodeEvento3() {
-        // Desactiva el botón al inicio de la ejecución
-        document.getElementById('play_button').disabled = true;
-        document.getElementById('play_button_img').src = 'img/playActivo.png';
-
-        ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
-
-
-        // Especifica los nombres de los bloques a buscar
-        var nombresBloques = ['evento3_n1', 'evento3_n2', 'evento3_n3'];
-
-        // Obtiene todos los bloques en el espacio de trabajo
-        var allBlocks = workspace.getAllBlocks();
-
-        // Busca el primer bloque entre los nombres especificados
-        var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
-
-        if (playNBlock) {
-            // Obtiene todos los bloques dentro del bloque encontrado
-            var playNBlocks = playNBlock.getChildren();
-
-            // Captura el código generado por los bloques dentro del bloque encontrado
-            var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
-
-            // Divide el código dentro del bloque encontrado en bloques individuales
-            var playNCodeBlocks = playNCode.split(';').filter(Boolean);
-
-            // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
-            function executePlayNBlock(index) {
-                if (index < playNCodeBlocks.length) {
-                    if (!ejecucionDetenida) {
-                        // Ejecuta el bloque dentro del bloque encontrado
-                        try {
-                            if (playNCodeBlocks[index].includes("rotateRight")) {
-                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
-                                if (angle > 140 && angle <= 240) {
-                                    tiempoEsperaAntes = 1000;
-                                } else if (angle > 240) {
-                                    tiempoEsperaAntes = 1000;
-                                }
-
-                                // Establece el tiempo de espera antes de ejecutar el bloque
-                                setTimeout(function () {
+                                    }, tiempoEspera);
+                                } else if (playNCodeBlocks[index].includes("MusicMaker")) {
                                     eval(playNCodeBlocks[index]);
-                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
                                     setTimeout(function () {
                                         executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                    }, tiempoEsperaDespues);
-                                }, tiempoEsperaAntes);
-                            } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
-                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
-                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, tiempoEspera);
-                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, 2000);
-                            } else {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                    }, 2000);
+                                } else {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                    }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                }
+                            } catch (e) {
+                                alert(e);
                             }
-                        } catch (e) {
-                            alert(e);
+
                         }
+                    } else {
+                        document.getElementById('play_button').disabled = false;
+                        document.getElementById('play_button_img').src = 'img/playDesactivo.png';
 
                     }
-                } else {
-                    document.getElementById('play_button').disabled = false;
-                    document.getElementById('play_button_img').src = 'img/playDesactivo.png';
-
                 }
-            }
 
-            // Inicia la ejecución con el primer bloque dentro del bloque encontrado
-            executePlayNBlock(0);
+                // Inicia la ejecución con el primer bloque dentro del bloque encontrado
+                executePlayNBlock(0);
+            }
         }
-    }
-</script>
+    </script>
 
 
 <script>
 
-    function runCodeEvento4() {
-        // Desactiva el botón al inicio de la ejecución
-        document.getElementById('play_button').disabled = true;
-        document.getElementById('play_button_img').src = 'img/playActivo.png';
+        function runCodeEvento4() {
+            // Desactiva el botón al inicio de la ejecución
+            document.getElementById('play_button').disabled = true;
+            document.getElementById('play_button_img').src = 'img/playActivo.png';
 
-        ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
+            ejecucionDetenida = false; // Restablece la variable de control al iniciar la ejecución
 
 
-        // Especifica los nombres de los bloques a buscar
-        var nombresBloques = ['evento4_n1', 'evento4_n2', 'evento4_n3'];
+            // Especifica los nombres de los bloques a buscar
+            var nombresBloques = ['evento4_n1', 'evento4_n2', 'evento4_n3'];
 
-        // Obtiene todos los bloques en el espacio de trabajo
-        var allBlocks = workspace.getAllBlocks();
+            // Obtiene todos los bloques en el espacio de trabajo
+            var allBlocks = workspace.getAllBlocks();
 
-        // Busca el primer bloque entre los nombres especificados
-        var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
+            // Busca el primer bloque entre los nombres especificados
+            var playNBlock = nombresBloques.map(nombre => allBlocks.find(block => block.type === nombre)).find(Boolean);
 
-        if (playNBlock) {
-            // Obtiene todos los bloques dentro del bloque encontrado
-            var playNBlocks = playNBlock.getChildren();
+            if (playNBlock) {
+                // Obtiene todos los bloques dentro del bloque encontrado
+                var playNBlocks = playNBlock.getChildren();
 
-            // Captura el código generado por los bloques dentro del bloque encontrado
-            var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
+                // Captura el código generado por los bloques dentro del bloque encontrado
+                var playNCode = playNBlocks.map(block => Blockly.JavaScript.blockToCode(block)).join('');
 
-            // Divide el código dentro del bloque encontrado en bloques individuales
-            var playNCodeBlocks = playNCode.split(';').filter(Boolean);
+                // Divide el código dentro del bloque encontrado en bloques individuales
+                var playNCodeBlocks = playNCode.split(';').filter(Boolean);
 
-            // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
-            function executePlayNBlock(index) {
-                if (index < playNCodeBlocks.length) {
-                    if (!ejecucionDetenida) {
-                        // Ejecuta el bloque dentro del bloque encontrado
-                        try {
-                            if (playNCodeBlocks[index].includes("rotateRight")) {
-                                var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
-                                // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
-                                var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
-                                if (angle > 140 && angle <= 240) {
-                                    tiempoEsperaAntes = 1000;
-                                } else if (angle > 240) {
-                                    tiempoEsperaAntes = 1000;
-                                }
+                // Función para ejecutar los bloques dentro del bloque encontrado secuencialmente
+                function executePlayNBlock(index) {
+                    if (index < playNCodeBlocks.length) {
+                        if (!ejecucionDetenida) {
+                            // Ejecuta el bloque dentro del bloque encontrado
+                            try {
+                                if (playNCodeBlocks[index].includes("rotateRight")) {
+                                    var angle = parseInt(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    // Ajusta el tiempo de espera predeterminado antes de ejecutar el bloque según el valor del ángulo
+                                    var tiempoEsperaAntes = 1000; // Tiempo de espera predeterminado antes de ejecutar el bloque
+                                    if (angle > 140 && angle <= 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    } else if (angle > 240) {
+                                        tiempoEsperaAntes = 1000;
+                                    }
 
-                                // Establece el tiempo de espera antes de ejecutar el bloque
-                                setTimeout(function () {
-                                    eval(playNCodeBlocks[index]);
-                                    // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
-                                    var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                    // Establece el tiempo de espera antes de ejecutar el bloque
+                                    setTimeout(function () {
+                                        eval(playNCodeBlocks[index]);
+                                        // Ajusta el tiempo de espera predeterminado después de ejecutar el bloque
+                                        var tiempoEsperaDespues = angle * 10; // Ajusta según tus necesidades
+                                        setTimeout(function () {
+                                            executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                        }, tiempoEsperaDespues);
+                                    }, tiempoEsperaAntes);
+                                } else if (playNCodeBlocks[index].includes("esperar(")) {
+                                    // Si el bloque es un bloque de espera, ajusta el tiempo de espera
+                                    var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
+                                    tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
                                     setTimeout(function () {
                                         executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                    }, tiempoEsperaDespues);
-                                }, tiempoEsperaAntes);
-                            } else if (playNCodeBlocks[index].includes("esperar(")) {
-                                // Si el bloque es un bloque de espera, ajusta el tiempo de espera
-                                var tiempoEspera = parseFloat(playNCodeBlocks[index].match(/\d+/)[0]);
-                                tiempoEspera = tiempoEspera === 1 ? 1000 : tiempoEspera * 1000;
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, tiempoEspera);
-                            } else if (playNCodeBlocks[index].includes("MusicMaker")) {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
-                                }, 2000);
-                            } else {
-                                eval(playNCodeBlocks[index]);
-                                setTimeout(function () {
-                                    executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
-                                }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                    }, tiempoEspera);
+                                } else if (playNCodeBlocks[index].includes("MusicMaker")) {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después del tiempo de espera
+                                    }, 2000);
+                                } else {
+                                    eval(playNCodeBlocks[index]);
+                                    setTimeout(function () {
+                                        executePlayNBlock(index + 1); // Llama a la siguiente iteración después de un tiempo
+                                    }, 1000); // Ajusta el tiempo de espera predeterminado (en milisegundos) entre bloques si es necesario
+                                }
+                            } catch (e) {
+                                alert(e);
                             }
-                        } catch (e) {
-                            alert(e);
+
                         }
+                    } else {
+                        document.getElementById('play_button').disabled = false;
+                        document.getElementById('play_button_img').src = 'img/playDesactivo.png';
 
                     }
-                } else {
-                    document.getElementById('play_button').disabled = false;
-                    document.getElementById('play_button_img').src = 'img/playDesactivo.png';
-
                 }
-            }
 
-            // Inicia la ejecución con el primer bloque dentro del bloque encontrado
-            executePlayNBlock(0);
+                // Inicia la ejecución con el primer bloque dentro del bloque encontrado
+                executePlayNBlock(0);
+            }
         }
-    }
-</script>
+    </script>
 <!---------------------------------------- Fin Codigo para ejecutar los bloques cuando reciba la orden por Blurtooth ------------------------------------------------->
 
 
+<!---------------------------------------- Codigo para enseñar robotica ------------------------------------------------->
 
+<script>
 
+        function agregarObjetos(array) {
+            var steps = [];
+            var accionesAgregadas = {}; // Objeto para mantener un registro de las acciones agregadas
+            for (var i = 0; i < array.length; i++) {
+                // Normalizar la acción eliminando los caracteres de nueva línea
+                var accion = array[i].replace(/\n/g, '');
+                var accionNormalizada = accion.split('(')[0] + accion.split('(')[1];
+                if (!accionesAgregadas[accionNormalizada]) { // Verificar si la acción ya ha sido agregada
+                    var objeto = {};
+
+                    switch (accion.split('(')[0]) {
+                        case 'movePlayer':
+                            objeto = {
+                                title: "Avanzar",
+                                content: "Para dar movimiento al robot necesitas un <b>Motor</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>Motor</b> es un dispositivo que convierte la energía en movimiento",
+                                target: "tutorial", // Apunta al elemento con ID card1
+                                placement: "right", // Coloca el globo a la derecha del elemento
+                                arrowOffset: "center"
+                            };
+                            break;
+                        case 'rotateRight':
+                            objeto = {
+                                title: "Girar",
+                                content: "Para girar al robot necesitas un <b>Motor</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>Motor</b> es un dispositivo que convierte la energía en movimiento",
+                                target: "tutorial", // Apunta al elemento con ID card1
+                                placement: "right", // Coloca el globo a la derecha del elemento
+                                arrowOffset: "center"
+                            };
+                            break;
+                        case 'encenderLuzRGB':
+                            objeto = {
+                                title: "Led",
+                                content: "Para enceder la luz del robot necesitas un <b>Led</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>Led</b> es un dispositivo semiconductor que emite luz cuando se aplica una corriente eléctrica a través de él. ",
+                                target: "tutorial", // Apunta al elemento con ID card1
+                                placement: "right", // Coloca el globo a la derecha del elemento
+                                arrowOffset: "center"
+                            };
+                            break;
+                        case 'playNoteWithDuration':
+                        objeto = {
+                                title: "Sonido",
+                                content: "Para reproducir un sonido necesitas una <b>Bocina</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Una <b>Bocina</b> es un dispositivo que convierte energía eléctrica en energía sonora, produciendo así sonido audible.",
+                                target: "tutorial", // Apunta al elemento con ID card1
+                                placement: "right", // Coloca el globo a la derecha del elemento
+                                arrowOffset: "center"
+                            };
+                            break;
+
+                        case 'estado_rotulador':
+                        objeto = {
+                                title: "Rotulador",
+                                content: "Para bajar un rotulador y poder dibujar la trayectoria del robot necesitas un <b>Rotulador</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Una <b>Bocina</b> es un instrumento de escritura que consiste en un depósito de tinta líquida o gel.",
+                                target: "tutorial", // Apunta al elemento con ID card1
+                                placement: "right", // Coloca el globo a la derecha del elemento
+                                arrowOffset: "center"
+                            };
+                            break;
+                        default:
+                            break;
+                    }
+                    steps.push(objeto);
+                    accionesAgregadas[accionNormalizada] = true; // Registrar la acción agregada
+                }
+            }
+            // Agregar dos objetos por defecto al final del array de pasos
+            steps.push({
+                title: "Controlador",
+                content: "Para controlar el robot necesitamos un microcontrolador, es este caso un <b>sp32</b>. <br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>sp32</b> es un el componente central que ejecuta el código y envía las señales a los diferentes actuadores y sensores del robot para realizar las acciones deseadas.",
+                target: "tutorial", // Apunta al elemento h2
+                placement: "right", // Coloca el globo en la parte superior
+                arrowOffset: "center"
+            });
+            steps.push({
+                title: "Batería",
+                content: "Para alimentar de energia a los componentes del robot necesitas una <b>Bateria</b>. <br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Una <b>Batería</b>, es un dispositivo que almacena energía eléctrica y la suministra al sistema del robot.",
+                target: "tutorial", // Apunta al elemento con ID card1
+                placement: "right", // Coloca el globo a la derecha del elemento
+                arrowOffset: "center"
+            });
+            return steps;
+        }
+
+        function iniciarTour() {
+            var acciones = ["movePlayer(20)", "\ngirar(30)", "\nluz(50)", "musica(c)", "girar(30)"];
+            var robotica = {
+                id: "mi-robotica",
+                steps: agregarObjetos(nose1)
+            };
+            hopscotch.startTour(robotica);
+        }
+
+    </script>
+
+<!---------------------------------------- Fin Codigo para enseñar robotica ------------------------------------------------->
 
 
 </body>

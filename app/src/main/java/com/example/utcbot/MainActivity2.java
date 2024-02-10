@@ -465,7 +465,7 @@ public class MainActivity2 extends AppCompatActivity {
             ImageView imageView4 = findViewById(R.id.imageView4);
             // Cambia la imagen programáticamente
             imageView4.setImageResource(R.drawable.bluetooth_des);
-            showToast("Error al conectar con el dispositivo.");
+            showToast("No se pudo conectar con el dispositivo.");
             bluetoothDesactivado();
 
             // Llama a la función de desconexión en caso de error
@@ -477,7 +477,7 @@ public class MainActivity2 extends AppCompatActivity {
         try {
             if (btSocket != null) {
                 btSocket.close();
-                showToast("Desconexión exitosa.");
+                // showToast("Desconexión exitosa.");
                 // Actualiza el estado de la conexión
                 isConnected = false;
 
@@ -582,8 +582,8 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void run() {
 
-                    // Ejecuta la función receiveData en la página web
-                    wv1.evaluateJavascript("playActivarSimuladorEvento1()", null);
+                // Ejecuta la función receiveData en la página web
+                wv1.evaluateJavascript("playActivarSimuladorEvento1()", null);
 
             }
         });

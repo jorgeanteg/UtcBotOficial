@@ -7,33 +7,33 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "formulario.db";
+    private static final String DATABASE_NAME = "utcBot.db";
     private static final int DATABASE_VERSION = 2; // Incrementa la versión de la base de datos
 
     // Definir la estructura de la tabla para almacenar los datos del formulario
-    static final String TABLE_NAME = "formulario_table";
+    static final String TABLE_NAME = "proyecto";
     static final String COLUMN_ID = "id";
     static final String COLUMN_NOMBRE = "nombre";
     static final String COLUMN_CONTENIDO = "contenido";
 
-    // Nueva tabla para proyectos
-    static final String TABLE_PROYECTO = "proyecto_table";
-    static final String COLUMN_PROYECTO_ID = "id";
-    static final String COLUMN_PROYECTO_CUERPO = "cuerpo";
-    static final String COLUMN_PROYECTO_DESCRIPCION = "descripcion";
+    // Nueva tabla para ejemplos
+    static final String TABLE_EJEMPLO = "ejemplo";
+    static final String COLUMN_EJEMPLO_ID = "id";
+    static final String COLUMN_EJEMPLO_NOMBRE = "nombre";
+    static final String COLUMN_EJEMPLO_CONTENIDO = "contenido";
 
     // Consulta SQL para crear las tablas
-    private static final String CREATE_TABLE_FORMULARIO =
+    private static final String CREATE_TABLE_PROYECTO =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLUMN_NOMBRE + " TEXT," +
                     COLUMN_CONTENIDO + " TEXT);";
 
-    private static final String CREATE_TABLE_PROYECTO =
-            "CREATE TABLE " + TABLE_PROYECTO + " (" +
-                    COLUMN_PROYECTO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_PROYECTO_CUERPO + " TEXT," +
-                    COLUMN_PROYECTO_DESCRIPCION + " TEXT);";
+    private static final String CREATE_TABLE_EJEMPLO =
+            "CREATE TABLE " + TABLE_EJEMPLO + " (" +
+                    COLUMN_EJEMPLO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLUMN_EJEMPLO_NOMBRE + " TEXT," +
+                    COLUMN_EJEMPLO_CONTENIDO + " TEXT);";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,8 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_FORMULARIO);
         db.execSQL(CREATE_TABLE_PROYECTO);
+        db.execSQL(CREATE_TABLE_EJEMPLO);
         // Insertar datos iniciales en la tabla de proyectos al instalar la aplicación
         insertarDatosIniciales(db);
     }
@@ -56,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         switch (oldVersion) {
             case 1:
                 // Código para actualización desde la versión 1 a la versión 2
-                db.execSQL(CREATE_TABLE_PROYECTO); // Crear la nueva tabla de proyecto
+                db.execSQL(CREATE_TABLE_EJEMPLO); // Crear la nueva tabla de proyecto
                 // Puedes agregar más código si es necesario para la actualización desde la versión 1
             case 2:
                 // Insertar datos iniciales en la tabla de proyectos al actualizar la aplicación
@@ -69,38 +69,120 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Método para insertar datos iniciales en la tabla de proyectos
+
     private void insertarDatosIniciales(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PROYECTO_CUERPO, "Movimientos Básicos");
-        values.put(COLUMN_PROYECTO_DESCRIPCION, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
-                "  <block type=\"play_n1\" id=\"D=LBGxxGEO{p$v=oki%}\" x=\"100\" y=\"50\">\n" +
+        values.put(COLUMN_EJEMPLO_NOMBRE, "Bloques de Sonido");
+        values.put(COLUMN_EJEMPLO_CONTENIDO, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
+                "  <block type=\"play_n1\" id=\"@ejh3lhmE(Doj?aEQuJQ\" x=\"100\" y=\"50\">\n" +
                 "    <statement name=\"cuerpo\">\n" +
-                "      <block type=\"rotulador_n1\" id=\"Vsw4JH}UZdT4MVigaTLC\">\n" +
-                "        <field name=\"ESTADO_ROTU\">True</field>\n" +
+                "      <block type=\"audio_n1\" id=\"eNMgovfD7YZ:a4/bZ*2O\">\n" +
+                "        <field name=\"AUDIO\">C</field>\n" +
+                "        <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
                 "        <next>\n" +
-                "          <block type=\"avanzar_n1\" id=\"h+flEnLwoNGv8P@%nDzW\">\n" +
-                "            <field name=\"DISTANCIA\">20</field>\n" +
+                "          <block type=\"audio_n1\" id=\"=iMg6AWW8}c%dGhmE5Ry\">\n" +
+                "            <field name=\"AUDIO\">C</field>\n" +
+                "            <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
                 "            <next>\n" +
-                "              <block type=\"girar_derecha_n1\" id=\"i4.#$(0w}YMaG/6rI-|n\">\n" +
-                "                <field name=\"ANGULO\">90</field>\n" +
+                "              <block type=\"audio_n1\" id=\"w)$H++ei|h5y9w1l2|W7\">\n" +
+                "                <field name=\"AUDIO\">G</field>\n" +
+                "                <field name=\"ESTADO_AUDIO\">negra</field>\n" +
                 "                <next>\n" +
-                "                  <block type=\"avanzar_n1\" id=\"z(pFhliW,=^`C!R8@#8o\">\n" +
-                "                    <field name=\"DISTANCIA\">20</field>\n" +
+                "                  <block type=\"audio_n1\" id=\"d9r?;V:B|]mC;-[LaUAt\">\n" +
+                "                    <field name=\"AUDIO\">G</field>\n" +
+                "                    <field name=\"ESTADO_AUDIO\">negra</field>\n" +
                 "                    <next>\n" +
-                "                      <block type=\"girar_derecha_n1\" id=\"rKAj7{xojko1`3p1pHd7\">\n" +
-                "                        <field name=\"ANGULO\">90</field>\n" +
+                "                      <block type=\"audio_n1\" id=\"N}B+(k^1cj,RuX7=#}dC\">\n" +
+                "                        <field name=\"AUDIO\">A</field>\n" +
+                "                        <field name=\"ESTADO_AUDIO\">negra</field>\n" +
                 "                        <next>\n" +
-                "                          <block type=\"avanzar_n1\" id=\"]RB2reEWp]tZ)Af:-o.G\">\n" +
-                "                            <field name=\"DISTANCIA\">20</field>\n" +
+                "                          <block type=\"audio_n1\" id=\"j-MKO)C!6bY.M[+^8!+%\">\n" +
+                "                            <field name=\"AUDIO\">A</field>\n" +
+                "                            <field name=\"ESTADO_AUDIO\">negra</field>\n" +
                 "                            <next>\n" +
-                "                              <block type=\"girar_derecha_n1\" id=\"H_uqe5eU=:H9hCq{%hVp\">\n" +
-                "                                <field name=\"ANGULO\">90</field>\n" +
+                "                              <block type=\"audio_n1\" id=\"!V#}$HM~P}!8##;GHqb1\">\n" +
+                "                                <field name=\"AUDIO\">G</field>\n" +
+                "                                <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
                 "                                <next>\n" +
-                "                                  <block type=\"avanzar_n1\" id=\"yRI/=]TKp4s4=W`k/d43\">\n" +
-                "                                    <field name=\"DISTANCIA\">20</field>\n" +
+                "                                  <block type=\"audio_n1\" id=\"b0`xxoh%0}FE39t%h7IH\">\n" +
+                "                                    <field name=\"AUDIO\">G</field>\n" +
+                "                                    <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
                 "                                    <next>\n" +
-                "                                      <block type=\"girar_derecha_n1\" id=\";1Jl#!=R;pXv)zazWLkt\">\n" +
-                "                                        <field name=\"ANGULO\">90</field>\n" +
+                "                                      <block type=\"audio_n1\" id=\"=GX~-Q8_lGKR)cxvQGtr\">\n" +
+                "                                        <field name=\"AUDIO\">F</field>\n" +
+                "                                        <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                        <next>\n" +
+                "                                          <block type=\"audio_n1\" id=\"l3*R:+0J@z7~XV=dzQ+0\">\n" +
+                "                                            <field name=\"AUDIO\">F</field>\n" +
+                "                                            <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                            <next>\n" +
+                "                                              <block type=\"audio_n1\" id=\"7VcH{4G=/W;OF6Q$29}e\">\n" +
+                "                                                <field name=\"AUDIO\">E</field>\n" +
+                "                                                <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                                <next>\n" +
+                "                                                  <block type=\"audio_n1\" id=\"xjI}Mo1_hF{.t01k1-K%\">\n" +
+                "                                                    <field name=\"AUDIO\">E</field>\n" +
+                "                                                    <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                                    <next>\n" +
+                "                                                      <block type=\"audio_n1\" id=\"lCsz*c79B{lH]j|-gd1M\">\n" +
+                "                                                        <field name=\"AUDIO\">D</field>\n" +
+                "                                                        <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
+                "                                                        <next>\n" +
+                "                                                          <block type=\"audio_n1\" id=\"_czpafHh46|fD$JhO3K/\">\n" +
+                "                                                            <field name=\"AUDIO\">D</field>\n" +
+                "                                                            <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
+                "                                                            <next>\n" +
+                "                                                              <block type=\"audio_n1\" id=\"icjrZcgFBW07JMb~4=s+\">\n" +
+                "                                                                <field name=\"AUDIO\">C</field>\n" +
+                "                                                                <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                                                <next>\n" +
+                "                                                                  <block type=\"audio_n1\" id=\"b5Qed?g1+OU;c+P$lSF3\">\n" +
+                "                                                                    <field name=\"AUDIO\">G</field>\n" +
+                "                                                                    <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                                                    <next>\n" +
+                "                                                                      <block type=\"audio_n1\" id=\"@j-ht=+E3mF#LS4Yz:9B\">\n" +
+                "                                                                        <field name=\"AUDIO\">A</field>\n" +
+                "                                                                        <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                                                        <next>\n" +
+                "                                                                          <block type=\"audio_n1\" id=\"wedtqaHr}Lg:T-R^2bVm\">\n" +
+                "                                                                            <field name=\"AUDIO\">G</field>\n" +
+                "                                                                            <field name=\"ESTADO_AUDIO\">negra</field>\n" +
+                "                                                                            <next>\n" +
+                "                                                                              <block type=\"audio_n1\" id=\"6pmp},)+ouX@bq)~uA2M\">\n" +
+                "                                                                                <field name=\"AUDIO\">F</field>\n" +
+                "                                                                                <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
+                "                                                                                <next>\n" +
+                "                                                                                  <block type=\"audio_n1\" id=\"KwvhE(HvbF[]W]zQ)7AO\">\n" +
+                "                                                                                    <field name=\"AUDIO\">E</field>\n" +
+                "                                                                                    <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
+                "                                                                                    <next>\n" +
+                "                                                                                      <block type=\"audio_n1\" id=\"IJR*%i%iDp?eL*1s,L_5\">\n" +
+                "                                                                                        <field name=\"AUDIO\">C</field>\n" +
+                "                                                                                        <field name=\"ESTADO_AUDIO\">blanca</field>\n" +
+                "                                                                                      </block>\n" +
+                "                                                                                    </next>\n" +
+                "                                                                                  </block>\n" +
+                "                                                                                </next>\n" +
+                "                                                                              </block>\n" +
+                "                                                                            </next>\n" +
+                "                                                                          </block>\n" +
+                "                                                                        </next>\n" +
+                "                                                                      </block>\n" +
+                "                                                                    </next>\n" +
+                "                                                                  </block>\n" +
+                "                                                                </next>\n" +
+                "                                                              </block>\n" +
+                "                                                            </next>\n" +
+                "                                                          </block>\n" +
+                "                                                        </next>\n" +
+                "                                                      </block>\n" +
+                "                                                    </next>\n" +
+                "                                                  </block>\n" +
+                "                                                </next>\n" +
+                "                                              </block>\n" +
+                "                                            </next>\n" +
+                "                                          </block>\n" +
+                "                                        </next>\n" +
                 "                                      </block>\n" +
                 "                                    </next>\n" +
                 "                                  </block>\n" +
@@ -121,12 +203,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    </statement>\n" +
                 "  </block>\n" +
                 "</xml>");
-        db.insert(TABLE_PROYECTO, null, values);
+        db.insert(TABLE_EJEMPLO, null, values);
+
+
 
         values.clear();
-
-        values.put(COLUMN_PROYECTO_CUERPO, "Bucle For Básico ");
-        values.put(COLUMN_PROYECTO_DESCRIPCION, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
+        values.put(COLUMN_EJEMPLO_NOMBRE, "Bucle For Básico ");
+        values.put(COLUMN_EJEMPLO_CONTENIDO, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
                 "  <block type=\"play_n1\" id=\"^4]UOYc!945baa)%K`Gf\" x=\"100\" y=\"50\">\n" +
                 "    <statement name=\"cuerpo\">\n" +
                 "      <block type=\"rotulador_n1\" id=\"9j}Tih=qHIz93oC5lh~W\">\n" +
@@ -168,14 +251,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    </statement>\n" +
                 "  </block>\n" +
                 "</xml>");
-        db.insert(TABLE_PROYECTO, null, values);
+        db.insert(TABLE_EJEMPLO, null, values);
 
 
 
         values.clear();
 
-        values.put(COLUMN_PROYECTO_CUERPO, "Hexagono-Bucle-For");
-        values.put(COLUMN_PROYECTO_DESCRIPCION, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
+        values.put(COLUMN_EJEMPLO_NOMBRE, "Hexágono-Bucle-For");
+        values.put(COLUMN_EJEMPLO_CONTENIDO, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
                 "  <block type=\"play_n2\" id=\"e1jOXdK2=`.Z*FJ|^Y%A\" x=\"100\" y=\"50\">\n" +
                 "    <statement name=\"cuerpo\">\n" +
                 "      <block type=\"rotulador_n2\" id=\"~#^R/lfz,1ZY+$?+B5+W\">\n" +
@@ -199,12 +282,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    </statement>\n" +
                 "  </block>\n" +
                 "</xml>");
-        db.insert(TABLE_PROYECTO, null, values);
+        db.insert(TABLE_EJEMPLO, null, values);
 
         values.clear();
 
-        values.put(COLUMN_PROYECTO_CUERPO, "Octagono-bucle-for");
-        values.put(COLUMN_PROYECTO_DESCRIPCION, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
+        values.put(COLUMN_EJEMPLO_NOMBRE, "Octágono-bucle-for");
+        values.put(COLUMN_EJEMPLO_CONTENIDO, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
                 "  <block type=\"play_n1\" id=\"D`wTdBb]_=zgVlp9W.=[\" x=\"100\" y=\"50\">\n" +
                 "    <statement name=\"cuerpo\">\n" +
                 "      <block type=\"audio_n1\" id=\"6yOlpb4)EH3}:3Rb~hRi\">\n" +
@@ -251,13 +334,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    </statement>\n" +
                 "  </block>\n" +
                 "</xml>");
-        db.insert(TABLE_PROYECTO, null, values);
+        db.insert(TABLE_EJEMPLO, null, values);
 
 
         values.clear();
 
-        values.put(COLUMN_PROYECTO_CUERPO, "Triangulo equilátero ");
-        values.put(COLUMN_PROYECTO_DESCRIPCION, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
+        values.put(COLUMN_EJEMPLO_NOMBRE, "Triángulo equilátero ");
+        values.put(COLUMN_EJEMPLO_CONTENIDO, "<xml xmlns=\"https://developers.google.com/blockly/xml\">\n" +
                 "  <block type=\"play_n2\" id=\"t+wXEOJH8*jl#jk#U2D@\" x=\"100\" y=\"50\">\n" +
                 "    <statement name=\"cuerpo\">\n" +
                 "      <block type=\"rotulador_n2\" id=\"oV!6pl)e9eFR;GwC[azo\">\n" +
@@ -296,7 +379,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    </statement>\n" +
                 "  </block>\n" +
                 "</xml>");
-        db.insert(TABLE_PROYECTO, null, values);
+        db.insert(TABLE_EJEMPLO, null, values);
         // Agrega más inserciones según sea necesario
     }
 }

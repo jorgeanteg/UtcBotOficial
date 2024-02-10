@@ -102,6 +102,44 @@
             <!-- Texto "Ejemplos" -->
 
             <!-- HorizontalScrollView para más imágenes -->
+            <TextView
+                android:id="@+id/robotica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="#35434C"
+                android:fontFamily="@font/archivo_black"
+                android:text="Aprende Robótica"
+                android:textSize="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView4"
+                android:layout_width="0dp"
+                android:layout_height="165dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/robotica">
+
+                <!-- LinearLayout para más imágenes -->
+                <LinearLayout
+                    android:id="@+id/cardsContainer3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -117,7 +155,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView4" />
 
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollView2"

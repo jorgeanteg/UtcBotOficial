@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
         } else {
             // Manejar el caso en que el cursor esté vacío
-            Toast.makeText(this, "Error: Cursor vacío", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Error: Cursor vacío", Toast.LENGTH_SHORT).show();
 
             TextView noProjectsTextView = new TextView(this);
             noProjectsTextView.setText("No existe ningún proyecto");
@@ -233,14 +233,14 @@ public class MainActivity extends AppCompatActivity {
         cardsContainer2.removeAllViews(); // Limpiar las tarjetas existentes
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] ejemplo = {DatabaseHelper.COLUMN_PROYECTO_ID, DatabaseHelper.COLUMN_PROYECTO_CUERPO, DatabaseHelper.COLUMN_PROYECTO_DESCRIPCION};
-        Cursor cursor = db.query(DatabaseHelper.TABLE_PROYECTO, ejemplo, null, null, null, null, null);
+        String[] ejemplo = {DatabaseHelper.COLUMN_EJEMPLO_ID, DatabaseHelper.COLUMN_EJEMPLO_NOMBRE, DatabaseHelper.COLUMN_EJEMPLO_CONTENIDO};
+        Cursor cursor = db.query(DatabaseHelper.TABLE_EJEMPLO, ejemplo, null, null, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                int idIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PROYECTO_ID);
-                int nombreIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PROYECTO_CUERPO);
-                int contenidoIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_PROYECTO_DESCRIPCION);
+                int idIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_EJEMPLO_ID);
+                int nombreIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_EJEMPLO_NOMBRE);
+                int contenidoIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_EJEMPLO_CONTENIDO);
 
                 // Verificar que las columnas existan en el cursor
                 if (idIndex != -1 && nombreIndex != -1 && contenidoIndex != -1) {
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Manejar el caso en que el cursor esté vacío
             // Puedes agregar un mensaje de registro o mostrar un Toast
-            Toast.makeText(this, "Error: Cursor vacío", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Error: Cursor vacío", Toast.LENGTH_SHORT).show();
         }
 
         db.close();
