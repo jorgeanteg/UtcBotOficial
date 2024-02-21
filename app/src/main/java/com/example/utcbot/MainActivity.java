@@ -25,6 +25,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.utcbot.robotica.Actuadores;
+import com.example.utcbot.robotica.Componente1;
+import com.example.utcbot.robotica.ComponentesPasivos;
+import com.example.utcbot.robotica.DisenoCad;
+import com.example.utcbot.robotica.FuenteEnergia;
+import com.example.utcbot.robotica.Impresion3D;
+import com.example.utcbot.robotica.Microcontroladores;
+import com.example.utcbot.robotica.Sensores;
+
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
@@ -88,6 +97,94 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
+
+        View tarjeta0 = findViewById(R.id.targeta0);
+        tarjeta0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), Componente1.class);
+                startActivity(intent1);
+            }
+        });
+
+        View tarjeta1 = findViewById(R.id.targeta1);
+        tarjeta1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), Microcontroladores.class);
+                startActivity(intent1);
+            }
+        });
+
+        View tarjeta2 = findViewById(R.id.targeta2);
+        tarjeta2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), Sensores.class);
+                startActivity(intent1);
+            }
+        });
+
+
+        View tarjeta3 = findViewById(R.id.targeta3);
+        tarjeta3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), Actuadores.class);
+                startActivity(intent1);
+            }
+        });
+
+        View tarjeta4 = findViewById(R.id.targeta4);
+        tarjeta4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), FuenteEnergia.class);
+                startActivity(intent1);
+            }
+        });
+
+        View tarjeta5 = findViewById(R.id.targeta5);
+        tarjeta5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), ComponentesPasivos.class);
+                startActivity(intent1);
+            }
+        });
+
+        View tarjeta6 = findViewById(R.id.targeta6);
+        tarjeta6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), DisenoCad.class);
+                startActivity(intent1);
+            }
+        });
+
+        View tarjeta7 = findViewById(R.id.targeta7);
+        tarjeta7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la Actividad1
+                Intent intent1 = new Intent(getApplicationContext(), Impresion3D.class);
+                startActivity(intent1);
+            }
+        });
+
+
+
 
 
 
@@ -293,6 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
         db.close();
     }
+
 
     @Override
     protected void onResume() {

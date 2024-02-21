@@ -1,3 +1,199 @@
 <resources>
-    <string name="app_name">UtcBot</string>
+    <string name="app_name">UTCoding</string>
+    <string name="titulo_motor">Motor</string>
+    <string name="concepto_motor">
+Un motor es un dispositivo que convierte energía (generalmente eléctrica, térmica o química) en energía mecánica para generar movimiento.</string>
+
+    <string name="subTitulo1_motor">Motores de corriente continua (DC): </string>
+    <string name="concepto2_motor">
+        Estos son los motores más comunes para robots debido a su simplicidad y facilidad de control. Puedes controlar la velocidad y dirección del motor variando la polaridad de la corriente o utilizando un controlador de motor.
+    </string>
+    <string name="subTitulo2_motor">Motores paso a paso:</string>
+    <string name="subTitulo3_motor">Servomotores</string>
+
+
+    <string name="titulo_robo">Robótica en la educación</string>
+    <string name="que_es_robo">
+        La robótica es un campo multidisciplinario que fusiona los principios de la mecánica, la electrónica y la informática, brindando a los estudiantes la oportunidad de explorar, crear y controlar sus propios robots a través de la programación.
+    </string>
+    <string name="para_sirve_robo">
+    Este ámbito de estudio permite a los estudiantes diseñar, construir y programar sus propios proyectos robóticos, transformando conceptos difíciles de entender en actividades prácticas y emocionantes que se pueden experimentar y disfrutar directamente.
+    Además, la robótica fomenta el desarrollo de habilidades blandas como el trabajo en equipo, la comunicación efectiva y la gestión del tiempo, ya que los proyectos de robótica suelen realizarse en grupo.
+
+    </string>
+    <string name="importancia_robo">
+         La robótica en la educación es vital para preparar a los estudiantes para el futuro en un mundo tecnológico en constante avance. Al introducir a los estudiantes en la robótica desde una edad temprana, no solo les estamos enseñando sobre tecnología y programación, sino que también les estamos equipando con las habilidades y el pensamiento crítico necesarios para navegar en un mundo cada vez más tecnológico.
+          </string>
+
+
+    <string name="titulo_esp">ESP32</string>
+    <string name="que_es_esp">
+        El ESP32 es un microcontrolador que puede servir como el cerebro central o la "cabeza" de un robot, enviando señales a otros componentes y controlándolos de manera efectiva. Gracias a su capacidad de procesamiento, el ESP32 puede ejecutar algoritmos de control, recibir y procesar datos de sensores, y enviar comandos a actuadores y otros dispositivos periféricos. Esto lo convierte en una opción ideal para controlar diferentes aspectos de un robot, como el movimiento, la percepción del entorno, la comunicación inalámbrica y más. Se destaca por su capacidad de conectividad Wi-Fi y Bluetooth integrada, así como por su potente procesador de doble núcleo y una amplia gama de periféricos.
+    </string>
+    <string name="para_sirve_esp">
+        El ESP32 es utilizado para una variedad de propósitos, como el desarrollo de dispositivos conectados a Internet, sensores inalámbricos, sistemas de automatización del hogar, monitoreo remoto, proyectos de robótica, dispositivos portátiles y más. Su versatilidad y bajo costo lo hacen popular entre los entusiastas de la electrónica y los desarrolladores profesionales que buscan una solución económica para conectar dispositivos a la red y controlarlos de forma remota.
+    </string>
+
+    <string name="titulo_ardu">Arduino</string>
+    <string name="que_es_ardu">
+        Arduino es una plataforma de hardware y software de código abierto diseñada para controlar una variedad de componentes electrónicos, incluyendo sensores, motores y luces, a través de la programación de su microcontrolador integrado. Permite a los usuarios recopilar datos del entorno, procesarlos y tomar decisiones basadas en ellos, así como enviar señales para controlar dispositivos físicos. Con su facilidad de uso y accesibilidad.
+    </string>
+    <string name="para_sirve_ardu">
+        El Arduino se utiliza para una amplia variedad de propósitos, desde proyectos de hobby hasta aplicaciones industriales. Sirve para controlar luces, motores, sensores y otros dispositivos electrónicos, permitiendo a los usuarios crear desde simples robots y dispositivos domésticos inteligentes hasta sistemas más complejos de automatización y control.
+    </string>
+
+    <string name="titulo_Raspberry">Raspberry Pi</string>
+    <string name="que_es_Raspberry">
+        La Raspberry Pi es un pequeño ordenador del tamaño de una placa de Arduino, popular para proyectos de electrónica. A diferencia de Arduino, es más potente y permite la creación de proyectos más complejos. Funciona como un microordenador y requiere un sistema operativo para su funcionamiento. Gracias a esto, puede utilizarse como un ordenador de escritorio.
+    </string>
+    <string name="para_sirve_Raspberry">
+        Raspberry Pi se utiliza para una amplia variedad de propósitos, desde proyectos educativos y de aprendizaje de programación hasta aplicaciones de hogar inteligente, sistemas de automatización, servidores de medios, consolas de juegos retro, estaciones meteorológicas, sistemas de control de robots y mucho más.
+    </string>
+
+
+    <string name="titulo_touch"> Sensor Touch</string>
+    <string name="que_es_touch">
+        Un sensor táctil es un dispositivo electrónico diseñado para identificar y responder al contacto directo con el dedo humano u otros objetos. Estos sensores son esenciales para que los robots perciban y reaccionen ante el entorno físico que los rodea.
+Su función principal radica en detectar el momento en que alguna parte del robot, o algún objeto externo, hace contacto con la superficie del sensor.
+    </string>
+    <string name="para_sirve_touch">
+        Los sensores táctiles son fundamentales en la robótica educativa porque permiten que los robots perciban su entorno físico y respondan de manera adecuada. Al detectar el contacto, los sensores táctiles pueden activar diferentes acciones o movimientos en el robot, lo que proporciona una retroalimentación sensorial esencial para la interacción con el entorno y la realización de tareas específicas.
+    </string>
+
+
+    <string name="titulo_obstaculo">Sensor de Obstáculos</string>
+    <string name="que_es_obstaculo">
+        Un sensor de obstáculos es un dispositivo diseñado para detectar la presencia de objetos cercanos en el entorno de un robot o de cualquier otro sistema automatizado. Utiliza diferentes tecnologías, como ultrasonido, infrarrojos o láser, para medir la distancia entre el sensor y el objeto más cercano.
+    </string>
+    <string name="para_sirve_obstaculo">
+        La función principal de un sensor de obstáculos es proporcionar al robot información sobre su entorno, permitiéndole detectar obstáculos y evitar colisiones. Esto es especialmente útil en aplicaciones de robótica móvil, donde el robot necesita navegar de manera autónoma por un espacio sin chocar con objetos en su camino.
+    </string>
+
+
+    <string name="titulo_distancia">Sensores de distancia ultrasónico (HC-SR04)</string>
+    <string name="que_es_distancia">
+        Los sensores de distancia ultrasónico, como el HC-SR04, son dispositivos electrónicos que utilizan ondas ultrasónicas para medir la distancia entre el sensor y un objeto en su entorno. Estos sensores emiten una serie de pulsos ultrasónicos y miden el tiempo que tarda en recibir el eco de esos pulsos después de rebotar en el objeto. Basándose en el tiempo de viaje de las ondas ultrasónicas, el sensor puede calcular la distancia al objeto con bastante precisión.
+    </string>
+    <string name="para_sirve_distancia">
+        Los sensores de distancia ultrasónico como el HC-SR04 son ampliamente utilizados en proyectos de robótica y automatización, así como en sistemas de seguridad y detección de obstáculos. Se utilizan para detectar obstáculos y evitar colisiones en robots móviles, medir distancias con precisión en sistemas como estacionamientos automáticos y alarmas, y permitir la navegación segura de robots autónomos al mapear su entorno y evitar colisiones.
+    </string>
+
+
+    <string name="titulo_DC">Motor de corriente continua (DC)</string>
+    <string name="que_es_DC">
+       Un motor de corriente continua (DC) es un tipo de motor eléctrico que convierte la energía eléctrica en energía mecánica. En robótica, los motores de corriente continua son ampliamente utilizados debido a su facilidad de control y su fácil interconexión. Esto se debe a que pueden controlarse fácilmente mediante la variación de la tensión o el pulso aplicado a sus terminales, lo que permite ajustar la velocidad y dirección del motor con precisión.
+    </string>
+    <string name="para_sirve_DC">
+        Los motores de corriente continua se utilizan ampliamente para proporcionar movimiento a los robots. Son componentes esenciales que permiten que los robots se desplacen, manipulen objetos, giren, levanten cargas y realicen una variedad de tareas mecánicas.
+    </string>
+
+    <string name="titulo_servo">Servomotor</string>
+    <string name="que_es_servo">
+       Un servomotor es un tipo especial de motor que permite controlar la posición del eje en un momento dado. Está diseñado para moverse determinada cantidad de grados y luego mantenerse fijo en una posición. Los servomotores se pueden clasificar por su rango de ángulo de giro, que incluye tipos de 180 grados, 360 grados, múltiples vueltas y ángulo ajustable.
+    </string>
+    <string name="para_sirve_servo">
+        En el contexto de la robótica, los servomotores son componentes esenciales utilizados para controlar el movimiento de diversas partes de un robot como, por ejemplo: la posición de brazos, ruedas, pinzas u otros elementos móviles de un robot, permitiendo así que el robot realice movimientos específicos y precisos.
+    </string>
+
+    <string name="titulo_paso">Motor paso a paso</string>
+    <string name="que_es_paso">
+       Un motor paso a paso es un tipo de motor eléctrico que mueve su eje de manera angular en pasos discretos, de ahí su nombre. Cada paso representa un incremento preciso en la posición del eje. Estos motores son controlados enviando secuencias de pulsos eléctricos a sus bobinas, lo que hace que avancen o retrocedan de manera controlada.
+    </string>
+    <string name="para_sirve_paso">
+        Los motores paso a paso son utilizados en una amplia variedad de aplicaciones que requieren un control preciso de movimiento, como en impresoras 3D, máquinas CNC, robótica, cámaras de seguridad, sistemas de posicionamiento, entre otros. Su capacidad para moverse con precisión y control es fundamental en muchos sistemas automatizados donde se necesita una posición exacta o un movimiento controlado.
+    </string>
+
+    <string name="titulo_led">LEDs estándar</string>
+    <string name="que_es_led">
+       Los LEDs estándar son diodos emisores de luz que emiten luz visible cuando se les aplica una corriente eléctrica. Son los tipos más comunes de LEDs que se encuentran en el mercado y están disponibles en una variedad de formas, tamaños y colores.
+    </string>
+    <string name="para_sirve_led">
+        Además de su uso en iluminación, los LEDs estándar también son esenciales en la indicación de estados o condiciones específicas en una amplia gama de dispositivos electrónicos y sistemas. Por ejemplo, se utilizan para señalar la activación de un sensor, el funcionamiento de un módulo, el estado de ejecución de un programa o incluso para indicar errores o alarmas en sistemas electrónicos. Su capacidad para emitir luz de manera clara y visible, así como su bajo consumo de energía, los convierte en una opción ideal para proporcionar retroalimentación visual en una variedad de aplicaciones.
+    </string>
+
+    <string name="titulo_rgb">LEDs RGB</string>
+    <string name="que_es_rgb">
+       Los LEDs RGB son diodos emisores de luz que pueden producir luz en tres colores primarios: rojo (Red), verde (Green) y azul (Blue), de ahí su nombre. Estos LEDs contienen tres chips individuales dentro de un solo encapsulado, cada uno capaz de emitir luz en uno de los colores primarios mencionados. La combinación de estos tres colores primarios permite al LED RGB producir una amplia gama de colores, incluidos todos los colores del espectro visible.
+    </string>
+    <string name="para_sirve_rgb">
+        Estos LEDs son utilizados para enseñar conceptos de color, mezcla de luz y programación en proyectos robóticos. Además, pueden ser utilizados para indicar estados, condiciones o resultados en los robots, proporcionando retroalimentación visual a los estudiantes sobre el funcionamiento de sus creaciones.
+    </string>
+
+    <string name="titulo_buzzer">Buzzer</string>
+    <string name="que_es_buzzer">
+        Un buzzer es un dispositivo electromecánico que produce un sonido o zumbido cuando se le aplica corriente eléctrica. Consiste en una cápsula que contiene una membrana vibrante o un oscilador electromagnético que genera vibraciones audibles cuando se activa.
+    </string>
+    <string name="para_sirve_buzzer">
+        El Buzzer en la robótica se utiliza para emitir sonidos y alertas en los robots programables. Puede ser programado para reproducir diferentes tonos y melodías, lo que permite a los estudiantes experimentar con la creación de música y sonidos en sus proyectos de robótica. Algunos usos comunes del Buzzer en robótica educativa incluyen la creación de alarmas, indicadores de estado, efectos de sonido y juegos interactivos.
+    </string>
+
+
+    <string name="titulo_litio">Baterías de polímero de litio (LiPo)</string>
+    <string name="que_es_litio">
+        Las baterías de polímero de litio (LiPo) son un tipo de batería recargable que utiliza tecnología de ion de litio y un electrolito de polímero para almacenar energía eléctrica. Estas baterías son conocidas por su alta densidad de energía, lo que significa que pueden proporcionar una gran cantidad de energía en un espacio reducido y con un peso ligero en comparación con otros tipos de baterías.
+    </string>
+    <string name="para_sirve_litio">
+        Las baterías de polímero de litio (LiPo) son empleadas como una fuente de energía móvil esencial para alimentar tanto robots como dispositivos electrónicos. Su capacidad de descarga constante y su capacidad de recarga las convierten en una opción óptima para aplicaciones repetidas en una amplia gama de actividades educativas y de desarrollo de habilidades en el ámbito de la robótica.
+    </string>
+
+    <string name="titulo_bateria">Baterías de polímero de litio (LiPo)</string>
+    <string name="que_es_bateria">
+        Las baterías de 9V son un tipo de batería compacta y rectangular que proporciona una tensión nominal de 9 voltios. Estas baterías suelen estar compuestas por seis celdas individuales de 1.5 voltios conectadas en serie dentro de un mismo envase.
+    </string>
+    <string name="para_sirve_bateria">
+         Las baterías de 9V sirven como una fuente de energía portátil para alimentar circuitos electrónicos, microcontroladores, sensores y motores utilizados en proyectos educativos. Estas baterías son ideales para proporcionar energía a pequeños componentes móviles y actuadores, así como para alimentar módulos y sensores adicionales que pueden ser parte integral del diseño y funcionamiento de los robots educativos.
+    </string>
+
+    <string name="titulo_pila">Pilas AA o AAA</string>
+    <string name="que_es_pila">
+        Las pilas AA y AAA son tipos de pilas secas o alcalinas de tamaño estándar que se utilizan comúnmente en una amplia variedad de dispositivos electrónicos de consumo. Las pilas AA son más grandes que las AAA, pero ambas tienen una tensión nominal de 1.5 voltios.
+    </string>
+    <string name="para_sirve_pila">
+          Las pilas AA y AAA pueden ser utilizadas para alimentar microcontroladores, sensores, actuadores y otros componentes electrónicos que forman parte de los proyectos de robótica. Estas baterías proporcionan una fuente de energía portátil y conveniente para los robots educativos, permitiendo que funcionen de manera autónoma sin depender de una conexión constante a una fuente de energía externa.
+    </string>
+
+
+    <string name="titulo_resistencia">Resistencias</string>
+    <string name="que_es_resistencia">
+        Las resistencias son componentes electrónicos pasivos que limitan el flujo de corriente eléctrica en un circuito. Están diseñadas para presentar una oposición al flujo de corriente y se utilizan para controlar el nivel de corriente en un circuito eléctrico. Esta oposición se mide en ohmios (Ω) y determina la cantidad de corriente que fluirá a través de la resistencia cuando se aplica un voltaje. Estas piezas se identifican por códigos de colores que indican su valor de resistencia, lo que facilita su identificación y uso en circuitos.
+    </string>
+    <string name="para_sirve_resistencia">
+          Las resistencias tienen varios propósitos, como reducir la corriente, ajustar el voltaje, dividir el voltaje, establecer niveles de corriente, proteger componentes sensibles, y generar calor en ciertos dispositivos. En resumen, las resistencias son fundamentales en la electrónica para controlar y limitar la corriente eléctrica en los circuitos.
+    </string>
+
+    <string name="titulo_condensador">Condensadores</string>
+    <string name="que_es_condensador">
+        Los condensadores son componentes electrónicos pasivos que almacenan y liberan energía eléctrica en forma de campo eléctrico. Consisten en dos placas conductoras separadas por un material dieléctrico que puede ser aire, cerámica o plástico. Los condensadores tienen la capacidad de almacenar carga eléctrica y liberarla gradualmente cuando se necesita.
+    </string>
+    <string name="para_sirve_condensador">
+           Principalmente, los condensadores se utilizan para estabilizar el suministro de energía eléctrica en los circuitos de los robots, ayudando a filtrar ruidos eléctricos y suavizar fluctuaciones en el voltaje que podrían afectar el funcionamiento adecuado de los componentes electrónicos. Además, los condensadores pueden utilizarse para almacenar energía temporalmente y liberarla rápidamente cuando sea necesario, lo que puede ser útil para mejorar la eficiencia energética o proporcionar un impulso de energía en momentos críticos del funcionamiento del robot.
+    </string>
+
+    <string name="titulo_inductor">Inductores</string>
+    <string name="que_es_inductor">
+        Los inductores son componentes electrónicos pasivos que almacenan energía en forma de campo magnético cuando una corriente eléctrica pasa a través de ellos. Consisten en una bobina de alambre enrollada alrededor de un núcleo magnético, como hierro o ferrita. La cantidad de energía almacenada en un inductor está determinada por su inductancia, medida en henrios.
+    </string>
+    <string name="para_sirve_inductor">
+         Los inductores son componentes esenciales en la electrónica, empleados en una variedad de aplicaciones. Se utilizan en circuitos de filtrado para bloquear o permitir el paso de ciertas frecuencias en una señal eléctrica, en fuentes de alimentación para suavizar fluctuaciones de voltaje, en la transferencia de señales entre etapas de un circuito y para almacenar energía temporalmente en aplicaciones de energía, liberándola cuando sea necesario. Por ejemplo, se pueden utilizar en la construcción de circuitos de temporización o en la estabilización de fuentes de alimentación para motores o circuitos de control.
+    </string>
+
+
+    <string name="titulo_cad">Diseño CAD</string>
+    <string name="que_es_cad">
+        El diseño asistido por ordenador (CAD) implica el uso de software especializado, como Tinkercad, Solidworks, Fusion 360 e Inventor, para crear modelos digitales detallados de robots y componentes mecánicos asociados a los proyectos de robótica.
+    </string>
+    <string name="para_sirve_cad">
+         El CAD en robótica educativa sirve para permitir a los estudiantes visualizar y diseñar sus propios robots antes de construirlos físicamente, lo que les proporciona una plataforma para explorar y experimentar con diferentes ideas y diseños. Además, el CAD facilita el proceso de enseñanza al permitir a los estudiantes comprender conceptos de diseño y mecánica antes de implementarlos en la construcción física de los robots, lo que fomenta un aprendizaje más práctico y efectivo.
+    </string>
+
+
+    <string name="titulo_3d">Impresión 3D</string>
+    <string name="que_es_3d">
+        La impresión 3D es un proceso de fabricación aditiva que consiste en crear objetos tridimensionales mediante la superposición de capas sucesivas de material, como plástico, metal o resina, a partir de un modelo digital. Este proceso permite la creación de objetos personalizados, prototipos y piezas funcionales con geometrías complejas que serían difíciles o imposibles de fabricar con métodos tradicionales.
+    </string>
+    <string name="para_sirve_3d">
+        En el entorno de la robótica educativa, la impresión 3D se utiliza para crear partes y componentes personalizados para robots y otros dispositivos robóticos. Esto permite a los estudiantes diseñar y fabricar piezas específicas según sus necesidades y requisitos, lo que fomenta la creatividad, el diseño iterativo y el aprendizaje práctico. Además, la impresión 3D proporciona una forma accesible y económica de prototipar y fabricar piezas para proyectos educativos, lo que facilita la experimentación y la exploración en el aula.
+    </string>
+
+
 </resources>

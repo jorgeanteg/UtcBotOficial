@@ -60,15 +60,13 @@
 </button>
 <button id="tutorial_explicacion" class="tutorial_explicacion" style="opacity: 0;">
 </button>
-<button id="tutorial_explicacion" class="tutorial_explicacion" style="opacity: 0;">
-</button>
 <button id="tutorial_bloque_play" class="tutorial_bloque_play" style="opacity: 0;">
 </button>
 
 
 
-<button class="floating-stop" id="floating_stop" onclick="iniciarTour()">
-    <!-- detenerEjecucion() -->
+<button class="floating-stop" id="floating_stop" onclick="detenerEjecucion()">
+
     <img src="img/stopPlay.png" alt="">
 </button>
 
@@ -81,19 +79,19 @@
             var tour = {
                 id: "mi-tour",
                 steps: [
-
                     {
                         target: "tutorial",
                         placement: "bottom", // Ubica el globo encima del título
-                        title: "¡Bienvenido a iRobotUTC!",
-                        content: "<img src='irobot.png' alt='imagen' class='centered-image' style='width: 100px; height: auto;'>",
+                        title: "¡Bienvenido a UTCoding!",
+                        content: "<img src='utcoding.png' alt='imagen' class='centered-image' style='width: 100px; height: auto;'>",
+                        arrowOffset: "center", // Centra la flecha
+                        showCloseButton: true,
 
-                        arrowOffset: "center" // Centra la flecha
                     },
                     {
                         target: "tutorial",
                         placement: "bottom", // Ubica el globo encima del título
-                        title: "IrobotUTC",
+                        title: "UTCoding",
                         content: "Esta aplicación te ofrece la oportunidad de controlar un robot simulado a través de bloques de programación, de una manera divertida y educativa.",
                         arrowOffset: "center" // Centra la flecha
                     },
@@ -259,7 +257,7 @@
 <!---------------------------------------- Teclados personalizados de la aplicacion ------------------------------------------------->
 <div id="tecladoNumerico" class="modal">
     <div class="fila">
-        <input class="pantalla_teclado" type="number" id="inputNuevo">
+        <input class="pantalla_teclado" type="number" id="inputNuevo" readonly>
     </div>
     <div class="fila">
         <button class="borrar-todo btn-borrar-todo btn-borrar">Borrar</button>
@@ -3220,7 +3218,7 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("avanzar")
-                    .appendField(new Blockly.FieldNumber(50, -10, 100, 1), "DISTANCIA")
+                    .appendField(new Blockly.FieldNumber(20, -20, 20, 1), "DISTANCIA")
                     .appendField("cm");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -3285,7 +3283,7 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("esperar")
-                    .appendField(new Blockly.FieldNumber(10, 0, 100, 1), "ESPERAR")
+                    .appendField(new Blockly.FieldNumber(10, 0, 10, 1), "ESPERAR")
                     .appendField("seg");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -4279,7 +4277,7 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("avanzar(")
-                    .appendField(new Blockly.FieldNumber(50, -100, 100, 1), "DISTANCIA")
+                    .appendField(new Blockly.FieldNumber(20, -20, 20, 1), "DISTANCIA")
                     .appendField(")");
                 this.setInputsInline(false);
                 this.setPreviousStatement(true, null);
@@ -4941,7 +4939,7 @@ Fin teclado Repetir -->
                 this.appendDummyInput()
                     .setAlign(Blockly.ALIGN_CENTRE)
                     .appendField("esperar")
-                    .appendField(new Blockly.FieldNumber(0, 0, 100, 1), "ESPERAR")
+                    .appendField(new Blockly.FieldNumber(0, 0, 10, 1), "ESPERAR")
                     .appendField("seg");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -6368,7 +6366,7 @@ Fin teclado Repetir -->
                         case 'movePlayer':
                             objeto = {
                                 title: "Avanzar",
-                                content: "Para dar movimiento al robot necesitas un <b>Motor</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>Motor</b> es un dispositivo que convierte la energía en movimiento",
+                                content: "Para dar movimiento al robot necesitas un <b>Motor</b> de corriente continua (DC).<br><img src='img/motor_DC.png' style='width: 150px; height: 100px;'><br> Un <b>Motor (DC)</b> es un motor eléctrico que convierte la energía eléctrica en energía mecánica, es decir, en movimiento.",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6377,7 +6375,7 @@ Fin teclado Repetir -->
                         case 'rotateRight':
                             objeto = {
                                 title: "Girar",
-                                content: "Para girar al robot necesitas un <b>Motor</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>Motor</b> es un dispositivo que convierte la energía en movimiento",
+                                content: "Para rotar al robot necesitas un <b>Motor</b> de corriente continua (DC).<br><img src='img/motor_DC.png' style='width: 150px; height: 100px;'><br> Un <b>Motor (DC)</b> es un motor eléctrico que convierte la energía eléctrica en energía mecánica, es decir, en movimiento.",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6386,7 +6384,7 @@ Fin teclado Repetir -->
                         case 'encenderLuzRGB':
                             objeto = {
                                 title: "Led",
-                                content: "Para enceder la luz del robot necesitas un <b>Led</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>Led</b> es un dispositivo semiconductor que emite luz cuando se aplica una corriente eléctrica a través de él. ",
+                                content: "Para enceder la luz del robot necesitas un <b>Led RGB</b>.<br><img src='img/rgb.png' style='width: 150px; height: 100px;'><br> Un <b>Led RGB</b> es un diodo emisor de luz que puede producir luz en tres colores primarios: rojo (Red), verde (Green) y azul (Blue).",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6395,7 +6393,7 @@ Fin teclado Repetir -->
                         case 'playNoteWithDuration':
                         objeto = {
                                 title: "Sonido",
-                                content: "Para reproducir un sonido necesitas una <b>Bocina</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Una <b>Bocina</b> es un dispositivo que convierte energía eléctrica en energía sonora, produciendo así sonido audible.",
+                                content: "Para reproducir un sonido necesitas una <b>Buzzer</b>.<br><img src='img/buzzer.png' style='width: 100px; height: 100px;'><br> Una <b>Buzzer</b> es un dispositivo electromecánico que produce un sonido o zumbido cuando se le aplica corriente eléctrica.",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6405,7 +6403,7 @@ Fin teclado Repetir -->
                         case 'estado_rotulador':
                         objeto = {
                                 title: "Rotulador",
-                                content: "Para bajar un rotulador y poder dibujar la trayectoria del robot necesitas un <b>Rotulador</b>.<br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Una <b>Bocina</b> es un instrumento de escritura que consiste en un depósito de tinta líquida o gel.",
+                                content: "Para bajar o subir un rotulador y poder dibujar la trayectoria del robot necesitas un <b>Servomotor</b>.<br><img src='img/servo_motor.png' style='width: 150px; height: 100px;'><br> Una <b>Servomotor</b> es un tipo especial de motor que permite controlar la posición del eje en un momento dado.",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6420,15 +6418,15 @@ Fin teclado Repetir -->
             }
             // Agregar dos objetos por defecto al final del array de pasos
             steps.push({
-                title: "Controlador",
-                content: "Para controlar el robot necesitamos un microcontrolador, es este caso un <b>sp32</b>. <br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Un <b>sp32</b> es un el componente central que ejecuta el código y envía las señales a los diferentes actuadores y sensores del robot para realizar las acciones deseadas.",
+                title: "Dispositivo de control",
+                content: "Para controlar el robot necesitamos un microcontrolador, es este caso un <b>ESP32</b>. <br><img src='img/esp32.png' style='width: 150px; height: 100px;'><br> Un <b>sp32</b> es un el componente central que ejecuta el código y envía las señales a los diferentes actuadores y sensores del robot para realizar las acciones deseadas.",
                 target: "tutorial", // Apunta al elemento h2
                 placement: "right", // Coloca el globo en la parte superior
                 arrowOffset: "center"
             });
             steps.push({
                 title: "Batería",
-                content: "Para alimentar de energia a los componentes del robot necesitas una <b>Bateria</b>. <br><img src='irobot.png' style='width: 150px; height: 100px;'><br> Una <b>Batería</b>, es un dispositivo que almacena energía eléctrica y la suministra al sistema del robot.",
+                content: "Para alimentar de energia al microcontrolador y a los componentes del robot necesitas una <b>Bateria Lipo</b>. <br><img src='img/bateria_litio.png' style='width: 130px; height: 120px;'><br> Una <b>Batería Lipo</b>, es un dispositivo que almacena energía eléctrica y la suministra al sistema del robot.",
                 target: "tutorial", // Apunta al elemento con ID card1
                 placement: "right", // Coloca el globo a la derecha del elemento
                 arrowOffset: "center"

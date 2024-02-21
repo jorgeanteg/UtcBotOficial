@@ -404,8 +404,8 @@ div.hopscotch-bubble .hopscotch-bubble-close {
   -moz-appearance: none;
   appearance: none;
   border: 0;
-  color: #000;
-  background: transparent url(../img/sprite-green.png) -192px -92px no-repeat;
+  color: #c24646;
+  background: transparent url(img/sprite-green.png) -192px -92px no-repeat;
   display: block;
   padding: 8px;
   position: absolute;

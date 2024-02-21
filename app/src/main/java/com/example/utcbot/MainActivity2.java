@@ -502,22 +502,18 @@ public class MainActivity2 extends AppCompatActivity {
     private class ConnectedThread extends Thread {
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
-
         ConnectedThread(BluetoothSocket socket) {
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
-
             try {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
                 showToast("Error al crear el flujo de datos.");
             }
-
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
-
         public void run() {
             byte[] buffer = new byte[1024]; // Tamaño del buffer, puedes ajustarlo según tus necesidades
             int bytes;
@@ -542,10 +538,8 @@ public class MainActivity2 extends AppCompatActivity {
                     } else {
                         showToast("Evento Desconocido");
                     }
-
                 } catch (IOException e) {
                     showToast("La conexión falló");
-
                     break;
                 }
             }
@@ -575,7 +569,7 @@ public class MainActivity2 extends AppCompatActivity {
     private void handleEvento1(String data) {
         // Procesar los datos recibidos aquí
         // Por ejemplo, mostrarlos en un TextView o realizar alguna acción en base a los datos recibidos
-        showToast("Datos recibidos: " + data);
+        showToast("Comando recibido, ejecutando los bloques... " + data);
 
         // Enviar datos al WebView
         runOnUiThread(new Runnable() {

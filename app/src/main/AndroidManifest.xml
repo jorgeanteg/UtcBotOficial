@@ -21,8 +21,37 @@
         android:theme="@style/Theme.UtcBot"
         tools:targetApi="31">
         <activity
-            android:name=".robotica.Motor"
-            android:exported="false" />
+            android:name=".robotica.Impresion3D"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.DisenoCad"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.ComponentesPasivos"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.FuenteEnergia"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.Actuadores"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.Sensores"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.Microcontroladores"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.Componente1"
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
