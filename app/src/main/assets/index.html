@@ -5445,8 +5445,10 @@ Fin teclado Repetir -->
 
         function movePlayer(customStepSize) {
             if (steps < maxSteps) {
-                const dx = (customStepSize / maxSteps) * Math.cos(player.rotation);
-                const dy = (customStepSize / maxSteps) * Math.sin(player.rotation);
+
+                //((customStepSize*2) le multiplico * 2 para que aumente la distancia
+                const dx = ((customStepSize*2) / maxSteps) * Math.cos(player.rotation);
+                const dy = ((customStepSize*2) / maxSteps) * Math.sin(player.rotation);
 
                 player.x += dx;
                 player.y += dy;
@@ -6366,7 +6368,7 @@ Fin teclado Repetir -->
                         case 'movePlayer':
                             objeto = {
                                 title: "Avanzar",
-                                content: "Para dar movimiento al robot necesitas un <b>Motor</b> de corriente continua (DC).<br><img src='img/motor_DC.png' style='width: 150px; height: 100px;'><br> Un <b>Motor (DC)</b> es un motor eléctrico que convierte la energía eléctrica en energía mecánica, es decir, en movimiento.",
+                                content: "Para dar movimiento al robot necesitas un <b>Micro motor</b> de paso.<br><img src='img/r_micromotor.png' style='width: 150px; height: 100px;'><br> Un <b>Micro motor paso a paso</b> es un tipo de motor que convierte pulsos eléctricos en movimientos discretos o pasos.",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6375,7 +6377,7 @@ Fin teclado Repetir -->
                         case 'rotateRight':
                             objeto = {
                                 title: "Girar",
-                                content: "Para rotar al robot necesitas un <b>Motor</b> de corriente continua (DC).<br><img src='img/motor_DC.png' style='width: 150px; height: 100px;'><br> Un <b>Motor (DC)</b> es un motor eléctrico que convierte la energía eléctrica en energía mecánica, es decir, en movimiento.",
+                                content: "Para rotar al robot necesitas un <b>MPU 6050 Acelerómetro</b> y micro motor de paso.<br><img src='img/r_azul_MPU.png' style='width: 150px; height: 100px;'><br> Un <b>MPU 6050 Acelerómetro</b> es un sensor que combina acelerómetro y giroscopio, útil para medir la aceleración lineal en tres ejes y detectar cambios de velocidad en diferentes direcciones.",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6384,7 +6386,7 @@ Fin teclado Repetir -->
                         case 'encenderLuzRGB':
                             objeto = {
                                 title: "Led",
-                                content: "Para enceder la luz del robot necesitas un <b>Led RGB</b>.<br><img src='img/rgb.png' style='width: 150px; height: 100px;'><br> Un <b>Led RGB</b> es un diodo emisor de luz que puede producir luz en tres colores primarios: rojo (Red), verde (Green) y azul (Blue).",
+                                content: "Para enceder la luz del robot necesitas un <b>Led RGB</b>.<br><img src='img/r_led_rgb.png' style='width: 150px; height: 100px;'><br> Un <b>Led RGB</b> es un diodo emisor de luz que puede producir luz en tres colores primarios: rojo (Red), verde (Green) y azul (Blue).",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6393,7 +6395,7 @@ Fin teclado Repetir -->
                         case 'playNoteWithDuration':
                         objeto = {
                                 title: "Sonido",
-                                content: "Para reproducir un sonido necesitas una <b>Buzzer</b>.<br><img src='img/buzzer.png' style='width: 100px; height: 100px;'><br> Una <b>Buzzer</b> es un dispositivo electromecánico que produce un sonido o zumbido cuando se le aplica corriente eléctrica.",
+                                content: "Para reproducir un sonido necesitas una <b>Bocina</b>.<br><img src='img/r_boccina.png' style='width: 150px; height: 100px;'><br> Una <b>Bocina</b>, también conocida como altavoz o parlante, es un dispositivo electromecánico que convierte señales eléctricas en ondas sonoras audibles.",
                                 target: "tutorial", // Apunta al elemento con ID card1
                                 placement: "right", // Coloca el globo a la derecha del elemento
                                 arrowOffset: "center"
@@ -6419,14 +6421,14 @@ Fin teclado Repetir -->
             // Agregar dos objetos por defecto al final del array de pasos
             steps.push({
                 title: "Dispositivo de control",
-                content: "Para controlar el robot necesitamos un microcontrolador, es este caso un <b>ESP32</b>. <br><img src='img/esp32.png' style='width: 150px; height: 100px;'><br> Un <b>sp32</b> es un el componente central que ejecuta el código y envía las señales a los diferentes actuadores y sensores del robot para realizar las acciones deseadas.",
+                content: "Para controlar el robot necesitamos un microcontrolador, es este caso un <b>ESP32</b>. <br><img src='img/r_esp32.png' style='width: 150px; height: 100px;'><br> Un <b>sp32</b> es un el componente central que ejecuta el código y envía las señales a los diferentes actuadores y sensores del robot para realizar las acciones deseadas.",
                 target: "tutorial", // Apunta al elemento h2
                 placement: "right", // Coloca el globo en la parte superior
                 arrowOffset: "center"
             });
             steps.push({
                 title: "Batería",
-                content: "Para alimentar de energia al microcontrolador y a los componentes del robot necesitas una <b>Bateria Lipo</b>. <br><img src='img/bateria_litio.png' style='width: 130px; height: 120px;'><br> Una <b>Batería Lipo</b>, es un dispositivo que almacena energía eléctrica y la suministra al sistema del robot.",
+                content: "Para alimentar de energia al microcontrolador y a los componentes del robot necesitas una <b>Bateria Lipo</b>. <br><img src='img/r_bateria.png' style='width: 130px; height: 120px;'><br> Una <b>Batería Lipo</b>, es un dispositivo que almacena energía eléctrica y la suministra al sistema del robot.",
                 target: "tutorial", // Apunta al elemento con ID card1
                 placement: "right", // Coloca el globo a la derecha del elemento
                 arrowOffset: "center"

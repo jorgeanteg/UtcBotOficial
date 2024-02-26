@@ -33,6 +33,7 @@ import com.example.utcbot.robotica.FuenteEnergia;
 import com.example.utcbot.robotica.Impresion3D;
 import com.example.utcbot.robotica.Microcontroladores;
 import com.example.utcbot.robotica.Sensores;
+import com.example.utcbot.robotica.elementosBasicos.InicioBasico;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -117,48 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Abrir la Actividad1
-                Intent intent1 = new Intent(getApplicationContext(), Microcontroladores.class);
-                startActivity(intent1);
-            }
-        });
-
-        View tarjeta2 = findViewById(R.id.targeta2);
-        tarjeta2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Abrir la Actividad1
-                Intent intent1 = new Intent(getApplicationContext(), Sensores.class);
-                startActivity(intent1);
-            }
-        });
-
-
-        View tarjeta3 = findViewById(R.id.targeta3);
-        tarjeta3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Abrir la Actividad1
-                Intent intent1 = new Intent(getApplicationContext(), Actuadores.class);
-                startActivity(intent1);
-            }
-        });
-
-        View tarjeta4 = findViewById(R.id.targeta4);
-        tarjeta4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Abrir la Actividad1
-                Intent intent1 = new Intent(getApplicationContext(), FuenteEnergia.class);
-                startActivity(intent1);
-            }
-        });
-
-        View tarjeta5 = findViewById(R.id.targeta5);
-        tarjeta5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Abrir la Actividad1
-                Intent intent1 = new Intent(getApplicationContext(), ComponentesPasivos.class);
+                Intent intent1 = new Intent(getApplicationContext(), InicioBasico.class);
                 startActivity(intent1);
             }
         });

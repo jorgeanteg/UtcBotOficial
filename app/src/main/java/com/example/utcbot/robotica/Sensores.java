@@ -3,10 +3,12 @@ package com.example.utcbot.robotica;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 import com.example.utcbot.R;
 
@@ -29,12 +31,11 @@ public class Sensores extends AppCompatActivity {
 
 
 
-        ImageView cerrar = findViewById(R.id.cerrar);
-        cerrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        VideoView videoView = findViewById(R.id.videoView);
+        // Ruta del video en recursos raw
+        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.cad_diseno;
+        Uri uri = Uri.parse(videoPath);
+        videoView.setVideoURI(uri);
+        videoView.start();
     }
 }

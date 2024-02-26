@@ -21,6 +21,62 @@
         android:theme="@style/Theme.UtcBot"
         tools:targetApi="31">
         <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico2_1"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico12"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico11"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico10"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico9"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico8"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico7"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico6"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico5"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico4"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico3"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico2"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico1"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".robotica.elementosBasicos.InicioBasico"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".robotica.Impresion3D"
             android:exported="false"
             android:screenOrientation="landscape" />
