@@ -14,20 +14,24 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_logo_launcher"
+        android:icon="@mipmap/ic_utc_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_logo_launcher_round"
+        android:roundIcon="@mipmap/ic_utc_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.UtcBot"
         tools:targetApi="31">
         <activity
+            android:name=".robotica.elementosBasicos.ElementosBasico13"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".robotica.elementosBasicos.ElementosBasico2_1"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".robotica.elementosBasicos.ElementosBasico12"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".robotica.elementosBasicos.ElementosBasico11"
             android:exported="false"
@@ -84,26 +88,7 @@
             android:name=".robotica.DisenoCad"
             android:exported="false"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".robotica.ComponentesPasivos"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".robotica.FuenteEnergia"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".robotica.Actuadores"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".robotica.Sensores"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".robotica.Microcontroladores"
-            android:exported="false"
-            android:screenOrientation="landscape" />
+
         <activity
             android:name=".robotica.Componente1"
             android:exported="false"

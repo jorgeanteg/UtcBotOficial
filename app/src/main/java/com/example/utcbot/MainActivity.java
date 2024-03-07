@@ -1,6 +1,5 @@
 package com.example.utcbot;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,14 +23,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.example.utcbot.robotica.Actuadores;
 import com.example.utcbot.robotica.Componente1;
-import com.example.utcbot.robotica.ComponentesPasivos;
 import com.example.utcbot.robotica.DisenoCad;
-import com.example.utcbot.robotica.FuenteEnergia;
 import com.example.utcbot.robotica.Impresion3D;
-import com.example.utcbot.robotica.Microcontroladores;
-import com.example.utcbot.robotica.Sensores;
 import com.example.utcbot.robotica.elementosBasicos.InicioBasico;
 
 public class MainActivity extends AppCompatActivity {

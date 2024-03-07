@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import com.example.utcbot.MainActivity;
 import com.example.utcbot.R;
 
-public class ElementosBasico2 extends AppCompatActivity {
+public class ElementosBasico13 extends AppCompatActivity {
 
     private MediaPlayer textoVoz, segundoSonido;
     private ImageView sonido, sonidoElemento;
@@ -25,7 +25,8 @@ public class ElementosBasico2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_elementos_basico2);
+        setContentView(R.layout.activity_elementos_basico13);
+
 
         //Codigo para poner la pantalla horizontal
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -44,7 +45,7 @@ public class ElementosBasico2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.start();
-                Intent intent = new Intent(ElementosBasico2.this, MainActivity.class);
+                Intent intent = new Intent(ElementosBasico13.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -64,7 +65,7 @@ public class ElementosBasico2 extends AppCompatActivity {
             public void onClick(View v) {
                 // Aquí puedes realizar acciones cuando se hace clic en la imagen
                 mediaPlayer.start();
-                Intent intent = new Intent(ElementosBasico2.this, ElementosBasico2_1.class);
+                Intent intent = new Intent(ElementosBasico13.this, ElementosBasico7.class);
                 startActivity(intent);
             }
         });
@@ -73,16 +74,14 @@ public class ElementosBasico2 extends AppCompatActivity {
         View tarjeta1 = findViewById(R.id.targeta1);
         tarjeta1.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View view) {
+            public void onClick(View view) {
                 mediaPlayer.start();
-                     mostrarDialogoPersonalizado();
-                }
+                mostrarDialogoPersonalizado();
+            }
         });
 
-
-
-        textoVoz = MediaPlayer.create(this, R.raw.sonido4);
-        segundoSonido = MediaPlayer.create(this, R.raw.micromotor);
+        textoVoz = MediaPlayer.create(this, R.raw.sonido_servo);
+        segundoSonido = MediaPlayer.create(this, R.raw.servo);
 
         sonido = findViewById(R.id.sonido);
 
@@ -156,7 +155,7 @@ public class ElementosBasico2 extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Obtener el layout inflado
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.motor_paso, null);
+        View dialogView = inflater.inflate(R.layout.micro_servo, null);
 
         // Obtener la referencia a la imagen en el diálogo
         ImageView sonidoElemento = dialogView.findViewById(R.id.sonido_elemento);

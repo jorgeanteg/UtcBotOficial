@@ -2,24 +2,15 @@ package com.example.utcbot.robotica.elementosBasicos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.example.utcbot.ListadoProyectos;
-import com.example.utcbot.MainActivity;
-import com.example.utcbot.MainActivity2;
 import com.example.utcbot.R;
-import com.example.utcbot.robotica.Actuadores;
-import com.example.utcbot.robotica.Componente1;
-import com.example.utcbot.robotica.Sensores;
 
 public class InicioBasico extends AppCompatActivity {
 

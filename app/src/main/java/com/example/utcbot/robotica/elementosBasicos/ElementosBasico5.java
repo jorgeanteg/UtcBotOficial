@@ -65,7 +65,7 @@ public class ElementosBasico5 extends AppCompatActivity {
             public void onClick(View v) {
                 // Aquí puedes realizar acciones cuando se hace clic en la imagen
                 mediaPlayer.start();
-                Intent intent = new Intent(ElementosBasico5.this, ElementosBasico7.class);
+                Intent intent = new Intent(ElementosBasico5.this, ElementosBasico13.class);
                 startActivity(intent);
             }
         });
